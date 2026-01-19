@@ -1,0 +1,22 @@
+.c-body {
+    font-family: var(--cyb-sys-font-default);
+    font-size: var(--cyb-sys-font-size-4);
+    font-weight: var(--cyb-sys-font-weight-4);
+    line-height: 1.5;
+
+    &--small {
+        font-size: var(--cyb-sys-font-size-3);
+    }
+
+    &--primary {
+        color: var(--cyb-sys-color-gray-2);
+    }
+
+    &--secondary {
+        color: var(--cyb-sys-color-gray-5);
+    }
+
+    &--white {
+        color: var(--cyb-sys-color-white-9);
+    }
+}

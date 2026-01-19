@@ -1,0 +1,38 @@
+<div class="c-pagination">
+    <button [routerLink]="route" [queryParams]="{page: 1, size: size}" queryParamsHandling="merge"
+        class="c-pagination__btn" [disabled]="currentPage === 1">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+            <path
+                d="M440-240 200-480l240-240 56 56-183 184 183 184-56 56Zm264 0L464-480l240-240 56 56-183 184 183 184-56 56Z" />
+        </svg>
+    </button>
+    <button [routerLink]="route" [queryParams]="{page: currentPage - 1, size: size}" queryParamsHandling="merge"
+        class="c-pagination__btn" [disabled]="currentPage === 1">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+            <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+        </svg>
+    </button>
+
+    <div class="c-pagination__numbers">
+        @for (page of pages; track $index) {
+        <button [routerLink]="route" [queryParams]="{page: page, size: size}" queryParamsHandling="merge"
+            class="c-pagination__number" [class.c-pagination__number--active]="currentPage === page">
+            {{ page }}
+        </button>
+        }
+    </div>
+
+    <button [routerLink]="route" [queryParams]="{page: currentPage + 1, size: size}" queryParamsHandling="merge"
+        class="c-pagination__btn" [disabled]="currentPage === totalPages">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+        </svg>
+    </button>
+    <button [routerLink]="route" [queryParams]="{page: totalPages, size: size}" queryParamsHandling="merge"
+        class="c-pagination__btn" [disabled]="currentPage === totalPages">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+            <path
+                d="M383-480 200-664l56-56 240 240-240 240-56-56 183-184Zm264 0L464-664l56-56 240 240-240 240-56-56 183-184Z" />
+        </svg>
+    </button>
+</div>

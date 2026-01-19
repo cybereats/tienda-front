@@ -1,0 +1,72 @@
+.c-popup {
+
+    --popup-bg: var(--cyb-sys-color-white-9);
+    --popup-text-color: var(--cyb-sys-color-black-1);
+    --popup-title-color: var(--cyb-sys-color-black-1);
+    --popup-title-danger-color: var(--cyb-sys-color-red-1);
+    --popup-border-color: var(--cyb-sys-color-black-1);
+    --popup-input-bg: var(--cyb-sys-color-white-9);
+    --popup-input-label: var(--cyb-sys-color-black-1);
+
+    background-color: var(--popup-bg);
+    color: var(--popup-text-color);
+    border-radius: 8px;
+    border: 1px solid var(--popup-border-color);
+    display: block;
+
+    &__title {
+        color: var(--popup-title-color);
+        border-bottom: 1px solid var(--popup-border-color);
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+
+        &--danger {
+            color: var(--popup-title-danger-color);
+        }
+    }
+
+    &__content {
+        padding-top: 1rem;
+    }
+
+    &__form {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    &__form-field {
+
+        // -- Estilos para los campos de formulario de Angular Material
+        .mat-mdc-text-field-wrapper {
+            background-color: var(--popup-input-bg);
+        }
+
+        .mat-mdc-floating-label {
+            color: var(--popup-input-label);
+        }
+    }
+
+    &__data-row {
+        margin: 0.5rem 0;
+    }
+
+    &__data-key {
+        color: var(--popup-title-color);
+        text-transform: capitalize;
+    }
+
+    &__actions {
+        border-top: 1px solid var(--popup-border-color);
+        padding-top: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    &__button {
+
+
+        &--warn {}
+
+        &--primary {}
+    }
+}

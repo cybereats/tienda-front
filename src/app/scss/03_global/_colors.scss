@@ -1,0 +1,82 @@
+@use "sass:list";
+@use "../01_utilities/variables" as utilities;
+
+
+:root {
+    @for $i from 1 through list.length(utilities.$white-colors) {
+        --cyb-sys-color-white-#{$i}: #{list.nth(utilities.$white-colors, $i)};
+    }
+
+    @for $i from 1 through list.length(utilities.$gray-colors) {
+        --cyb-sys-color-gray-#{$i}: #{list.nth(utilities.$gray-colors, $i)};
+    }
+
+    @for $i from 1 through list.length(utilities.$orange-colors) {
+        --cyb-sys-color-orange-#{$i}: #{list.nth(utilities.$orange-colors, $i)};
+    }
+
+    @for $i from 1 through list.length(utilities.$red-colors) {
+        --cyb-sys-color-red-#{$i}: #{list.nth(utilities.$red-colors, $i)};
+    }
+
+    @for $i from 1 through list.length(utilities.$green-colors) {
+        --cyb-sys-color-green-#{$i}: #{list.nth(utilities.$green-colors, $i)};
+    }
+
+    @for $i from 1 through list.length(utilities.$blue-colors) {
+        --cyb-sys-color-blue-#{$i}: #{list.nth(utilities.$blue-colors, $i)};
+    }
+
+    @for $i from 1 through list.length(utilities.$purple-colors) {
+        --cyb-sys-color-purple-#{$i}: #{list.nth(utilities.$purple-colors, $i)};
+    }
+}
+
+@for $i from 1 through list.length(utilities.$white-colors) {
+
+    .g--color-white-#{$i} {
+        color: var(--cyb-sys-color-white-#{$i});
+    }
+}
+
+@for $i from 1 through list.length(utilities.$gray-colors) {
+
+    .g--color-gray-#{$i} {
+        color: var(--cyb-sys-color-gray-#{$i});
+    }
+}
+
+@for $i from 1 through list.length(utilities.$orange-colors) {
+
+    .g--color-orange-#{$i} {
+        color: var(--cyb-sys-color-orange-#{$i});
+    }
+}
+
+@for $i from 1 through list.length(utilities.$red-colors) {
+
+    .g--color-red-#{$i} {
+        color: var(--cyb-sys-color-red-#{$i});
+    }
+}
+
+@for $i from 1 through list.length(utilities.$green-colors) {
+
+    .g--color-green-#{$i} {
+        color: var(--cyb-sys-color-green-#{$i});
+    }
+}
+
+@for $i from 1 through list.length(utilities.$blue-colors) {
+
+    .g--color-blue-#{$i} {
+        color: var(--cyb-sys-color-blue-#{$i});
+    }
+}
+
+@for $i from 1 through list.length(utilities.$purple-colors) {
+
+    .g--color-purple-#{$i} {
+        color: var(--cyb-sys-color-purple-#{$i});
+    }
+}

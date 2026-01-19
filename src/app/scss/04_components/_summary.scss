@@ -1,0 +1,29 @@
+.summary {
+  --padding-main: var(--cyb-sys-padding-8);
+  --card-bg: var(--cyb-sys-color-white-9);
+  --card-padding: var(--cyb-sys-padding-5);
+  --card-radius: var(--cyb-sys-border-radius-5);
+  --chart-height: var(--cyb-sys-height-7);
+  --title-font-size: var(--cyb-sys-font-size-9);
+  --title-font-weight: var(--cyb-sys-font-weight-7);
+  --title-padding-left: var(--cyb-sys-padding-8);
+  --shadow: var(--cyb-sys-shadow-2);
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+
+  &__chart {
+    background-color: var(--card-bg);
+    padding: var(--card-padding);
+    border-radius: var(--card-radius);
+    width: 100%;
+    height: var(--chart-height);
+    box-shadow: var(--shadow);
+  }
+
+  &__title {
+    font-size: var(--title-font-size);
+    font-weight: var(--title-font-weight);
+    padding-left: var(--title-padding-left);
+  }
+}

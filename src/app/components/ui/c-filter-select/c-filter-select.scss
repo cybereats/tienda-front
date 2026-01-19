@@ -1,0 +1,22 @@
+.c-filter-select {
+    --filter-select-bg: var(--cyb-sys-color-white-9);
+    --filter-select-border-color: var(--cyb-sys-color-white-4);
+    --filter-select-radius: var(--cyb-sys-border-radius-4);
+    --filter-select-padding: var(--cyb-sys-padding-5);
+    --filter-select-font-size: var(--cyb-sys-font-size-4);
+    --filter-select-text-color: var(--cyb-sys-color-gray-5);
+    --filter-select-hover-border: var(--cyb-sys-color-blue-7);
+
+    padding: var(--filter-select-padding);
+    border-radius: var(--filter-select-radius);
+    border: 1px solid var(--filter-select-border-color);
+    background-color: var(--filter-select-bg);
+    color: var(--filter-select-text-color);
+    font-size: var(--filter-select-font-size);
+    outline: none;
+    cursor: pointer;
+
+    &:focus {
+        border-color: var(--filter-select-hover-border);
+    }
+}

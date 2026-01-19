@@ -1,0 +1,40 @@
+.c-reset-filters {
+    --reset-filters-bg: var(--cyb-sys-color-white-8);
+    --reset-filters-color: var(--cyb-sys-color-gray-5);
+    --reset-filters-border: 1px solid var(--cyb-sys-color-white-4);
+    --reset-filters-radius: var(--cyb-sys-border-radius-4);
+    --reset-filters-padding: var(--cyb-sys-padding-5) var(--cyb-sys-padding-5);
+    --reset-filters-gap: var(--cyb-sys-margin-2);
+    --reset-filters-font-size: var(--cyb-sys-font-size-4);
+    --reset-filters-hover-bg: var(--cyb-sys-color-white-7);
+    --reset-filters-hover-border-color: var(--cyb-sys-color-gray-5);
+    --reset-filters-hover-color: var(--cyb-sys-color-gray-2);
+
+    background-color: var(--reset-filters-bg);
+    color: var(--reset-filters-color);
+    border: var(--reset-filters-border);
+    border-radius: var(--reset-filters-radius);
+    padding: var(--reset-filters-padding);
+    gap: var(--reset-filters-gap);
+    font-size: var(--reset-filters-font-size);
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+
+    &:hover:not(:disabled) {
+        background-color: var(--reset-filters-hover-bg);
+        border-color: var(--reset-filters-hover-border-color);
+        color: var(--reset-filters-hover-color);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        filter: grayscale(1);
+    }
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+}

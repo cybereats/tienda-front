@@ -1,0 +1,6 @@
+<select class="c-filter-select" [ngModel]="value" (ngModelChange)="onChange($event)">
+    <option value="">{{ placeholder }}</option>
+    @for (option of options; track option.value) {
+    <option [value]="option.value">{{ option.label }}</option>
+    }
+</select>

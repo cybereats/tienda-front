@@ -1,0 +1,14 @@
+@use "sass:list";
+@use "../01_utilities/variables" as utilities;
+
+:root {
+  @for $i from 1 through list.length(utilities.$shadows) {
+    --cyb-sys-shadow-#{$i}: #{list.nth(utilities.$shadows, $i)};
+  }
+}
+
+@for $i from 1 through list.length(utilities.$shadows) {
+  .g--shadow-#{$i} {
+    box-shadow: var(--cyb-sys-shadow-#{$i});
+  }
+}

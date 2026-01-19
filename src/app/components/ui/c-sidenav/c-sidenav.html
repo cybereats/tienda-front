@@ -1,0 +1,16 @@
+<div class="c-sidenav l-flex l-flex__direction-column l-flex__align-start">
+  <!-- <div class="c-sidenav__logo l-flex l-flex__justify-center l-flex__align-center">
+    <img src="./images/CyberEats-Logo.png" alt="CyberEats Logo" routerLink="/admin">
+  </div> -->
+  @for (item of sideNavItems; track $index) {
+  <a class="l-flex l-flex__align-center" [routerLink]='item.route'>
+    <img [src]="`./icons/${item.icon}`">
+    <span class="c-body c-body--white">{{item.name}}</span>
+  </a>
+  }
+
+  <a class="l-flex l-flex__align-center c-sidenav__item" (click)="logout()" style="cursor: pointer;">
+    <img src="./icons/exit.png">
+    <span class="c-body c-body--white">Salir</span>
+  </a>
+</div>

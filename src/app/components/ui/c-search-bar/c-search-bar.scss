@@ -1,0 +1,50 @@
+.c-search-bar {
+    --search-input-bg: var(--cyb-sys-color-white-9);
+    --search-border-color: var(--cyb-sys-color-white-4);
+    --search-radius: var(--cyb-sys-border-radius-4);
+    --search-font-size: var(--cyb-sys-font-size-4);
+    --search-text-color: var(--cyb-sys-color-gray-5);
+    --search-btn-color: var(--cyb-sys-color-gray-4);
+    --search-btn-hover: var(--cyb-sys-color-blue-7);
+    --search-padding-right: var(--cyb-sys-padding-12);
+    --search-btn-right: var(--cyb-sys-margin-5);
+    --search-btn-padding: var(--cyb-sys-padding-3);
+
+    position: relative;
+
+
+    &__input {
+        width: 100%;
+        padding: var(--cyb-sys-padding-5);
+        padding-right: var(--search-padding-right);
+        border-radius: var(--search-radius);
+        border: 1px solid var(--search-border-color);
+        background-color: var(--search-input-bg);
+        color: var(--search-text-color);
+        font-size: var(--search-font-size);
+        outline: none;
+
+        &:focus {
+            border-color: var(--search-btn-hover);
+        }
+    }
+
+    &__btn {
+        position: absolute;
+        right: var(--search-btn-right);
+        background: none;
+        border: none;
+        color: var(--search-btn-color);
+        cursor: pointer;
+        padding: var(--search-btn-padding);
+
+        &:hover {
+            color: var(--search-btn-hover);
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}

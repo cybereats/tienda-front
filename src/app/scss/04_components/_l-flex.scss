@@ -1,0 +1,45 @@
+.l-flex {
+  display: flex;
+
+  &__direction-column {
+    flex-direction: column;
+  }
+
+  &__align-center {
+    align-items: center;
+  }
+
+  &__align-start {
+    align-items: flex-start;
+  }
+
+  &__justify-center {
+    justify-content: center;
+  }
+
+  &__justify-space-between {
+    justify-content: space-between;
+  }
+
+  &__gap-2 {
+    gap: var(--cyb-sys-margin-2);
+  }
+
+  &__gap-3 {
+    gap: var(--cyb-sys-margin-3);
+  }
+
+  &__gap-4 {
+    gap: var(--cyb-sys-margin-4);
+  }
+
+  &__gap-5 {
+    gap: var(--cyb-sys-margin-5);
+  }
+
+  &__flex-1 {
+    flex: 1;
+  }
+
+
+}

@@ -1,0 +1,86 @@
+.form {
+    --form-card-bg-color: var(--cyb-sys-color-white-9);
+    --form-card-padding: var(--cyb-sys-padding-12);
+    --form-card-border-radius: var(--cyb-sys-border-radius-6);
+    --form-box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --form-card-width: var(--cyb-sys-width-8);
+
+    --form-title-text-align: center;
+    --form-title-margin-bottom: var(--cyb-sys-margin-12);
+    --form-title-font-size: var(--cyb-sys-font-size-9);
+    --form-title-font-weight: var(--cyb-sys-font-weight-8);
+    --form-title-color: var(--cyb-sys-color-gray-2);
+
+    --form-label-margin: var(--cyb-sys-margin-3);
+    --form-label-font-size: var(--cyb-sys-font-size-5);
+    --form-label-font-weight: var(--cyb-sys-font-weight-5);
+    --form-label-color: var(--cyb-sys-color-gray-3);
+
+    --form-input-padding: var(--cyb-sys-padding-6);
+    --form-input-margin: var(--cyb-sys-margin-9);
+    --form-input-bg-color: var(--cyb-sys-color-gray-9);
+    --form-input-border-radius: var(--cyb-sys-border-radius-4);
+    --form-input-font-size: var(--cyb-sys-font-size-4);
+
+    --form-button-padding: var(--cyb-sys-padding-6);
+    --form-button-margin: var(--cyb-sys-margin-4);
+    --form-button-bg-color: var(--cyb-sys-color-blue-7);
+    --form-button-bg-color-hover: var(--cyb-sys-color-blue-8);
+    --form-button-color: var(--cyb-sys-color-white-9);
+    --form-button-border-radius: var(--cyb-sys-border-radius-4);
+    --form-button-font-size: var(--cyb-sys-font-size-5);
+    --form-button-font-weight: var(--cyb-sys-font-weight-6);
+
+
+    &__card {
+        background-color: var(--form-card-bg-color);
+        padding: var(--form-card-padding);
+        border-radius: var(--form-card-border-radius);
+        box-shadow: var(--form-box-shadow);
+        width: var(--form-card-width);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__title {
+        text-align: var(--form-title-text-align);
+        margin-bottom: var(--form-title-margin-bottom);
+        font-size: var(--form-title-font-size);
+        font-weight: var(--form-title-font-weight);
+        color: var(--form-title-color);
+    }
+
+
+    &__label {
+        margin-bottom: var(--form-label-margin);
+        font-size: var(--form-label-font-size);
+        font-weight: var(--form-label-font-weight);
+        color: var(--form-label-color);
+    }
+
+    &__input {
+        padding: var(--form-input-padding);
+        background-color: var(--form-input-bg-color);
+        border: 1px solid transparent;
+        border-radius: var(--form-input-border-radius);
+        font-size: var(--form-input-font-size);
+    }
+
+    &__button {
+        width: 100%;
+        padding: var(--form-button-padding);
+        margin-top: var(--form-button-margin);
+        background-color: var(--form-button-bg-color);
+        color: var(--form-button-color);
+        border: none;
+        border-radius: var(--form-button-border-radius);
+        font-size: var(--form-button-font-size);
+        font-weight: var(--form-button-font-weight);
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--form-button-bg-color-hover);
+        }
+    }
+}

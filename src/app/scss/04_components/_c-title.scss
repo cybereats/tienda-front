@@ -1,0 +1,22 @@
+.c-title {
+    font-family: var(--cyb-sys-font-title);
+    font-size: var(--cyb-sys-font-size-9);
+    font-weight: var(--cyb-sys-font-weight-7);
+    color: var(--cyb-sys-color-gray-2);
+    margin-bottom: var(--cyb-sys-margin-9);
+    margin-top: var(--cyb-sys-margin-7);
+
+    &--medium {
+        font-size: var(--cyb-sys-font-size-5);
+        font-weight: var(--cyb-sys-font-weight-6);
+    }
+
+    &--small {
+        font-size: var(--cyb-sys-font-size-4);
+        font-weight: var(--cyb-sys-font-weight-6);
+    }
+
+    &--blue {
+        color: var(--cyb-sys-color-blue-7);
+    }
+}

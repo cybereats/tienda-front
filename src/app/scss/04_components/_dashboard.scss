@@ -1,0 +1,11 @@
+.dashboard {
+  --padding-main: var(--cyb-sys-padding-8);
+  --gap-main: var(--cyb-sys-margin-8);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  width: 100%;
+  justify-content: space-around;
+  gap: var(--gap-main);
+  flex-wrap: nowrap;
+}

@@ -1,0 +1,14 @@
+@use "sass:list";
+@use "../01_utilities/variables" as utilities;
+
+:root {
+    @for $i from 1 through list.length(utilities.$height-sizes) {
+        --cyb-sys-height-#{$i}: #{list.nth(utilities.$height-sizes, $i)};
+    }
+}
+
+@for $i from 1 through list.length(utilities.$height-sizes) {
+    .g--height-#{$i} {
+        height: var(--cyb-sys-height-#{$i});
+    }
+}

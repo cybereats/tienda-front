@@ -1,0 +1,41 @@
+@use "sass:list";
+@use "../01_utilities/variables" as utilities;
+
+
+:root {
+    @for $i from 1 through list.length(utilities.$padding-sizes) {
+        --cyb-sys-padding-#{$i}: #{list.nth(utilities.$padding-sizes, $i)};
+    }
+}
+
+@for $i from 1 through list.length(utilities.$padding-sizes) {
+    .g--padding-#{$i} {
+        padding: var(--cyb-sys-padding-#{$i});
+    }
+
+    .g--padding-top-#{$i} {
+        padding-top: var(--cyb-sys-padding-#{$i});
+    }
+
+    .g--padding-right-#{$i} {
+        padding-right: var(--cyb-sys-padding-#{$i});
+    }
+
+    .g--padding-bottom-#{$i} {
+        padding-bottom: var(--cyb-sys-padding-#{$i});
+    }
+
+    .g--padding-left-#{$i} {
+        padding-left: var(--cyb-sys-padding-#{$i});
+    }
+
+    .g--padding-x-#{$i} {
+        padding-left: var(--cyb-sys-padding-#{$i});
+        padding-right: var(--cyb-sys-padding-#{$i});
+    }
+
+    .g--padding-y-#{$i} {
+        padding-top: var(--cyb-sys-padding-#{$i});
+        padding-bottom: var(--cyb-sys-padding-#{$i});
+    }
+}

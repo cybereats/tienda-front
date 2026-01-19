@@ -1,0 +1,47 @@
+.c-status {
+    padding: var(--cyb-sys-padding-3) var(--cyb-sys-padding-5);
+    border-radius: var(--cyb-sys-border-radius-4);
+    border: 1px solid transparent;
+    font-weight: var(--cyb-sys-font-weight-5);
+    cursor: pointer;
+    outline: none;
+    font-size: inherit;
+    width: fit-content;
+
+    &__option {
+        background-color: var(--cyb-sys-color-white-9);
+        color: var(--cyb-sys-color-gray-3);
+    }
+
+    &--orange {
+        background-color: var(--cyb-sys-color-orange-9);
+        color: var(--cyb-sys-color-orange-3);
+    }
+
+    &--green {
+        background-color: var(--cyb-sys-color-green-10);
+        color: var(--cyb-sys-color-green-3);
+    }
+
+    &--blue {
+        background-color: var(--cyb-sys-color-blue-10);
+        color: var(--cyb-sys-color-blue-4);
+    }
+
+    &--red {
+        background-color: var(--cyb-sys-color-red-9);
+        color: var(--cyb-sys-color-red-3);
+    }
+
+    &--purple {
+        background-color: var(--cyb-sys-color-purple-10);
+        color: var(--cyb-sys-color-purple-4);
+    }
+
+    &--gray {
+        background-color: var(--cyb-sys-color-gray-8);
+        color: var(--cyb-sys-color-gray-3);
+    }
+
+
+}

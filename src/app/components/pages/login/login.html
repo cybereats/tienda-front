@@ -1,0 +1,35 @@
+<div class="form">
+    <div class="form__card">
+        <h1 class="form__title">Iniciar Sesión</h1>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            @if (errorMessage) {
+            <div class="form__error">{{ errorMessage }}</div>
+            }
+
+            <label class="form__label" for="username">Usuario o Email</label>
+            <input class="form__input" type="text" id="username" formControlName="username"
+                placeholder="Introduce tu usuario o email"
+                [class.form__input--error]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+            @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
+            <span class="form__validation-error">El usuario es obligatorio</span>
+            }
+
+            <label class="form__label" for="password">Contraseña</label>
+            <input class="form__input" type="password" id="password" formControlName="password"
+                placeholder="Introduce tu contraseña"
+                [class.form__input--error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+            <span class="form__validation-error">La contraseña es obligatoria</span>
+            }
+
+            <button class="form__button" type="submit" [disabled]="isLoading">
+                {{ isLoading ? 'Entrando...' : 'Entrar' }}
+            </button>
+
+            <!-- <p class="form__link">
+                ¿No tienes cuenta? <a routerLink="/admin/register">Regístrate aquí</a>
+            </p> -->
+        </form>
+    </div>
+</div>

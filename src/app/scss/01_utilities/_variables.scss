@@ -1,0 +1,210 @@
+$white-colors: (
+    "#D6D6D6",
+    "#DBDBDB",
+    "#E0E0E0",
+    "#E6E6E6",
+    "#EBEBEB",
+    "#F0F0F0",
+    "#F5F5F5",
+    "#FAFAFA",
+    "#FFFFFF"
+);
+
+$gray-colors: (
+    "#0D0D0D",
+    "#292929",
+    "#474747",
+    "#636363",
+    "#808080",
+    "#9C9C9C",
+    "#BABABA",
+    "#D6D6D6",
+    "#F2F2F2"
+);
+
+$orange-colors: (
+    "#76350F",
+    "#91400D",
+    "#B35309",
+    "#DB7706",
+    "#F59F0A",
+    "#FBBD23",
+    "#FCD44F",
+    "#FDE68B",
+    "#FEF3C8"
+);
+
+$red-colors: (
+    "#811D1D",
+    "#981B1B",
+    "#BA1C1C",
+    "#DC2828",
+    "#EF4343",
+    "#F87272",
+    "#FCA6A6",
+    "#FEC8C8",
+    "#FEE1E1"
+);
+
+$green-colors: (
+    "#041901",
+    "#0A4404",
+    "#0E6907",
+    "#0E920C",
+    "#10B713",
+    "#12E220",
+    "#2DF041",
+    "#55F66E",
+    "#79FC91",
+    "#EBFFEE"
+);
+
+$blue-colors: (
+    "#010E19",
+    "#011E3C",
+    "#002C60",
+    "#003585",
+    "#003EA8",
+    "#0041CC",
+    "#0144EF",
+    "#184DFB",
+    "#3D63FA",
+    "#E2E7FE"
+);
+
+$purple-colors: (
+    "#0E0119",
+    "#24013C",
+    "#3C0060",
+    "#580085",
+    "#7600A8",
+    "#9900CC",
+    "#BB01EF",
+    "#D618FB",
+    "#E13DFA",
+    "#FAE2FE"
+);
+
+$margin-sizes: (
+    0px,
+    2px,
+    4px,
+    6px,
+    8px,
+    12px,
+    16px,
+    20px,
+    24px,
+    32px,
+    40px,
+    48px,
+    64px
+);
+
+$padding-sizes: (
+    0px,
+    2px,
+    4px,
+    6px,
+    8px,
+    12px,
+    16px,
+    20px,
+    24px,
+    32px,
+    40px,
+    48px,
+    64px
+);
+
+$font-sizes: (
+    10px,
+    12px,
+    14px,
+    16px,
+    18px,
+    20px,
+    24px,
+    28px,
+    32px,
+    40px,
+    48px
+);
+
+$font-weights: (
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900
+);
+
+$gap-sizes: (
+    0px,
+    2px,
+    4px,
+    6px,
+    8px,
+    12px,
+    16px,
+    20px,
+    24px,
+    32px
+);
+
+$border-radius-sizes: (
+    0px,
+    2px,
+    4px,
+    6px,
+    8px,
+    12px,
+    16px,
+    20px,
+    24px,
+    32px
+);
+
+$width-sizes: (
+    0px,
+    50px,
+    100px,
+    150px,
+    200px,
+    250px,
+    300px,
+    400px,
+    500px,
+    600px,
+    800px,
+    1000px
+);
+
+
+$height-sizes: (
+    0px,
+    50px,
+    100px,
+    150px,
+    200px,
+    250px,
+    300px,
+    400px,
+    500px,
+    600px,
+    800px,
+    1000px
+);
+
+$shadows: (
+    0 1px 2px 0 rgba(0, 0, 0, 0.05),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 25px 50px -12px rgba(0, 0, 0, 0.25)
+);
