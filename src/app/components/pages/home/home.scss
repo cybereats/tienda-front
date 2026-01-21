@@ -59,6 +59,7 @@
         line-height: 1;
         letter-spacing: 0.5rem;
         margin: 0;
+        color: white; // Explicitly set to white for visibility
         text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
 
         .highlight {
@@ -296,15 +297,13 @@
             .arsenal-bg {
                 position: absolute;
                 top: 0;
-                left: -25%;
-                /* Wider to cover skew fully */
-                width: 150%;
+                min-width: 150%;
                 height: 100%;
                 object-fit: cover;
                 z-index: 0;
-                opacity: 0.6;
+                opacity: 0.8;
                 transition: opacity 0.5s ease, transform 0.6s ease;
-                filter: brightness(0.8);
+                filter: brightness(0.9);
                 pointer-events: none; // Click through image
             }
 
@@ -320,7 +319,7 @@
                 color: white;
                 text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
                 position: relative;
-                z-index: 2;
+                z-index: 10;
                 pointer-events: none; // Ensure click passes to card
             }
 
@@ -338,6 +337,8 @@
                 flex-direction: column;
                 align-items: center;
                 gap: 2rem;
+                position: relative;
+                z-index: 10;
 
                 p {
                     font-size: 1.25rem;
@@ -363,20 +364,14 @@
                 }
             }
 
-            .btn-toggle {
+            button.c-btn {
                 margin-top: 2rem;
                 background: transparent;
                 border: 2px solid white;
                 color: white;
-                padding: 0.8rem 2rem;
-                border-radius: 99px;
-                font-weight: 700;
-                cursor: pointer;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                transition: all 0.3s ease;
+                // Inherits other props from c-btn, strictly adding specific arsenal styling here
                 position: relative;
-                z-index: 2;
+                z-index: 10;
 
                 &:hover {
                     background: white;
@@ -393,7 +388,7 @@
                 // removed background: black; to keep gradient
 
                 .arsenal-bg {
-                    opacity: 0.3;
+                    opacity: 0.5;
                     transform: scale(1.05);
                 }
 
@@ -420,7 +415,7 @@
                 }
 
                 // Hide toggle button in active state as requested
-                .btn-toggle {
+                button.c-btn {
                     display: none;
                 }
             }
@@ -441,7 +436,7 @@
                     padding: 0;
                 }
 
-                .btn-toggle {
+                button.c-btn {
                     display: none;
                 }
             }
@@ -454,7 +449,7 @@
         }
     }
 
-    // Food Section
+    //      Food Section
     &__food {
         height: 80vh;
         display: flex;
