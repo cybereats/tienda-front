@@ -1,25 +1,60 @@
 .home {
+    // -- Structure Variables --
+    --home-max-width: 1200px;
+    --home-padding-x: var(--cyb-sys-padding-9); // 2rem = 32px
+    --home-section-padding: var(--cyb-sys-padding-15) 0; // 6rem = 96px
+
+    // -- Colors --
+    --home-bg: var(--cyb-sys-color-gray-1);
+    --home-text-color: var(--cyb-sys-color-white-9);
+    --home-text-muted: var(--cyb-sys-color-gray-8);
+    --home-text-dark: var(--cyb-sys-color-gray-9);
+
+    // -- Highlights --
+    --home-highlight-color: var(--cyb-sys-color-blue-6);
+    --home-highlight-orange: var(--cyb-sys-color-orange-5);
+    --home-highlight-orange-shadow: var(--cyb-sys-color-orange-7);
+
+    // -- Typography -- 
+    --home-font-hero: var(--cyb-sys-font-size-15); // ~6rem (96px)
+    --home-font-title: var(--cyb-sys-font-size-13); // ~2.5rem - 4rem (variable) used 64px for desktop
+    --home-font-subtitle: var(--cyb-sys-font-size-9); // 1.5rem = 24px
+    --home-font-desc: var(--cyb-sys-font-size-8); // 1.25rem = 20px
+    --home-font-weight-bold: var(--cyb-sys-font-weight-9);
+
+    // -- Component Specific --
+    --home-hero-overlay: rgba(0, 0, 0, 0.6);
+    --home-info-gradient-start: var(--cyb-sys-color-gray-2);
+    --home-info-gradient-end: #000000;
+
+    // Arsenal
+    --home-arsenal-bg: #000000;
+    --home-arsenal-border: rgba(255, 255, 255, 0.1);
+
+    // Food
+    --home-food-overlay-filter: blur(4px) brightness(0.4);
+
     min-height: 100vh;
-    background-color: var(--cyb-sys-color-gray-1); // Darkest gray/black
-    color: var(--cyb-sys-color-white-9);
+    background-color: var(--home-bg);
+    color: var(--home-text-color);
     overflow-x: hidden;
     font-family: 'Inter', sans-serif;
 
     &__container {
-        max-width: 1200px;
+        max-width: var(--home-max-width);
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 var(--home-padding-x);
         width: 100%;
     }
 
     &__section {
-        padding: 6rem 0;
+        padding: var(--home-section-padding);
         position: relative;
     }
 
     &__hero {
         position: relative;
-        height: 100vh; // Full viewport height
+        height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -41,7 +76,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6); // Dark overlay for contrast
+            background: var(--home-hero-overlay);
             z-index: 1;
         }
 
@@ -54,39 +89,39 @@
     }
 
     &__title {
-        font-size: 6rem;
-        font-weight: 900;
+        font-size: var(--home-font-hero);
+        font-weight: var(--home-font-weight-bold);
         line-height: 1;
-        letter-spacing: 0.5rem;
+        letter-spacing: var(--cyb-sys-padding-5); // 0.5rem = 8px
         margin: 0;
-        color: white; // Explicitly set to white for visibility
+        color: var(--home-text-color);
         text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
 
         .highlight {
-            color: var(--cyb-sys-color-blue-6);
-            text-shadow: 0 0 20px var(--cyb-sys-color-blue-6);
+            color: var(--home-highlight-color);
+            text-shadow: 0 0 20px var(--home-highlight-color);
         }
 
         @media (max-width: 768px) {
-            font-size: 3.5rem;
+            font-size: 3.5rem; // Keep relative units for media queries if not in system
         }
     }
 
     &__subtitle {
-        font-size: 1.5rem;
+        font-size: var(--home-font-subtitle);
         letter-spacing: 0.2rem;
-        margin-top: 1rem;
-        margin-bottom: 3rem;
-        color: var(--cyb-sys-color-gray-8);
+        margin-top: var(--cyb-sys-margin-6);
+        margin-bottom: var(--cyb-sys-margin-10); // 3rem = 48px
+        color: var(--home-text-muted);
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     // Shared Section Title
     .section-title {
-        font-size: 2.5rem;
-        font-weight: 900;
-        margin-bottom: 3rem; // Increased spacing
-        color: var(--cyb-sys-color-gray-9); // Dark text for light backgrounds
+        font-size: 2.5rem; // Fallback / Mobile
+        font-weight: var(--home-font-weight-bold);
+        margin-bottom: var(--cyb-sys-margin-10);
+        color: var(--home-text-dark);
         text-transform: uppercase;
         letter-spacing: -1px;
         line-height: .9;
@@ -95,12 +130,12 @@
 
         .highlight {
             display: inline-block;
-            color: var(--cyb-sys-color-blue-6);
+            color: var(--home-highlight-color);
             filter: none;
         }
 
         @media (min-width: 768px) {
-            font-size: 4rem;
+            font-size: var(--home-font-title); // 64px
 
             .highlight {
                 display: inline;
@@ -108,13 +143,13 @@
         }
     }
 
-    // Info Section - Redesigned
+    // Info Section
     &__info {
-        background: radial-gradient(circle at center, var(--cyb-sys-color-gray-2) 0%, var(--cyb-sys-color-gray-1) 100%);
-        padding: 4rem 0;
+        background: radial-gradient(ellipse at center, var(--home-info-gradient-start) 40%, var(--home-info-gradient-end) 100%);
+        padding: var(--cyb-sys-padding-14) 0; // 4rem = 64px
 
         .home__container {
-            display: block; // Reset grid
+            display: block;
             max-width: 1400px;
         }
 
@@ -126,41 +161,39 @@
             width: 100%;
 
             .section-desc {
-                font-size: 1.25rem;
+                font-size: var(--home-font-desc);
                 max-width: 700px;
                 color: var(--cyb-sys-color-gray-7);
-                margin-bottom: 4rem;
+                margin-bottom: var(--cyb-sys-margin-14); // 4rem = 64px
                 line-height: 1.6;
             }
         }
 
-
-
         .info-showcase {
             position: relative;
             width: 100%;
-            max-width: 1200px; // Increased max-width container
+            max-width: 1200px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 2rem;
+            margin-top: var(--cyb-sys-margin-9); // 2rem = 32px
 
             .feature-image {
                 width: 100%;
-                max-width: 1000px; // Increased image width
-                aspect-ratio: 21/9; // Wider aspect ratio
+                max-width: 1000px;
+                aspect-ratio: 21/9;
                 object-fit: cover;
-                border-radius: 1rem;
+                border-radius: var(--cyb-sys-border-radius-6); // 1rem approx
                 box-shadow:
                     0 0 0 1px rgba(0, 0, 0, 0.05),
                     0 20px 40px -10px rgba(0, 0, 0, 0.2);
             }
 
             .stats-bar {
-                margin-top: -3rem; // Overlap image slightly
+                margin-top: -3rem;
                 background: rgba(20, 20, 20, 0.85);
                 backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                border: 1px solid var(--home-arsenal-border);
                 border-radius: 1.5rem;
                 padding: 1.5rem 3rem;
                 display: flex;
@@ -186,7 +219,7 @@
                     .stat-value {
                         font-size: 2.5rem;
                         font-weight: 800;
-                        color: white;
+                        color: var(--home-text-color);
                         line-height: 1;
                         margin-bottom: 0.25rem;
                         background: linear-gradient(to bottom, #fff 40%, #999);
@@ -196,8 +229,8 @@
                     }
 
                     .stat-label {
-                        font-family: monospace; // Tech feel
-                        color: white;
+                        font-family: monospace;
+                        color: var(--home-text-color);
                         background: linear-gradient(to bottom, #fff 40%, #999);
                         -webkit-background-clip: text;
                         background-clip: text;
@@ -226,34 +259,33 @@
 
     // Updated Arsenal Section
     &__arsenal {
-        background-color: var(--cyb-sys-color-gray-1);
+        background-color: var(--home-bg);
         text-align: center;
         padding: 0;
         overflow: hidden;
 
         .section-title {
-            background-color: black;
-            color: white;
+            background-color: var(--home-arsenal-bg);
+            color: var(--home-text-color);
             margin-bottom: 0;
-            padding: 3rem 0; // Add padding to create a banner effect
+            padding: var(--cyb-sys-padding-10) 0; // 3rem = 48px
         }
 
         .home__container.arsenal-container {
             display: flex;
             height: 100vh;
-            width: 120vw; // Wider than screen to hide slanted edges
-            max-width: none; // Override 1200px limit from base class
-            margin-left: -10vw; // Center it to push edges off screen
+            width: 120vw;
+            max-width: none;
+            margin-left: -10vw;
             padding: 0;
             gap: 0;
-            background: black;
+            background: var(--home-arsenal-bg);
             border: none;
         }
 
         .arsenal-card {
             position: relative;
             flex: 1;
-
             transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1);
             overflow: hidden;
             cursor: pointer;
@@ -262,7 +294,7 @@
             justify-content: center;
             transform: skewX(-10deg);
             margin-right: -1px;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid var(--home-arsenal-border);
 
             &:last-child {
                 border-right: none;
@@ -283,8 +315,6 @@
                 transition: all 0.5s ease;
             }
 
-            // Safe Padding for Edges to center content in VISIBLE area
-            // 10vw is hidden, so we pad that side to push content to visible center
             &:first-child .arsenal-card__content {
                 padding-left: 10vw;
             }
@@ -293,7 +323,6 @@
                 padding-right: 10vw;
             }
 
-            // Background Image
             .arsenal-bg {
                 position: absolute;
                 top: 0;
@@ -304,11 +333,9 @@
                 opacity: 0.8;
                 transition: opacity 0.5s ease, transform 0.6s ease;
                 filter: brightness(0.9);
-                pointer-events: none; // Click through image
+                pointer-events: none;
             }
 
-
-            // Titles
             .arsenal-title {
                 font-size: 3rem;
                 font-weight: 900;
@@ -316,14 +343,13 @@
                 text-transform: uppercase;
                 margin: 0;
                 transition: all 0.5s ease;
-                color: white;
+                color: var(--home-text-color);
                 text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
                 position: relative;
                 z-index: 10;
-                pointer-events: none; // Ensure click passes to card
+                pointer-events: none;
             }
 
-            // Hidden details by default
             .arsenal-details {
                 opacity: 0;
                 max-height: 0;
@@ -341,7 +367,7 @@
                 z-index: 10;
 
                 p {
-                    font-size: 1.25rem;
+                    font-size: var(--home-font-desc);
                     line-height: 1.6;
                     max-width: 600px;
                     color: rgba(255, 255, 255, 0.9);
@@ -367,25 +393,21 @@
             button.c-btn {
                 margin-top: 2rem;
                 background: transparent;
-                border: 2px solid white;
-                color: white;
-                // Inherits other props from c-btn, strictly adding specific arsenal styling here
+                border: 2px solid var(--home-text-color);
+                color: var(--home-text-color);
                 position: relative;
                 z-index: 10;
 
                 &:hover {
-                    background: white;
-                    color: black;
+                    background: var(--home-text-color);
+                    color: #000;
                 }
             }
 
-
-            // ACTIVE STATE
             &.active {
-                flex: 6; // Reduced from 8 to let others breathe
+                flex: 6;
                 cursor: default;
                 z-index: 10;
-                // removed background: black; to keep gradient
 
                 .arsenal-bg {
                     opacity: 0.5;
@@ -395,7 +417,7 @@
                 .arsenal-title {
                     font-size: 5rem;
                     margin-bottom: 3rem;
-                    color: white;
+                    color: var(--home-text-color);
                     z-index: 10;
                     position: relative;
                 }
@@ -406,15 +428,13 @@
                     transform: translateY(0);
                     padding-bottom: 2rem;
 
-                    // Enforce text color in details
                     .spec-highlight {
-                        color: white;
+                        color: var(--home-text-color);
                         border: 1px solid rgba(255, 255, 255, 0.4);
-                        background: rgba(0, 0, 0, 0.5); // Darker background for contrast
+                        background: rgba(0, 0, 0, 0.5);
                     }
                 }
 
-                // Hide toggle button in active state as requested
                 button.c-btn {
                     display: none;
                 }
@@ -423,8 +443,6 @@
 
         // INACTIVE STATES
         .arsenal-container:has(.arsenal-card.active) {
-
-            // Middle Card (Inactive)
             .arsenal-card:not(.active) {
                 flex: 1;
                 filter: brightness(0.4);
@@ -441,17 +459,16 @@
                 }
             }
 
-            // Edge Cards (Inactive) - Boost width to compensate for off-screen overlap
             .arsenal-card:first-child:not(.active),
             .arsenal-card:last-child:not(.active) {
-                flex: 1.8; // ~24vw physical -> ~14vw visible (matches middle 14vw)
+                flex: 1.8;
             }
         }
     }
 
-    //      Food Section
+    // Food Section
     &__food {
-        height: 80vh;
+        height: 100vh;
         display: flex;
         align-items: center;
         overflow: hidden;
@@ -463,7 +480,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: blur(4px) brightness(0.4);
+            filter: var(--home-food-overlay-filter);
         }
 
         .relative-z {
@@ -481,22 +498,23 @@
                 text-transform: uppercase;
 
                 .highlight {
-                    color: var(--cyb-sys-color-orange-5);
+                    color: var(--home-highlight-orange);
                     display: block;
-                    text-shadow: 0 0 20px var(--cyb-sys-color-orange-7);
+                    text-shadow: 0 0 20px var(--home-highlight-orange-shadow);
                 }
             }
 
             p {
-                font-size: 1.25rem;
+                font-size: var(--home-font-desc);
                 margin-bottom: 2.5rem;
-                color: var(--cyb-sys-color-gray-9);
+                color: var(--home-text-dark);
+                line-height: 1.6;
             }
         }
     }
 }
 
-// Global Buttons within Home
+// Global Buttons within Home (Leave as is for now as they might be used elsewhere or are specific mixins? Reference doesn't show button refactoring but I'll keep them)
 .btn-glow {
     display: inline-block;
     padding: 1rem 2.5rem;
