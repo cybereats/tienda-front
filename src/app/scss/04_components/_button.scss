@@ -1,0 +1,39 @@
+.c-btn {
+    --btn-bg: transparent;
+    --btn-border-color: #ffffff;
+    --btn-text-color: #ffffff;
+    --btn-padding: 0.8rem 2rem;
+    --btn-radius: 99px;
+    --btn-font-weight: 700;
+    --btn-border-width: 2px;
+
+    --btn-hover-bg: #ffffff;
+    --btn-hover-text-color: #000000;
+
+    background: var(--btn-bg);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    color: var(--btn-text-color);
+    padding: var(--btn-padding);
+    border-radius: var(--btn-radius);
+    font-weight: var(--btn-font-weight);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+
+    &:hover {
+        background: var(--btn-hover-bg);
+        color: var(--btn-hover-text-color);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}

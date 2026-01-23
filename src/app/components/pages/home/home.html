@@ -1,0 +1,125 @@
+<div class="home">
+    <section class="home__hero">
+        <div class="home__hero-overlay"></div>
+        <img src="assets/cyber-hero.png" alt="Cyber Cafe Gaming" class="home__hero-bg">
+        <div class="home__hero-content">
+            <h1 class="home__title">CYBER <span class="highlight">ZONE</span></h1>
+            <p class="home__subtitle">Ultimate Gaming Experience</p>
+            <a href="#arsenal" class="c-btn">ENTER THE ZONE</a>
+        </div>
+    </section>
+
+    <section class="home__section home__info">
+        <div class="home__container">
+            <div class="info-content centered-layout">
+                <h2 class="section-title">LEVEL UP <span class="highlight">YOUR GAME</span></h2>
+                <p class="section-desc">Welcome to the most advanced gaming center in the city. Experience ultra-low
+                    latency,
+                    360Hz monitors, and the latest RTX 40-Series GPUs.</p>
+
+                <div class="info-showcase">
+                    <img src="assets/vr-lounge.png" alt="VR Lounge Area" class="feature-image">
+
+                    <div class="stats-bar">
+                        <div class="stat-item">
+                            <span class="stat-value">100+</span>
+                            <span class="stat-label">High-End PCs</span>
+                        </div>
+                        <div class="stat-divisor"></div>
+                        <div class="stat-item">
+                            <span class="stat-value">10 Gbps</span>
+                            <span class="stat-label">Fiber Connection</span>
+                        </div>
+                        <div class="stat-divisor"></div>
+                        <div class="stat-item">
+                            <span class="stat-value">24/7</span>
+                            <span class="stat-label">Open Access</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="arsenal" class="home__section home__arsenal">
+        <div class="home__container arsenal-container">
+            <!-- ELITE TIER -->
+            <div class="arsenal-card elite" [class.active]="activeCard === 'elite'" (click)="setActive('elite')">
+                <div class="arsenal-card__content">
+                    <h3 class="arsenal-title">GAMA ALTA</h3>
+
+                    <div class="arsenal-details">
+                        <div class="specs-grid">
+                            <span class="spec-highlight">4K 240Hz</span>
+                            <span class="spec-highlight">RTX 5090</span>
+                            <span class="spec-highlight">i9-14900K</span>
+                            <span class="spec-highlight">64GB RAM</span>
+                        </div>
+                        <p>Experience the absolute pinnacle of gaming performance. Dominate every lobby with zero
+                            compromise.</p>
+                        <a routerLink="/computers" class="c-btn">RENT NOW</a>
+                    </div>
+
+                    <button class="c-btn">{{ activeCard === 'elite' ? 'Ver menos' : 'Ver mas' }}</button>
+                    <img src="assets/gama-alta.png" alt="Elite Tier" class="arsenal-bg">
+                </div>
+            </div>
+
+            <!-- PRO TIER -->
+            <div class="arsenal-card pro" [class.active]="activeCard === 'pro'" (click)="setActive('pro')">
+                <div class="arsenal-card__content">
+                    <h3 class="arsenal-title">GAMA MEDIA</h3>
+
+                    <div class="arsenal-details">
+                        <div class="specs-grid">
+                            <span class="spec-highlight">1440p 165Hz</span>
+                            <span class="spec-highlight">RTX 4070</span>
+                            <span class="spec-highlight">i7-13700K</span>
+                            <span class="spec-highlight">32GB RAM</span>
+                        </div>
+                        <p>Perfect balance of power and performance. High FPS in all modern titles.</p>
+                        <a routerLink="/computers" class="c-btn">RENT NOW</a>
+                    </div>
+
+                    <button class="c-btn">{{ activeCard === 'pro' ? 'Ver menos' : 'Ver mas' }}</button>
+                    <img src="assets/gama-media.png" alt="Pro Tier" class="arsenal-bg">
+                </div>
+            </div>
+
+            <!-- STANDARD TIER -->
+            <div class="arsenal-card standard" [class.active]="activeCard === 'standard'"
+                (click)="setActive('standard')">
+                <div class="arsenal-card__content">
+                    <h3 class="arsenal-title">GAMA BAJA</h3>
+
+                    <div class="arsenal-details">
+                        <div class="specs-grid">
+                            <span class="spec-highlight">1080p 144Hz</span>
+                            <span class="spec-highlight">RTX 3060</span>
+                            <span class="spec-highlight">i5-12400F</span>
+                            <span class="spec-highlight">16GB RAM</span>
+                        </div>
+                        <p>Solid performance for competitive shooters and MOBA games.</p>
+                        <a routerLink="/computers" class="c-btn">RENT NOW</a>
+                    </div>
+
+                    <button class="c-btn">{{ activeCard === 'standard' ? 'Ver menos' : 'Ver mas' }}</button>
+                    <img src="assets/gama-baja.png" alt="Standard Tier" class="arsenal-bg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="home__section home__food">
+        <div class="home__hero-overlay"></div>
+        <img src="assets/food-combo.png" alt="Cyber Food" class="home__food-bg">
+        <div class="home__container relative-z">
+            <div class="food-content">
+                <h2>REFUEL <span class="highlight">STATION</span></h2>
+                <p>Don't pause your game to eat. Order directly from your terminal and we'll bring the fuel to you.
+                    Burgers, energy drinks, snacks, and more.</p>
+                <a routerLink="/products" class="c-btn">VIEW MENU</a>
+            </div>
+        </div>
+    </section>
+</div>
