@@ -1,3 +1,15 @@
+<div class="landbot" [class.landbot--open]="isChatOpen" aria-live="polite">
+  <button class="landbot__button" type="button" aria-label="Abrir chat" (click)="toggleChat()">💬</button>
+  <div class="landbot__panel" role="dialog" aria-label="Chat" [attr.aria-hidden]="!isChatOpen">
+    <div class="landbot__panel-header">
+      <span class="landbot__panel-title">Chat</span>
+      <button class="landbot__panel-close" type="button" aria-label="Cerrar chat" (click)="toggleChat()">✕</button>
+    </div>
+    <iframe src="https://landbot.online/v3/H-3308121-YR251MIPJLHEDWW2/index.html" title="Landbot Chat"
+      frameborder="0"></iframe>
+  </div>
+</div>
+
 @if (!paths.includes(currentUrl())) {
 <c-header [class]="themeClass"></c-header>
 }

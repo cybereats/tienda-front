@@ -14,6 +14,8 @@ export class App implements OnInit {
   readonly router = inject(Router);
   paths = ['/login', '/register'];
   currentUrl = signal('');
+  protected readonly title = signal('tienda-front');
+  isChatOpen = false;
 
   ngOnInit() {
     this.currentUrl.set(this.router.url);
@@ -27,5 +29,9 @@ export class App implements OnInit {
 
   get themeClass(): string {
     return this.currentUrl() === '/food' ? 'theme-food' : '';
+  }
+
+  toggleChat() {
+    this.isChatOpen = !this.isChatOpen;
   }
 }
