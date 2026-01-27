@@ -1,0 +1,31 @@
+﻿<header class="c-header">
+    <div class="c-header__container">
+        <a href="/" class="c-header__logo">
+            <span class="highlight">CYBER</span>EATS
+        </a>
+
+        <nav class="c-header__nav">
+            <ul class="c-header__menu">
+                <li class="c-header__item"><a routerLink="/" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}" class="c-header__link">Home</a></li>
+                <li class="c-header__item"><a routerLink="/arsenal" routerLinkActive="active"
+                        class="c-header__link">Arsenal</a></li>
+                <li class="c-header__item"><a routerLink="/food" routerLinkActive="active"
+                        class="c-header__link">Comida</a></li>
+                <li class="c-header__item"><a href="#" class="c-header__link">Juegos</a></li>
+                <li class="c-header__item"><a href="#" class="c-header__link">Comunidad</a></li>
+            </ul>
+        </nav>
+
+        <div class="c-header__actions">
+            
+            @if (authService.user$ | async; as user) {
+            <span class="c-header__username">{{ user.username }}</span>
+            <button class="c-btn-text" (click)="logout()">Logout</button>
+            } @else {
+            <button class="c-btn-text" routerLink="/login">Log In</button>
+            <button class="c-btn-glow" routerLink="/register">Unirse</button>
+            }
+        </div>
+    </div>
+</header>

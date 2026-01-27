@@ -3,7 +3,10 @@ import { User } from './user.model'
 export interface RegisterRequest {
   name: string
   username: string
+  email: string
+  bornDate: string
   password: string
+  role?: string
 }
 
 export interface LoginRequest {

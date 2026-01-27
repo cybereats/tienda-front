@@ -1,4 +1,4 @@
-.c-popup {
+﻿.c-popup {
 
     --popup-bg: var(--cyb-sys-color-white-9);
     --popup-text-color: var(--cyb-sys-color-black-1);
@@ -37,7 +37,6 @@
 
     &__form-field {
 
-        // -- Estilos para los campos de formulario de Angular Material
         .mat-mdc-text-field-wrapper {
             background-color: var(--popup-input-bg);
         }
@@ -63,7 +62,6 @@
     }
 
     &__button {
-
 
         &--warn {}
 

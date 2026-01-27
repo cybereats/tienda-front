@@ -1,37 +1,30 @@
 .home {
-    // -- Structure Variables --
     --home-max-width: 1200px;
-    --home-padding-x: var(--cyb-sys-padding-9); // 2rem = 32px
-    --home-section-padding: var(--cyb-sys-padding-15) 0; // 6rem = 96px
+    --home-padding-x: var(--cyb-sys-padding-9);
+    --home-section-padding: var(--cyb-sys-padding-15) 0;
 
-    // -- Colors --
     --home-bg: var(--cyb-sys-color-gray-1);
     --home-text-color: var(--cyb-sys-color-white-9);
     --home-text-muted: var(--cyb-sys-color-gray-8);
     --home-text-dark: var(--cyb-sys-color-gray-9);
 
-    // -- Highlights --
     --home-highlight-color: var(--cyb-sys-color-blue-6);
     --home-highlight-orange: var(--cyb-sys-color-orange-5);
     --home-highlight-orange-shadow: var(--cyb-sys-color-orange-7);
 
-    // -- Typography -- 
-    --home-font-hero: var(--cyb-sys-font-size-15); // ~6rem (96px)
-    --home-font-title: var(--cyb-sys-font-size-13); // ~2.5rem - 4rem (variable) used 64px for desktop
-    --home-font-subtitle: var(--cyb-sys-font-size-9); // 1.5rem = 24px
-    --home-font-desc: var(--cyb-sys-font-size-8); // 1.25rem = 20px
+    --home-font-hero: var(--cyb-sys-font-size-15);
+    --home-font-title: var(--cyb-sys-font-size-13);
+    --home-font-subtitle: var(--cyb-sys-font-size-9);
+    --home-font-desc: var(--cyb-sys-font-size-8);
     --home-font-weight-bold: var(--cyb-sys-font-weight-9);
 
-    // -- Component Specific --
     --home-hero-overlay: rgba(0, 0, 0, 0.6);
     --home-info-gradient-start: var(--cyb-sys-color-gray-2);
     --home-info-gradient-end: #000000;
 
-    // Arsenal
     --home-arsenal-bg: #000000;
     --home-arsenal-border: rgba(255, 255, 255, 0.1);
 
-    // Food
     --home-food-overlay-filter: blur(4px) brightness(0.4);
 
     min-height: 100vh;
@@ -92,7 +85,7 @@
         font-size: var(--home-font-hero);
         font-weight: var(--home-font-weight-bold);
         line-height: 1;
-        letter-spacing: var(--cyb-sys-padding-5); // 0.5rem = 8px
+        letter-spacing: var(--cyb-sys-padding-5);
         margin: 0;
         color: var(--home-text-color);
         text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
@@ -103,7 +96,7 @@
         }
 
         @media (max-width: 768px) {
-            font-size: 3.5rem; // Keep relative units for media queries if not in system
+            font-size: 3.5rem;
         }
     }
 
@@ -111,14 +104,13 @@
         font-size: var(--home-font-subtitle);
         letter-spacing: 0.2rem;
         margin-top: var(--cyb-sys-margin-6);
-        margin-bottom: var(--cyb-sys-margin-10); // 3rem = 48px
+        margin-bottom: var(--cyb-sys-margin-10);
         color: var(--home-text-muted);
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
-    // Shared Section Title
     .section-title {
-        font-size: 2.5rem; // Fallback / Mobile
+        font-size: 2.5rem;
         font-weight: var(--home-font-weight-bold);
         margin-bottom: var(--cyb-sys-margin-10);
         color: var(--home-text-dark);
@@ -135,7 +127,7 @@
         }
 
         @media (min-width: 768px) {
-            font-size: var(--home-font-title); // 64px
+            font-size: var(--home-font-title);
 
             .highlight {
                 display: inline;
@@ -143,10 +135,9 @@
         }
     }
 
-    // Info Section
     &__info {
         background: radial-gradient(ellipse at center, var(--home-info-gradient-start) 40%, var(--home-info-gradient-end) 100%);
-        padding: var(--cyb-sys-padding-14) 0; // 4rem = 64px
+        padding: var(--cyb-sys-padding-14) 0;
 
         .home__container {
             display: block;
@@ -164,7 +155,7 @@
                 font-size: var(--home-font-desc);
                 max-width: 700px;
                 color: var(--cyb-sys-color-gray-7);
-                margin-bottom: var(--cyb-sys-margin-14); // 4rem = 64px
+                margin-bottom: var(--cyb-sys-margin-14);
                 line-height: 1.6;
             }
         }
@@ -176,14 +167,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: var(--cyb-sys-margin-9); // 2rem = 32px
+            margin-top: var(--cyb-sys-margin-9);
 
             .feature-image {
                 width: 100%;
                 max-width: 1000px;
                 aspect-ratio: 21/9;
                 object-fit: cover;
-                border-radius: var(--cyb-sys-border-radius-6); // 1rem approx
+                border-radius: var(--cyb-sys-border-radius-6);
                 box-shadow:
                     0 0 0 1px rgba(0, 0, 0, 0.05),
                     0 20px 40px -10px rgba(0, 0, 0, 0.2);
@@ -257,7 +248,6 @@
         }
     }
 
-    // Updated Arsenal Section
     &__arsenal {
         background-color: var(--home-bg);
         text-align: center;
@@ -268,7 +258,7 @@
             background-color: var(--home-arsenal-bg);
             color: var(--home-text-color);
             margin-bottom: 0;
-            padding: var(--cyb-sys-padding-10) 0; // 3rem = 48px
+            padding: var(--cyb-sys-padding-10) 0;
         }
 
         .home__container.arsenal-container {
@@ -300,7 +290,6 @@
                 border-right: none;
             }
 
-            // Unskew content
             &__content {
                 transform: skewX(10deg);
                 width: 100%;
@@ -441,7 +430,6 @@
             }
         }
 
-        // INACTIVE STATES
         .arsenal-container:has(.arsenal-card.active) {
             .arsenal-card:not(.active) {
                 flex: 1;
@@ -466,7 +454,6 @@
         }
     }
 
-    // Food Section
     &__food {
         height: 100vh;
         display: flex;
@@ -514,7 +501,6 @@
     }
 }
 
-// Global Buttons within Home (Leave as is for now as they might be used elsewhere or are specific mixins? Reference doesn't show button refactoring but I'll keep them)
 .btn-glow {
     display: inline-block;
     padding: 1rem 2.5rem;

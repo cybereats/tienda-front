@@ -1,0 +1,172 @@
+﻿
+.c-header {
+    --header-height: 80px;
+    --header-bg: rgba(10, 10, 10, 0.85); 
+    --header-backdrop: blur(16px);
+    --header-border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    --header-font-family: 'Inter', sans-serif;
+
+    --header-text-primary: var(--cyb-sys-color-white-9);
+    --header-text-secondary: var(--cyb-sys-color-gray-8);
+    --header-highlight: var(--cyb-sys-color-blue-6);
+    --header-highlight-glow: rgba(59, 130, 246, 0.5);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    z-index: 1000;
+    background: var(--header-bg);
+    backdrop-filter: var(--header-backdrop);
+    border-bottom: var(--header-border-bottom);
+    font-family: var(--header-font-family);
+
+    &__container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 var(--cyb-sys-padding-9, 2rem);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__logo {
+        font-size: 1.75rem;
+        font-weight: 900;
+        color: var(--header-text-primary);
+        text-decoration: none;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+
+        .highlight {
+            color: var(--header-highlight);
+            text-shadow: 0 0 15px var(--header-highlight-glow);
+            margin-right: 2px;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    &__nav {
+        @media (max-width: 768px) {
+            display: none; 
+        }
+    }
+
+    &__menu {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__link {
+        text-decoration: none;
+        color: var(--header-text-secondary);
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        position: relative;
+        padding-bottom: 4px;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--header-highlight);
+            box-shadow: 0 0 8px var(--header-highlight);
+            transition: width 0.3s ease;
+        }
+
+        &:hover,
+        &.active {
+            color: var(--header-text-primary);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+
+            &::after {
+                width: 100%;
+            }
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+}
+
+.c-btn-text {
+    background: none;
+    border: none;
+    color: var(--header-text-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    font-family: 'Inter', sans-serif;
+
+    &:hover {
+        color: var(--header-highlight);
+    }
+}
+
+.c-btn-glow {
+    padding: 0.75rem 2rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white;
+    background: var(--cyb-sys-color-blue-6);
+    border: none;
+    border-radius: 4px; 
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 1px;
+    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); 
+
+    &:hover {
+        background: var(--cyb-sys-color-blue-5);
+        box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+        transform: translateY(-1px);
+    }
+}
+
+:host(.theme-food) {
+    .c-header {
+        --header-highlight: var(--cyb-sys-color-orange-5);
+        --header-highlight-glow: rgba(249, 115, 22, 0.3); 
+    }
+
+    .c-btn-glow {
+        background: var(--cyb-sys-color-orange-5);
+        box-shadow: 0 0 12px rgba(249, 115, 22, 0.3); 
+
+        &:hover {
+            background: var(--cyb-sys-color-orange-4);
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.4); 
+        }
+    }
+
+    .c-btn-text:hover {
+        color: var(--cyb-sys-color-orange-5);
+    }
+}

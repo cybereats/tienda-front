@@ -1,12 +1,31 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+﻿import { Component, inject, signal, OnInit } from '@angular/core';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { CHeader } from "./components/ui/c-header/c-header";
+import { CFooter } from "./components/ui/c-footer/c-footer";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CHeader, CFooter],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  protected readonly title = signal('tienda-front');
+export class App implements OnInit {
+  readonly router = inject(Router);
+  paths = ['/login', '/register'];
+  currentUrl = signal('');
+
+  ngOnInit() {
+    this.currentUrl.set(this.router.url);
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.currentUrl.set(event.urlAfterRedirects);
+    });
+  }
+
+  get themeClass(): string {
+    return this.currentUrl() === '/food' ? 'theme-food' : '';
+  }
 }

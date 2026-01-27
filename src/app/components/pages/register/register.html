@@ -1,0 +1,74 @@
+<div class="form">
+    <div class="form__card">
+        <h1 class="form__title">Registro</h1>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            @if (errorMessage) {
+            <div class="form__error">{{ errorMessage }}</div>
+            }
+
+            <label class="form__label" for="name">Nombre</label>
+            <input class="form__input" type="text" id="name" formControlName="name" placeholder="Introduce tu nombre"
+                [class.form__input--error]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+            @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+            <span class="form__validation-error">El nombre es obligatorio</span>
+            }
+
+            <label class="form__label" for="username">Usuario</label>
+            <input class="form__input" type="text" id="username" formControlName="username"
+                placeholder="Escoge un nombre de usuario"
+                [class.form__input--error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+            @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+            <span class="form__validation-error">El usuario es obligatorio</span>
+            }
+
+            <label class="form__label" for="email">Email</label>
+            <input class="form__input" type="email" id="email" formControlName="email" placeholder="Introduce tu email"
+                [class.form__input--error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+            <span class="form__validation-error">
+                @if (registerForm.get('email')?.errors?.['required']) {
+                El email es obligatorio
+                }
+                @if (registerForm.get('email')?.errors?.['email']) {
+                Formato de email no válido
+                }
+            </span>
+            }
+
+            <label class="form__label" for="bornDate">Fecha de Nacimiento</label>
+            <input class="form__input" type="date" id="bornDate" formControlName="bornDate"
+                [class.form__input--error]="registerForm.get('bornDate')?.invalid && registerForm.get('bornDate')?.touched">
+            @if (registerForm.get('bornDate')?.invalid && registerForm.get('bornDate')?.touched) {
+            <span class="form__validation-error">La fecha de nacimiento es obligatoria</span>
+            }
+
+            <label class="form__label" for="password">Contraseña</label>
+            <input class="form__input" type="password" id="password" formControlName="password"
+                placeholder="Introduce tu contraseña (min 6 caracteres)"
+                [class.form__input--error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+            <span class="form__validation-error">
+                @if (registerForm.get('password')?.errors?.['required']) {
+                La contraseña es obligatoria
+                }
+                @if (registerForm.get('password')?.errors?.['minlength']) {
+                La contraseña debe tener al menos 6 caracteres
+                }
+            </span>
+            }
+
+            <button class="form__button" type="submit" [disabled]="registerForm.invalid || isLoading">
+                {{ isLoading ? 'Registrando...' : 'Registrarse' }}
+            </button>
+
+            <p class="form__link">
+                ¿Ya tienes una cuenta? <a routerLink="/login">Entra aquí</a>
+            </p>
+
+            <p class="form__link">
+                <a routerLink="/">Volver al inicio</a>
+            </p>
+        </form>
+    </div>
+</div>

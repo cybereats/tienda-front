@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+﻿import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -13,7 +13,6 @@ export class CStatus {
     @Input() status!: string;
     @Input() options!: { value: string, label: string, color: string }[];
     @Output() statusChange = new EventEmitter<string>();
-
 
     onStatusChange(newStatus: string) {
         this.status = newStatus;

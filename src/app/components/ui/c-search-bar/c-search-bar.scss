@@ -1,4 +1,4 @@
-.c-search-bar {
+﻿.c-search-bar {
     --search-input-bg: var(--cyb-sys-color-white-9);
     --search-border-color: var(--cyb-sys-color-white-4);
     --search-radius: var(--cyb-sys-border-radius-4);
@@ -11,7 +11,6 @@
     --search-btn-padding: var(--cyb-sys-padding-3);
 
     position: relative;
-
 
     &__input {
         width: 100%;

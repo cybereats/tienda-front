@@ -1,4 +1,4 @@
-import { Computer } from "./computer.model";
+﻿import { Computer } from "./computer.model";
 import { User } from "./user.model";
 
 export interface Report {
@@ -17,7 +17,7 @@ export interface ReportResponse {
     page: number;
     size: number;
     totalElements: number;
-    totalPages?: number; // Optional since backend doesn't return it
+    totalPages?: number; 
 }
 
 export interface ReportStats {

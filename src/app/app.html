@@ -1,1 +1,7 @@
+@if (!paths.includes(currentUrl())) {
+<c-header [class]="themeClass"></c-header>
+}
 <router-outlet />
+@if (!paths.includes(currentUrl())) {
+<c-footer [class]="themeClass"></c-footer>
+}

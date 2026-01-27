@@ -23,13 +23,17 @@
             <span class="form__validation-error">La contraseña es obligatoria</span>
             }
 
-            <button class="form__button" type="submit" [disabled]="isLoading">
+            <button class="form__button" type="submit" [disabled]="loginForm.invalid || isLoading">
                 {{ isLoading ? 'Entrando...' : 'Entrar' }}
             </button>
 
-            <!-- <p class="form__link">
-                ¿No tienes cuenta? <a routerLink="/admin/register">Regístrate aquí</a>
-            </p> -->
+            <p class="form__link">
+                ¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a>
+            </p>
+
+            <p class="form__link">
+                <a routerLink="/">Volver al inicio</a>
+            </p>
         </form>
     </div>
 </div>

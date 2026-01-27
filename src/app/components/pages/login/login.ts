@@ -38,7 +38,7 @@ export class Login {
       next: (response: any) => {
         this.authService.setUser(response.user)
         this.authService.saveToken(response.token)
-        this.router.navigate(['/admin'])
+        this.router.navigate(['/'])
       },
       error: (error) => {
         this.isLoading = false

@@ -43,7 +43,6 @@
 
     <section id="arsenal" class="home__section home__arsenal">
         <div class="home__container arsenal-container">
-            <!-- ELITE TIER -->
             <div class="arsenal-card elite" [class.active]="activeCard === 'elite'" (click)="setActive('elite')">
                 <div class="arsenal-card__content">
                     <h3 class="arsenal-title">GAMA ALTA</h3>
@@ -64,8 +63,6 @@
                     <img src="assets/gama-alta.png" alt="Elite Tier" class="arsenal-bg">
                 </div>
             </div>
-
-            <!-- PRO TIER -->
             <div class="arsenal-card pro" [class.active]="activeCard === 'pro'" (click)="setActive('pro')">
                 <div class="arsenal-card__content">
                     <h3 class="arsenal-title">GAMA MEDIA</h3>
@@ -85,8 +82,6 @@
                     <img src="assets/gama-media.png" alt="Pro Tier" class="arsenal-bg">
                 </div>
             </div>
-
-            <!-- STANDARD TIER -->
             <div class="arsenal-card standard" [class.active]="activeCard === 'standard'"
                 (click)="setActive('standard')">
                 <div class="arsenal-card__content">
@@ -118,7 +113,7 @@
                 <h2>REFUEL <span class="highlight">STATION</span></h2>
                 <p>Don't pause your game to eat. Order directly from your terminal and we'll bring the fuel to you.
                     Burgers, energy drinks, snacks, and more.</p>
-                <a routerLink="/products" class="c-btn">VIEW MENU</a>
+                <a routerLink="/food" class="c-btn">VER MENÚ</a>
             </div>
         </div>
     </section>

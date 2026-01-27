@@ -1,0 +1,18 @@
+<div class="featured-card">
+    <div class="featured-card__image">
+        <img [src]="'assets/' + product.image" [alt]="product.label">
+        @if (showBadge) {
+        <div class="featured-badge">POPULAR</div>
+        }
+    </div>
+    <div class="featured-card__content">
+        <h3>{{ product.label }}</h3>
+        <p>{{ product.description }}</p>
+        <div class="featured-card__footer">
+            <span class="price">${{ product.price }}</span>
+            @if (authService.user$ | async) {
+            <button class="c-btn c-btn--small">PEDIR</button>
+            }
+        </div>
+    </div>
+</div>

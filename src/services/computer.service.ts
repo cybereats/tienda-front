@@ -13,6 +13,14 @@ export class ComputerService extends HTTPService {
         return this.http.get<CategoryPC>(`/api/categories-pc/${slug}`);
     }
 
+    findAllPage<T>(page: number, size: number): Observable<T> {
+        return this.http.get<T>(`${this.url}?page=${page}&size=${size}`);
+    }
+
+    findAll<T>(): Observable<T> {
+        return this.http.get<T>(`${this.url}/all`);
+    }
+
     search<T>(page: number, size: number, text?: string, category?: string): Observable<T> {
         const params: any = { page, size };
         if (text) params.text = text;

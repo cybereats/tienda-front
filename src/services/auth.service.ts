@@ -1,4 +1,4 @@
-
+﻿
 import { Injectable } from '@angular/core'
 import { Observable, BehaviorSubject, timeout, catchError, of, throwError } from 'rxjs'
 import { AuthResponse, LoginRequest, RegisterRequest, UserProfile } from '../models/auth.model'
@@ -13,8 +13,6 @@ export class AuthService extends HTTPService {
   private userSubject = new BehaviorSubject<UserProfile | null>(null)
   public user$ = this.userSubject.asObservable()
   private tokenVerified = false
-
-
 
   register(request: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.url}/register`, request)
@@ -73,7 +71,7 @@ export class AuthService extends HTTPService {
     this.clearUser()
     localStorage.removeItem('auth_token')
     this.tokenVerified = false
-    window.location.href = '/admin/login'
+    window.location.href = '/login'
   }
 
   isAdmin(): boolean {

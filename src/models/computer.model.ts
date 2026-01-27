@@ -1,4 +1,4 @@
-export interface Computer {
+﻿export interface Computer {
     id: number;
     label: string;
     slug: string;
@@ -6,6 +6,7 @@ export interface Computer {
     specs: string;
     workingSince: string;
     image: string;
+    status: 'AVAILABLE' | 'OCCUPIED' | 'MAINTENANCE';
     categoryPCResponse: CategoryPC;
 }
 
@@ -14,10 +15,9 @@ export interface ComputerResponse {
     page: number;
     size: number;
     totalElements: number;
-    totalPages?: number; // Optional since backend doesn't return it
+    totalPages?: number; 
 
 }
-
 
 export interface CategoryPC {
     id: number;

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HTTPService } from './http.service';
 import {
@@ -14,7 +14,6 @@ import {
 })
 export class StatsService extends HTTPService {
   private readonly baseUrl = '/api/stats';
-
 
   getDailyIncome(): Observable<DailyIncomeResponse> {
     return this.http.get<DailyIncomeResponse>(`${this.baseUrl}/daily-income`);
