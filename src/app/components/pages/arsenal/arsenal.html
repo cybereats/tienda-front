@@ -6,9 +6,8 @@
     </div>
     }
 
-    
+
     <aside class="arsenal__sidebar">
-        <h1 class="arsenal__title">ARSENAL <span class="highlight">MAP</span></h1>
 
         <div class="arsenal__stats">
             <div class="stat-item">
@@ -31,10 +30,11 @@
                 <li class="status-available"><span class="dot"></span> DISPONIBLE</li>
                 <li class="status-occupied"><span class="dot"></span> OCUPADO</li>
                 <li class="status-maintenance"><span class="dot"></span> MANTENIMIENTO</li>
+                <li class="status-mine"><span class="dot"></span> MI RESERVA</li>
             </ul>
         </div>
 
-        
+
         @if (selectedStation) {
         <div class="arsenal__details">
             <div class="details-header">
@@ -69,11 +69,15 @@
             <div class="session-info">
                 <p>STATUS: <span class="highlight">IN USE</span></p>
             </div>
+            @if (isMyPc(selectedStation)) {
+            <button class="c-btn c-btn--primary" (click)="openAdminPage(selectedStation)">ADMINISTRAR</button>
+            } @else {
             <button class="c-btn c-btn--disabled" disabled>OCUPADO</button>
+            }
             } @else if (selectedStation.status === 'MAINTENANCE') {
             <div class="maintenance-msg">EN REPARACIÓN</div>
             } @else {
-            <button class="c-btn c-btn--glow">RESERVAR AHORA</button>
+            <a [routerLink]="['/reservar', selectedStation.slug]" class="c-btn c-btn--glow">RESERVAR AHORA</a>
             }
         </div>
         } @else {
@@ -83,11 +87,11 @@
         }
     </aside>
 
-    
+
     <main class="arsenal__map">
         <div class="arsenal__floor-plan">
 
-            
+
             <div class="room servers">
                 <span class="room-label">SERVIDORES</span>
             </div>
@@ -96,12 +100,12 @@
                 <div class="bathroom-unit">BAÑOS</div>
             </div>
 
-            
+
             <div class="room vip">
                 <span class="room-label">{{ vipSection?.category?.label || 'VIP ARENA' }}</span>
                 <div class="vip-tables">
                     @for (pc of vipSection?.stations || []; track pc.id) {
-                    <button class="station-node mini" [class]="pc.status.toLowerCase()"
+                    <button class="station-node mini" [class]="pc.status.toLowerCase()" [class.mine]="isMyPc(pc)"
                         [class.selected]="selectedStation === pc" (click)="selectStation(pc)">
                         <svg class="pc-icon" viewBox="0 0 24 24" fill="currentColor">
                             <path
@@ -114,13 +118,13 @@
                 <div class="room-door"></div>
             </div>
 
-            
+
             <div class="arena-columns">
                 @for (section of arenaSections; track section.category.id) {
                 <div class="table-group">
                     <div class="group-label">{{ section.category.label }}</div>
                     @for (pc of section.stations; track pc.id) {
-                    <button class="station-node micro" [class]="pc.status.toLowerCase()"
+                    <button class="station-node micro" [class]="pc.status.toLowerCase()" [class.mine]="isMyPc(pc)"
                         [class.selected]="selectedStation === pc" (click)="selectStation(pc)">
                         <svg class="pc-icon" viewBox="0 0 24 24" fill="currentColor">
                             <path
@@ -133,7 +137,7 @@
                 }
             </div>
 
-            
+
             <div class="bottom-wall-row">
                 @if (bottomSection) {
                 <div class="row-label">
@@ -141,7 +145,7 @@
                 </div>
                 }
                 @for (pc of bottomSection?.stations || []; track pc.id) {
-                <button class="station-node micro" [class]="pc.status.toLowerCase()"
+                <button class="station-node micro" [class]="pc.status.toLowerCase()" [class.mine]="isMyPc(pc)"
                     [class.selected]="selectedStation === pc" (click)="selectStation(pc)">
                     <svg class="pc-icon" viewBox="0 0 24 24" fill="currentColor">
                         <path
@@ -152,7 +156,7 @@
                 }
             </div>
 
-            
+
             <div class="room reception">
                 <span class="room-label">RECEPCIÓN</span>
                 <div class="reception-desk"></div>
@@ -161,7 +165,7 @@
                 <span class="room-label">SNACK BAR</span>
             </div>
 
-            
+
             <div class="entrance">ENTRADA</div>
             <div class="exit">SALIDA EMERGENCIA</div>
             <div class="lounge-area">

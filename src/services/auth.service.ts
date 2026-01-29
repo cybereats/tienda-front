@@ -78,4 +78,8 @@ export class AuthService extends HTTPService {
     const user = this.getUser()
     return user?.role === 'ADMIN'
   }
+
+  isLoggedIn(): boolean {
+    return this.getUser() !== null
+  }
 }

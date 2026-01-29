@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
-import { Router, RouterLink } from '@angular/router'
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'
 import { AuthService } from '../../../../services/auth.service'
 import { CommonModule } from '@angular/common'
 
@@ -14,11 +14,13 @@ export class Register {
   registerForm: FormGroup
   isLoading = false
   errorMessage = ''
+  private returnUrl: string = '/'
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -27,6 +29,8 @@ export class Register {
       bornDate: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     })
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
   }
 
   onSubmit(): void {
@@ -40,7 +44,7 @@ export class Register {
     this.authService.register({ ...this.registerForm.value, role: 'CLIENT' }).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token)
-        this.router.navigate(['/'])
+        this.router.navigateByUrl(this.returnUrl)
       },
       error: (error) => {
         this.isLoading = false

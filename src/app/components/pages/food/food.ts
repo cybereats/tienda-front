@@ -5,6 +5,8 @@ import { FoodCard } from '../../ui/food-card/food-card';
 import { Product, ProductsResponse, CategoryProduct } from '../../../../models/product.model';
 import { ProductService } from '../../../../services/product.service';
 import { AuthService } from '../../../../services/auth.service';
+import { CartService } from '../../../../services/cart.service';
+import { CartAnimationService } from '../../../../services/cart-animation.service';
 
 @Component({
     selector: 'app-food',
@@ -15,6 +17,7 @@ import { AuthService } from '../../../../services/auth.service';
 export class Food implements OnInit {
     products: Product[] = [];
     featuredProducts: Product[] = [];
+    combos: Product[] = [];
     categories: CategoryProduct[] = [];
     selectedCategory: string = '';
     searchText: string = '';
@@ -26,6 +29,8 @@ export class Food implements OnInit {
 
     constructor(
         public authService: AuthService,
+        public cartService: CartService,
+        private cartAnimation: CartAnimationService,
         private productService: ProductService
     ) { }
 
@@ -33,13 +38,27 @@ export class Food implements OnInit {
         this.loadCategories();
     }
 
+    scrollToMenu(): void {
+        document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' });
+    }
+
     loadCategories(): void {
         this.productService.getAllCategories().subscribe({
             next: (cats) => {
                 this.categories = cats;
                 this.loadProducts();
+                this.loadCombos();
             },
             error: (err) => console.error('Error loading categories:', err)
+        });
+    }
+
+    loadCombos(): void {
+        this.productService.search<ProductsResponse>(1, 10, '', 'combos').subscribe({
+            next: (response) => {
+                this.combos = response.data;
+            },
+            error: (err) => console.error('Error loading combos:', err)
         });
     }
 
@@ -107,6 +126,30 @@ export class Food implements OnInit {
             const container = event.currentTarget as HTMLElement;
             container.scrollLeft += event.deltaY;
             event.preventDefault();
+        }
+    }
+
+    getComboQuantity(combo: Product): number {
+        return this.cartService.getItemQuantity(combo.id);
+    }
+
+    incrementCombo(event: MouseEvent, combo: Product): void {
+        this.cartAnimation.animateToCart(event);
+        const qty = this.getComboQuantity(combo);
+        if (qty === 0) {
+            this.cartService.addToCart(combo, 1).subscribe();
+        } else {
+            this.cartService.updateQuantity(combo.id, qty + 1).subscribe();
+        }
+    }
+
+    decrementCombo(event: MouseEvent, combo: Product): void {
+        this.cartAnimation.animateFromCart(event);
+        const qty = this.getComboQuantity(combo);
+        if (qty > 1) {
+            this.cartService.updateQuantity(combo.id, qty - 1).subscribe();
+        } else if (qty === 1) {
+            this.cartService.removeFromCart(combo.id).subscribe();
         }
     }
 }

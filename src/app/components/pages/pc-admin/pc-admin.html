@@ -1,0 +1,168 @@
+<div class="pc-admin">
+  @if (isLoading()) {
+  <div class="loading">
+    <div class="loader"></div>
+    <p>CONECTANDO AL SISTEMA...</p>
+  </div>
+  } @else if (error()) {
+  <div class="error-state">
+    <div class="error-icon">⚠️</div>
+    <h2>{{ error() }}</h2>
+    <button class="c-btn c-btn--primary" (click)="goBack()">VOLVER AL MAPA</button>
+  </div>
+  } @else if (booking()) {
+  <header class="pc-admin__header">
+    <button class="back-btn" (click)="goBack()">
+      <span>←</span> VOLVER
+    </button>
+    <div class="header-info">
+      <h1>{{ booking()!.pc.label }}</h1>
+      <span class="category-badge">{{ booking()!.pc.categoryPCResponse.label }}</span>
+    </div>
+    <div class="status-indicator online">
+      <span class="dot"></span>
+      ONLINE
+    </div>
+  </header>
+
+  <main class="pc-admin__content">
+    <!-- Tiempo restante destacado -->
+    <section class="time-section">
+      <div class="time-card active">
+        <div class="time-label">TIEMPO ACTIVO</div>
+        <div class="time-value">{{ calculateUptime() }}</div>
+      </div>
+      <div class="time-card remaining">
+        <div class="time-label">TIEMPO RESTANTE</div>
+        <div class="time-value">{{ getRemainingTime() }}</div>
+        <div class="time-bar">
+          <div class="time-progress" [style.width.%]="getRemainingPercentage()"></div>
+        </div>
+      </div>
+      <div class="time-card total">
+        <div class="time-label">SESIÓN TOTAL</div>
+        <div class="time-value">{{ booking()!.hours }}h</div>
+      </div>
+    </section>
+
+    <!-- Specs del PC -->
+    <section class="specs-section">
+      <h2>ESPECIFICACIONES</h2>
+      @let specs = getParsedSpecs(booking()!.pc.specs);
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-icon">⚡</div>
+          <div class="spec-info">
+            <span class="spec-label">PROCESADOR</span>
+            <span class="spec-value">{{ specs.cpu }}</span>
+          </div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">🎮</div>
+          <div class="spec-info">
+            <span class="spec-label">GRÁFICA</span>
+            <span class="spec-value">{{ specs.gpu }}</span>
+          </div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">🧠</div>
+          <div class="spec-info">
+            <span class="spec-label">MEMORIA</span>
+            <span class="spec-value">{{ specs.ram }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estadísticas en tiempo real -->
+    @if (pcStats()) {
+    <section class="stats-section">
+      <h2>RENDIMIENTO EN TIEMPO REAL</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-icon">⚡</span>
+            <span class="stat-name">CPU</span>
+            <span class="stat-percentage">{{ pcStats()!.cpuUsage }}%</span>
+          </div>
+          <div class="stat-bar">
+            <div class="stat-fill cpu" [style.width.%]="pcStats()!.cpuUsage"></div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-icon">🧠</span>
+            <span class="stat-name">RAM</span>
+            <span class="stat-percentage">{{ pcStats()!.ramUsage }}GB / {{ pcStats()!.ramTotal }}GB</span>
+          </div>
+          <div class="stat-bar">
+            <div class="stat-fill ram" [style.width.%]="(pcStats()!.ramUsage / pcStats()!.ramTotal) * 100"></div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-icon">🎮</span>
+            <span class="stat-name">GPU</span>
+            <span class="stat-percentage">{{ pcStats()!.gpuUsage }}%</span>
+          </div>
+          <div class="stat-bar">
+            <div class="stat-fill gpu" [style.width.%]="pcStats()!.gpuUsage"></div>
+          </div>
+          <div class="stat-extra">
+            <span>🌡️ {{ pcStats()!.gpuTemp }}°C</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-icon">💾</span>
+            <span class="stat-name">DISCO</span>
+            <span class="stat-percentage">{{ pcStats()!.diskUsage }}%</span>
+          </div>
+          <div class="stat-bar">
+            <div class="stat-fill disk" [style.width.%]="pcStats()!.diskUsage"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Network y procesos -->
+    <section class="network-section">
+      <h2>RED Y SISTEMA</h2>
+      <div class="network-grid">
+        <div class="network-card">
+          <div class="network-icon up">↑</div>
+          <div class="network-info">
+            <span class="network-label">UPLOAD</span>
+            <span class="network-value">{{ pcStats()!.networkUp }} <small>Mbps</small></span>
+          </div>
+        </div>
+        <div class="network-card">
+          <div class="network-icon down">↓</div>
+          <div class="network-info">
+            <span class="network-label">DOWNLOAD</span>
+            <span class="network-value">{{ pcStats()!.networkDown }} <small>Mbps</small></span>
+          </div>
+        </div>
+        <div class="network-card">
+          <div class="network-icon process">⚙️</div>
+          <div class="network-info">
+            <span class="network-label">PROCESOS</span>
+            <span class="network-value">{{ pcStats()!.activeProcesses }}</span>
+          </div>
+        </div>
+        <div class="network-card">
+          <div class="network-icon uptime">⏱️</div>
+          <div class="network-info">
+            <span class="network-label">UPTIME</span>
+            <span class="network-value">{{ pcStats()!.uptime }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    }
+  </main>
+  }
+</div>

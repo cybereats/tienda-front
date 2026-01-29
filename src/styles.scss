@@ -28,3 +28,92 @@ html,
 body {
   height: 100%;
 }
+
+// Cart animation styles
+.flying-emoji {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  font-size: 2rem;
+  filter: drop-shadow(0 0 10px rgba(255, 200, 0, 0.8));
+}
+
+.cart-bounce {
+  animation: cartBounce 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) !important;
+}
+
+@keyframes cartBounce {
+  0% {
+    transform: scale(1);
+  }
+
+  20% {
+    transform: scale(1.4) rotate(-10deg);
+  }
+
+  40% {
+    transform: scale(0.9) rotate(5deg);
+  }
+
+  60% {
+    transform: scale(1.2) rotate(-5deg);
+  }
+
+  80% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.orders-celebrate {
+  animation: ordersCelebrate 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) !important;
+}
+
+@keyframes ordersCelebrate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  10% {
+    transform: scale(1.3) rotate(-15deg);
+  }
+
+  20% {
+    transform: scale(1.5) rotate(15deg);
+  }
+
+  30% {
+    transform: scale(1.3) rotate(-10deg);
+  }
+
+  40% {
+    transform: scale(1.4) rotate(10deg);
+  }
+
+  50% {
+    transform: scale(1.2) rotate(-5deg);
+  }
+
+  60% {
+    transform: scale(1.3) rotate(5deg);
+  }
+
+  70% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+
+  80% {
+    transform: scale(1.15) rotate(3deg);
+  }
+
+  90% {
+    transform: scale(1.05) rotate(-1deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}

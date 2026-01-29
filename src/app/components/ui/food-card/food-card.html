@@ -11,7 +11,12 @@
         <div class="featured-card__footer">
             <span class="price">${{ product.price }}</span>
             @if (authService.user$ | async) {
-            <button class="c-btn c-btn--small">PEDIR</button>
+            <div class="cart-controls">
+                <button class="cart-btn cart-btn--minus" (click)="decrement($event)"
+                    [disabled]="quantity === 0">−</button>
+                <span class="cart-qty">{{ quantity }}</span>
+                <button class="cart-btn cart-btn--plus" (click)="increment($event)">+</button>
+            </div>
             }
         </div>
     </div>

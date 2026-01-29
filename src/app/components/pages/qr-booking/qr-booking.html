@@ -1,0 +1,125 @@
+<div class="qr-booking">
+  @if (isLoading()) {
+  <div class="qr-booking__loading">
+    <div class="qr-booking__loader"></div>
+    <p>CONECTANDO CON LA ESTACIÓN...</p>
+  </div>
+  } @else if (loadError()) {
+  <div class="qr-booking__error-page">
+    <div class="qr-booking__error-icon">⚠️</div>
+    <h2>No se pudo cargar</h2>
+    <p>{{ loadError() }}</p>
+    <a routerLink="/computers" class="c-btn">VER MAPA DE ESTACIONES</a>
+  </div>
+  } @else if (pc(); as station) {
+  <div class="qr-booking__main">
+    <div class="qr-booking__pc-info">
+      <div class="qr-booking__pc-header">
+        <span class="qr-booking__pc-badge">{{ station.label }}</span>
+        <span class="qr-booking__pc-status" [class.available]="station.status === 'AVAILABLE'"
+          [class.occupied]="station.status === 'OCCUPIED'" [class.maintenance]="station.status === 'MAINTENANCE'">
+          @switch (station.status) {
+          @case ('AVAILABLE') { ● DISPONIBLE }
+          @case ('OCCUPIED') { ● OCUPADO }
+          @case ('MAINTENANCE') { ● MANTENIMIENTO }
+          }
+        </span>
+      </div>
+
+      <h1 class="qr-booking__pc-title">{{ station.categoryPCResponse?.label || 'Estación Gaming' }}</h1>
+
+      <div class="qr-booking__pc-specs">
+        @let specs = getParsedSpecs(station.specs);
+        <div class="spec-item">
+          <span class="spec-icon">🖥️</span>
+          <div>
+            <span class="spec-label">CPU</span>
+            <span class="spec-value">{{ specs.cpu }}</span>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-icon">🎮</span>
+          <div>
+            <span class="spec-label">GPU</span>
+            <span class="spec-value">{{ specs.gpu }}</span>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-icon">💾</span>
+          <div>
+            <span class="spec-label">RAM</span>
+            <span class="spec-value">{{ specs.ram }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="qr-booking__pc-price-info">
+        <span class="price-label">Tarifa por hora</span>
+        <span class="price-value">{{ PRICE_PER_HOUR | currency:'EUR':'symbol' }}</span>
+      </div>
+    </div>
+
+    <div class="qr-booking__booking-panel">
+      <h2 class="qr-booking__panel-title">Reservar sesión</h2>
+
+      <div class="qr-booking__hours-selector">
+        <label class="hours-label">¿Cuántas horas quieres jugar?</label>
+        <div class="hours-control">
+          <button type="button" class="hours-btn hours-btn--minus" (click)="decrementHours()"
+            [disabled]="hours <= MIN_HOURS">−</button>
+          <div class="hours-display">
+            <div class="hours-value">{{ hours }}</div>
+            <div class="hours-unit">{{ hours === 1 ? 'hora' : 'horas' }}</div>
+          </div>
+          <button type="button" class="hours-btn hours-btn--plus" (click)="incrementHours()"
+            [disabled]="hours >= MAX_HOURS">+</button>
+        </div>
+        <div class="hours-range">
+          <span>Mín: {{ MIN_HOURS }}h</span>
+          <span>Máx: {{ MAX_HOURS }}h</span>
+        </div>
+      </div>
+
+      <div class="qr-booking__price-summary">
+        <div class="price-row">
+          <span>{{ PRICE_PER_HOUR | currency:'EUR':'symbol' }} × {{ hours }} {{ hours === 1 ? 'hora' : 'horas'
+            }}</span>
+        </div>
+        <div class="price-total">
+          <span>Total a pagar</span>
+          <span class="total-value">{{ totalPrice | currency:'EUR':'symbol' }}</span>
+        </div>
+      </div>
+
+      @if (successMessage()) {
+      <div class="qr-booking__success">
+        <span class="success-icon">✓</span>
+        <p>{{ successMessage() }}</p>
+        <a routerLink="/computers" class="c-btn">IR A MI ESTACIÓN</a>
+      </div>
+      } @else {
+      @if (authService.user$ | async; as user) {
+      <button class="qr-booking__pay-btn" type="button" (click)="pay()" [disabled]="isSubmitting()">
+        @if (isSubmitting()) {
+        <span class="pay-spinner"></span>
+        <span>PROCESANDO...</span>
+        } @else {
+        <span>PAGAR {{ totalPrice | currency:'EUR':'symbol' }}</span>
+        }
+      </button>
+      } @else {
+      <div class="qr-booking__auth-required">
+        <p class="auth-message">Para reservar necesitas iniciar sesión</p>
+        <button type="button" class="qr-booking__pay-btn" (click)="goToLogin()">INICIAR SESIÓN</button>
+        <button type="button" class="qr-booking__register-btn" (click)="goToRegister()">CREAR CUENTA</button>
+      </div>
+      }
+
+      @if (submitError()) {
+      <div class="qr-booking__submit-error">{{ submitError() }}</div>
+      }
+      }
+    </div>
+  </div>
+  }
+</div>

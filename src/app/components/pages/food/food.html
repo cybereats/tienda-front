@@ -1,16 +1,16 @@
 ﻿<div class="food">
-    
+
     <section class="food__hero">
         <div class="food__hero-overlay"></div>
         <img src="assets/food-hero.png" alt="Cyber Food" class="food__hero-bg">
         <div class="food__hero-content">
             <h1 class="food__title">CYBER <span class="highlight">EATS</span></h1>
             <p class="food__subtitle">Combustible para Gamers</p>
-            <a href="#menu" class="c-btn btn-glow--orange">VER MENÚ</a>
+            <button (click)="scrollToMenu()" class="c-btn btn-glow--orange">VER MENÚ</button>
         </div>
     </section>
 
-    
+
     <section class="food__section food__featured">
         <div class="food__container">
             <h2 class="section-title">LO MÁS <span class="highlight">POPULAR</span></h2>
@@ -22,19 +22,19 @@
         </div>
     </section>
 
-    
+
     <section id="menu" class="food__section food__categories">
         <div class="food__container">
             <h2 class="section-title">NUESTRO <span class="highlight">MENÚ</span></h2>
 
-            
+
             <div class="search-container">
                 <input type="text" #searchInput (keyup.enter)="onSearch(searchInput.value)"
                     placeholder="Busca tu comida favorita..." class="search-input">
                 <button (click)="onSearch(searchInput.value)" class="search-btn">🔍</button>
             </div>
 
-            
+
             <div class="category-wrapper" #scrollContainer (wheel)="onWheelScroll($event)">
                 <div class="category-tabs">
                     <button class="category-tab" [class.active]="selectedCategory === ''" (click)="selectCategory('')">
@@ -49,14 +49,14 @@
                 </div>
             </div>
 
-            
+
             <div class="products-grid">
                 @for (product of products; track product.id) {
                 <food-card [product]="product"></food-card>
                 }
             </div>
 
-            
+
             @if (hasMoreProducts()) {
             <div class="load-more">
                 <button (click)="loadMore()" class="c-btn btn-outline" [disabled]="isLoadingMore">
@@ -67,53 +67,41 @@
         </div>
     </section>
 
-    
+
     <section class="food__section food__combos">
         <div class="food__container">
             <h2 class="section-title">COMBOS <span class="highlight">ESPECIALES</span></h2>
             <p class="section-desc">Ahorra más con nuestros combos diseñados para largas sesiones de gaming</p>
 
             <div class="combos-showcase">
+                @for (combo of combos; track combo.id) {
                 <div class="combo-card combo-card--large">
                     <div class="combo-card__bg">
-                        <img src="assets/combo-gamer.png" alt="Combo Gamer">
+                        <img [src]="'assets/' + combo.image" [alt]="combo.label">
                     </div>
                     <div class="combo-card__content">
-                        <span class="combo-badge">AHORRA 20%</span>
-                        <h3>COMBO GAMER</h3>
-                        <p>Hamburguesa + Papas + Bebida</p>
+                        <span class="combo-badge">COMBO</span>
+                        <h3>{{ combo.label | uppercase }}</h3>
+                        <p>{{ combo.description }}</p>
                         <div class="combo-price">
-                            <span class="old-price">$17.99</span>
-                            <span class="new-price">$14.99</span>
+                            <span class="new-price">${{ combo.price }}</span>
                         </div>
                         @if (authService.user$ | async) {
-                        <button class="c-btn btn-glow--orange">PEDIR AHORA</button>
+                        <div class="cart-controls cart-controls--combo">
+                            <button class="cart-btn cart-btn--minus" (click)="decrementCombo($event, combo)"
+                                [disabled]="getComboQuantity(combo) === 0">−</button>
+                            <span class="cart-qty">{{ getComboQuantity(combo) }}</span>
+                            <button class="cart-btn cart-btn--plus" (click)="incrementCombo($event, combo)">+</button>
+                        </div>
                         }
                     </div>
                 </div>
-
-                <div class="combo-card combo-card--large">
-                    <div class="combo-card__bg">
-                        <img src="assets/combo-power.png" alt="Combo Power">
-                    </div>
-                    <div class="combo-card__content">
-                        <span class="combo-badge">AHORRA 25%</span>
-                        <h3>COMBO POWER</h3>
-                        <p>Double Burger + Papas XL + Bebida XL</p>
-                        <div class="combo-price">
-                            <span class="old-price">$21.99</span>
-                            <span class="new-price">$16.99</span>
-                        </div>
-                        @if (authService.user$ | async) {
-                        <button class="c-btn btn-glow--orange">PEDIR AHORA</button>
-                        }
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </section>
 
-    
+
     @if (!(authService.user$ | async)) {
     <section class="food__section food__cta">
         <div class="food__container">

@@ -8,18 +8,74 @@
             <ul class="c-header__menu">
                 <li class="c-header__item"><a routerLink="/" routerLinkActive="active"
                         [routerLinkActiveOptions]="{exact: true}" class="c-header__link">Home</a></li>
-                <li class="c-header__item"><a routerLink="/arsenal" routerLinkActive="active"
+                <li class="c-header__item"><a routerLink="/computers" routerLinkActive="active"
                         class="c-header__link">Arsenal</a></li>
                 <li class="c-header__item"><a routerLink="/food" routerLinkActive="active"
                         class="c-header__link">Comida</a></li>
-                <li class="c-header__item"><a href="#" class="c-header__link">Juegos</a></li>
-                <li class="c-header__item"><a href="#" class="c-header__link">Comunidad</a></li>
             </ul>
         </nav>
 
         <div class="c-header__actions">
-            
+
             @if (authService.user$ | async; as user) {
+            <div class="c-header__orders-wrapper">
+                <button class="c-header__orders orders-icon" (click)="toggleOrdersDropdown()">
+                    <span class="c-header__orders-icon">📋</span>
+                    @if ((userOrderService.pendingCount$ | async); as count) {
+                    <span class="c-header__orders-count">{{ count }}</span>
+                    }
+                </button>
+
+                @if (showOrdersDropdown) {
+                <div class="orders-dropdown" (mouseleave)="closeDropdown()">
+                    <div class="orders-dropdown__header">
+                        <h3>Mis Pedidos</h3>
+                    </div>
+                    <div class="orders-dropdown__content">
+                        @if ((userOrderService.orders$ | async); as orders) {
+                        @if (orders.length > 0) {
+                        @for (order of orders; track order.id) {
+                        <div class="order-item">
+                            <div class="order-item__header">
+                                <span class="order-item__id">#{{ order.id }}</span>
+                                <span class="order-item__status"
+                                    [class]="userOrderService.getStatusClass(order.status)">
+                                    {{ userOrderService.getStatusLabel(order.status) }}
+                                </span>
+                            </div>
+                            <div class="order-item__products">
+                                @for (item of order.orderItems.slice(0, 2); track item.id) {
+                                <span>{{ item.quantity }}x {{ item.product.label }}</span>
+                                }
+                                @if (order.orderItems.length > 2) {
+                                <span class="more">+{{ order.orderItems.length - 2 }} más</span>
+                                }
+                            </div>
+                            <div class="order-item__footer">
+                                <span class="order-item__total">{{ userOrderService.getTotalPrice(order) |
+                                    currency:'EUR':'symbol' }}</span>
+                                <span class="order-item__date">{{ order.createdAt | date:'short' }}</span>
+                            </div>
+                        </div>
+                        }
+                        } @else {
+                        <div class="orders-dropdown__empty">
+                            <span>🍽️</span>
+                            <p>No tienes pedidos aún</p>
+                        </div>
+                        }
+                        }
+                    </div>
+                </div>
+                }
+            </div>
+
+            <a routerLink="/cart" class="c-header__cart cart-icon">
+                <span class="c-header__cart-icon">🛒</span>
+                @if ((cartService.cart$ | async)?.totalItems; as count) {
+                <span class="c-header__cart-count">{{ count }}</span>
+                }
+            </a>
             <span class="c-header__username">{{ user.username }}</span>
             <button class="c-btn-text" (click)="logout()">Logout</button>
             } @else {

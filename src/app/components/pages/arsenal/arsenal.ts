@@ -1,7 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import { ComputerService } from '../../../../services/computer.service';
+import { BookingService } from '../../../../services/booking.service';
+import { AuthService } from '../../../../services/auth.service';
 import { Computer, ComputerResponse, CategoryPC } from '../../../../models/computer.model';
+import { Booking } from '../../../../models/booking.model';
 import { forkJoin } from 'rxjs';
 
 export interface ArsenalSection {
@@ -11,12 +15,15 @@ export interface ArsenalSection {
 
 @Component({
     selector: 'app-arsenal',
-    imports: [CommonModule],
+    imports: [CommonModule, RouterLink],
     templateUrl: './arsenal.html',
     styleUrl: './arsenal.scss',
 })
 export class Arsenal implements OnInit {
     private computerService = inject(ComputerService);
+    private bookingService = inject(BookingService);
+    private router = inject(Router);
+    readonly authService = inject(AuthService);
 
     stations: Computer[] = [];
     categories: CategoryPC[] = [];
@@ -26,8 +33,33 @@ export class Arsenal implements OnInit {
     arenaSections: ArsenalSection[] = [];
     vipSection?: ArsenalSection;
 
+    myBookings = signal<Booking[]>([]);
+    myPcIds = signal<Set<number>>(new Set());
+
     ngOnInit() {
         this.loadData();
+        this.loadMyBookings();
+    }
+
+    loadMyBookings() {
+        if (this.authService.isLoggedIn()) {
+            this.bookingService.getMyActiveBookings().subscribe({
+                next: (bookings) => {
+                    this.myBookings.set(bookings);
+                    const pcIds = new Set(bookings.map(b => b.pc.id));
+                    this.myPcIds.set(pcIds);
+                },
+                error: () => { }
+            });
+        }
+    }
+
+    isMyPc(pc: Computer): boolean {
+        return this.myPcIds().has(pc.id);
+    }
+
+    getBookingForPc(pc: Computer): Booking | undefined {
+        return this.myBookings().find(b => b.pc.id === pc.id);
     }
 
     loadData() {
@@ -96,6 +128,10 @@ export class Arsenal implements OnInit {
 
     closeDetails() {
         this.selectedStation = null;
+    }
+
+    openAdminPage(pc: Computer) {
+        this.router.navigate(['/pc-admin', pc.id]);
     }
 
     getParsedSpecs(specs: string) {

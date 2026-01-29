@@ -11,20 +11,34 @@
 	flex-direction: column;
 	align-items: flex-end;
 	gap: 12px;
+	pointer-events: none;
 
 	&__button {
 		width: 56px;
 		height: 56px;
 		border-radius: 50%;
 		border: none;
-		background: var(--cyb-sys-color-blue-6, #3b82f6);
+		background: var(--chat-button-color, #3b82f6);
 		color: #fff;
 		font-size: 24px;
 		display: grid;
 		place-items: center;
 		cursor: pointer;
 		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+		pointer-events: auto;
+	}
+
+	&--food &__button {
+		background: #f97316;
+	}
+
+	&--computers &__button {
+		background: #8b5cf6;
+	}
+
+	&--reservar &__button {
+		background: #10b981;
 	}
 
 	&__button:hover {

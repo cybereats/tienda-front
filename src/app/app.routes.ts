@@ -1,15 +1,22 @@
 import { Routes } from '@angular/router';
 import { Home } from './components/pages/home/home';
+import { Arsenal } from './components/pages/arsenal/arsenal';
+import { Food } from './components/pages/food/food';
 import { Login } from './components/pages/login/login';
 import { Register } from './components/pages/register/register';
-import { Food } from './components/pages/food/food';
-
-import { Arsenal } from './components/pages/arsenal/arsenal';
+import { QrBooking } from './components/pages/qr-booking/qr-booking';
+import { Cart } from './components/pages/cart/cart';
+import { PcAdmin } from './components/pages/pc-admin/pc-admin';
+import { authGuard } from '../guards/auth.guard';
 
 export const routes: Routes = [
     { path: '', component: Home },
+    { path: 'computers', component: Arsenal },
+    { path: 'food', component: Food },
     { path: 'login', component: Login },
     { path: 'register', component: Register },
-    { path: 'food', component: Food },
-    { path: 'arsenal', component: Arsenal },
+    { path: 'reservar/:slug', component: QrBooking },
+    { path: 'pc-admin/:pcId', component: PcAdmin, canActivate: [authGuard] },
+    { path: 'cart', component: Cart },
+    { path: '**', redirectTo: '' }
 ];

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
-import { Router, RouterLink } from '@angular/router'
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'
 import { AuthService } from '../../../../services/auth.service'
 import { CommonModule } from '@angular/common'
 
@@ -14,16 +14,20 @@ export class Login {
   loginForm: FormGroup
   isLoading = false
   errorMessage = ''
+  private returnUrl: string = '/'
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     })
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
   }
 
   onSubmit(): void {
@@ -38,7 +42,7 @@ export class Login {
       next: (response: any) => {
         this.authService.setUser(response.user)
         this.authService.saveToken(response.token)
-        this.router.navigate(['/'])
+        this.router.navigateByUrl(this.returnUrl)
       },
       error: (error) => {
         this.isLoading = false
