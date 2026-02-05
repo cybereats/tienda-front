@@ -7,7 +7,7 @@
         <nav class="c-header__nav">
             <ul class="c-header__menu">
                 <li class="c-header__item"><a routerLink="/" routerLinkActive="active"
-                        [routerLinkActiveOptions]="{exact: true}" class="c-header__link">Home</a></li>
+                        [routerLinkActiveOptions]="{exact: true}" class="c-header__link">Inicio</a></li>
                 <li class="c-header__item"><a routerLink="/computers" routerLinkActive="active"
                         class="c-header__link">Arsenal</a></li>
                 <li class="c-header__item"><a routerLink="/food" routerLinkActive="active"
@@ -77,9 +77,9 @@
                 }
             </a>
             <span class="c-header__username">{{ user.username }}</span>
-            <button class="c-btn-text" (click)="logout()">Logout</button>
+            <button class="c-btn-text" (click)="logout()">Cerrar Sesión</button>
             } @else {
-            <button class="c-btn-text" routerLink="/login">Log In</button>
+            <button class="c-btn-text" routerLink="/login">Iniciar Sesión</button>
             <button class="c-btn-glow" routerLink="/register">Unirse</button>
             }
         </div>

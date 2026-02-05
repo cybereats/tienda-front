@@ -16,16 +16,16 @@
             </div>
             <div class="stat-item available">
                 <span class="value">{{ availableCount }}</span>
-                <span class="label">OPEN</span>
+                <span class="label">LIBRES</span>
             </div>
             <div class="stat-item occupied">
                 <span class="value">{{ occupiedCount }}</span>
-                <span class="label">LIVE</span>
+                <span class="label">EN USO</span>
             </div>
         </div>
 
         <div class="arsenal__legend">
-            <h3>STATUS</h3>
+            <h3>ESTADO</h3>
             <ul>
                 <li class="status-available"><span class="dot"></span> DISPONIBLE</li>
                 <li class="status-occupied"><span class="dot"></span> OCUPADO</li>
@@ -61,13 +61,13 @@
             </div>
 
             <div class="station-meta">
-                <p>WORKING SINCE: <span class="highlight">{{ selectedStation.workingSince }}</span></p>
-                <p>AVAILABILITY: <span class="highlight">{{ selectedStation.status }}</span></p>
+                <p>EN SERVICIO DESDE: <span class="highlight">{{ selectedStation.workingSince }}</span></p>
+                <p>DISPONIBILIDAD: <span class="highlight">{{ selectedStation.status }}</span></p>
             </div>
 
             @if (selectedStation.status === 'OCCUPIED') {
             <div class="session-info">
-                <p>STATUS: <span class="highlight">IN USE</span></p>
+                <p>ESTADO: <span class="highlight">EN USO</span></p>
             </div>
             @if (isMyPc(selectedStation)) {
             <button class="c-btn c-btn--primary" (click)="openAdminPage(selectedStation)">ADMINISTRAR</button>
@@ -102,7 +102,7 @@
 
 
             <div class="room vip">
-                <span class="room-label">{{ vipSection?.category?.label || 'VIP ARENA' }}</span>
+                <span class="room-label">{{ vipSection?.category?.label || 'ZONA VIP' }}</span>
                 <div class="vip-tables">
                     @for (pc of vipSection?.stations || []; track pc.id) {
                     <button class="station-node mini" [class]="pc.status.toLowerCase()" [class.mine]="isMyPc(pc)"
@@ -162,7 +162,7 @@
                 <div class="reception-desk"></div>
             </div>
             <div class="room snack-bar">
-                <span class="room-label">SNACK BAR</span>
+                <span class="room-label">CAFETERÍA</span>
             </div>
 
 

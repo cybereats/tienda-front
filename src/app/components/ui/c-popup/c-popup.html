@@ -2,7 +2,7 @@
   @switch (dialogData.mode) {
 
   @case ('create') {
-  <h1 mat-dialog-title class="c-popup__title">Create {{ dialogData.title || 'Item' }}</h1>
+  <h1 mat-dialog-title class="c-popup__title">Crear {{ dialogData.title || 'Elemento' }}</h1>
 
   <mat-dialog-content class="c-popup__content">
     <form class="c-popup__form" [formGroup]="form">
@@ -27,16 +27,16 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end" class="c-popup__actions">
-    <button mat-button (click)="onClose()" class="c-popup__button">Cancel</button>
+    <button mat-button (click)="onClose()" class="c-popup__button">Cancelar</button>
     <button mat-raised-button color="primary" (click)="onSave()" [disabled]="form.invalid"
       class="c-popup__button c-popup__button--primary">
-      Create
+      Crear
     </button>
   </mat-dialog-actions>
   }
 
   @case ('edit') {
-  <h1 mat-dialog-title class="c-popup__title">Edit {{ dialogData.title || 'Item' }}</h1>
+  <h1 mat-dialog-title class="c-popup__title">Editar {{ dialogData.title || 'Elemento' }}</h1>
 
   <mat-dialog-content class="c-popup__content">
     <form class="c-popup__form" [formGroup]="form">
@@ -61,20 +61,20 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end" class="c-popup__actions">
-    <button mat-button (click)="onClose()" class="c-popup__button">Cancel</button>
+    <button mat-button (click)="onClose()" class="c-popup__button">Cancelar</button>
     <button mat-raised-button color="primary" (click)="onSave()" [disabled]="form.invalid"
       class="c-popup__button c-popup__button--primary">
-      Save
+      Guardar
     </button>
   </mat-dialog-actions>
   }
 
   @case ('delete') {
-  <h1 mat-dialog-title class="c-popup__title c-popup__title--danger">Delete {{ dialogData.title || 'Item' }}</h1>
+  <h1 mat-dialog-title class="c-popup__title c-popup__title--danger">Eliminar {{ dialogData.title || 'Elemento' }}</h1>
 
   <mat-dialog-content class="c-popup__content">
-    <p>Are you sure you want to delete this {{ dialogData.title?.toLowerCase() || 'item' }}? This action cannot be
-      undone.</p>
+    <p>¿Estás seguro de que quieres eliminar este {{ dialogData.title?.toLowerCase() || 'elemento' }}? Esta acción no se puede
+      deshacer.</p>
 
     @for (key of formKeys; track key) {
     <p class="c-popup__data-row">
@@ -85,9 +85,9 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end" class="c-popup__actions">
-    <button mat-button (click)="onClose()" class="c-popup__button">Cancel</button>
+    <button mat-button (click)="onClose()" class="c-popup__button">Cancelar</button>
     <button mat-raised-button color="warn" (click)="onDelete()" class="c-popup__button c-popup__button--warn">
-      Delete
+      Eliminar
     </button>
   </mat-dialog-actions>
   }
