@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../../../services/cart.service';
 import { CartAnimationService } from '../../../../services/cart-animation.service';
@@ -16,6 +16,7 @@ export class Cart {
   cartService = inject(CartService);
   private cartAnimation = inject(CartAnimationService);
   private userOrderService = inject(UserOrderService);
+  private router = inject(Router);
 
   isCheckingOut = false;
   checkoutSuccess = false;
@@ -40,29 +41,9 @@ export class Cart {
   }
 
   checkout(): void {
-    this.isCheckingOut = true;
-    this.cartService.checkout(this.deliveryType).subscribe({
-      next: (order) => {
-        console.log('Pedido creado:', order);
-        this.isCheckingOut = false;
-        this.checkoutSuccess = true;
-        this.userOrderService.addOrder(order);
-
-        // Animación del icono de pedidos
-        this.cartAnimation.animateOrdersIcon();
-
-        setTimeout(() => {
-          this.checkoutSuccess = false;
-        }, 3000);
-      },
-      error: (err) => {
-        this.isCheckingOut = false;
-        console.error('Error al realizar pedido:', err);
-        console.error('Error status:', err.status);
-        console.error('Error message:', err.message);
-        console.error('Error body:', err.error);
-        alert('Error al realizar el pedido: ' + (err.error?.message || err.message || 'Error desconocido'));
-      }
-    });
+    const state = {
+      source: 'cart'
+    };
+    this.router.navigate(['/payment'], { state });
   }
 }

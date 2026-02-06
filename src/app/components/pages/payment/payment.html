@@ -1,0 +1,222 @@
+<div class="payment">
+    <div class="payment__container">
+        <a routerLink="/cart" class="payment__back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+            </svg>
+            <span>Volver al carrito</span>
+        </a>
+
+        <div class="payment__main">
+            <div class="payment__header">
+                <h1 class="payment__title">PROCESAR <span class="highlight">PAGO</span></h1>
+                <div class="payment__total-display">
+                    <span class="label">Total a pagar</span>
+                    <span class="amount">{{ totalPrice | currency:'EUR' }}</span>
+                </div>
+            </div>
+
+            <div class="payment__content">
+                <label class="payment__methods-label">Selecciona tu método de pago preferido</label>
+                <!-- Payment Method Selection -->
+                <div class="payment__methods">
+                    <div class="method-card" [class.active]="selectedMethod === 'card'" (click)="selectMethod('card')">
+                        <div class="method-card__icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="5" width="20" height="14" rx="2" />
+                                <line x1="2" y1="10" x2="22" y2="10" />
+                            </svg>
+                        </div>
+                        <span class="method-card__label">Tarjeta</span>
+                    </div>
+                    <div class="method-card" [class.active]="selectedMethod === 'paypal'"
+                        (click)="selectMethod('paypal')">
+                        <div class="method-card__icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.729C5.056 3.012 5.674 2.5 6.401 2.5h10.124c2.81 0 4.88 1.134 4.88 4.28 0 2.21-1.002 4.437-3.09 5.378-2.618 1.171-4.782 1.181-7.098 1.181h-1.42l-.213 1.34-1.508 9.358c-.03.18-.184.3-.364.3z" />
+                            </svg>
+                        </div>
+                        <span class="method-card__label">PayPal</span>
+                    </div>
+                    <div class="method-card" [class.active]="selectedMethod === 'apple'"
+                        (click)="selectMethod('apple')">
+                        <div class="method-card__icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.671-1.48 3.671-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.605 1.09zM15.53 3.83c.843-1.012 1.404-2.427 1.248-3.83-1.208.052-2.67.805-3.535 1.82a3.39 3.39 0 0 0-1.274 3.674c1.338.104 2.716-.65 3.561-1.664z" />
+                            </svg>
+                        </div>
+                        <span class="method-card__label">Apple Pay</span>
+                    </div>
+                    <div class="method-card" [class.active]="selectedMethod === 'transfer'"
+                        (click)="selectMethod('transfer')">
+                        <div class="method-card__icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 21h18M3 10h18M5 21V10M19 21V10M2 14h20M4 6h16l-8-4-8 4z" />
+                            </svg>
+                        </div>
+                        <span class="method-card__label">Transferencia</span>
+                    </div>
+                </div>
+
+                <!-- Credit Card Form -->
+                <div class="payment__form-container" *ngIf="selectedMethod === 'card'">
+                    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment__form">
+
+                        <div class="form-group">
+                            <label for="cardNumber">Número de Tarjeta</label>
+                            <div class="payment__input-with-card">
+                                <div class="input-wrapper flex-grow">
+                                    <input id="cardNumber" type="text" formControlName="cardNumber"
+                                        placeholder="0000 0000 0000 0000" maxlength="19"
+                                        (input)="formatCardNumber($event)">
+                                    <div class="input-icon" [ngClass]="cardType"></div>
+                                </div>
+
+                                <div class="payment__card-preview small" [ngClass]="'card--' + cardType">
+                                    <div class="card-inner flex-center">
+                                        <div class="card-type-icon static">
+                                            <!-- Visa Icon -->
+                                            <svg *ngIf="cardType === 'visa'" viewBox="0 0 24 24" fill="white">
+                                                <path
+                                                    d="M10 14h2l1-4h-2l-1 4zm8.5-4c-.2 0-.4.1-.5.3l-2.5 5.7h2.2l.4-1.2h2.6l.2 1.2h2.1l-1.9-6h-2.6zm-1.1 3.2l.8-2.6l.8 2.6h-1.6zM2 14h2.4l1.5-3.7h.1l.9 3.7h2.3l-2.4-6h-2.4l-2.4 6z" />
+                                            </svg>
+                                            <!-- Mastercard Icon -->
+                                            <svg *ngIf="cardType === 'mastercard'" viewBox="0 0 24 24">
+                                                <circle cx="9" cy="12" r="7" fill="#EB001B" fill-opacity="0.8" />
+                                                <circle cx="15" cy="12" r="7" fill="#F79E1B" fill-opacity="0.8" />
+                                            </svg>
+                                            <!-- Amex Icon -->
+                                            <svg *ngIf="cardType === 'amex'" viewBox="0 0 24 24" fill="#007BC1">
+                                                <rect width="24" height="24" rx="2" />
+                                                <text x="3" y="16" fill="white" font-weight="900"
+                                                    font-size="8">AMEX</text>
+                                            </svg>
+                                            <!-- Discover Icon -->
+                                            <svg *ngIf="cardType === 'discover'" viewBox="0 0 24 24" fill="#F45B21">
+                                                <rect width="24" height="24" rx="2" />
+                                                <text x="2" y="16" fill="white" font-weight="900"
+                                                    font-size="6">DISCOVER</text>
+                                            </svg>
+                                            <!-- Default/Unknown -->
+                                            <svg *ngIf="cardType === 'unknown'" viewBox="0 0 24 24" fill="none"
+                                                stroke="white" stroke-width="2">
+                                                <rect x="2" y="5" width="20" height="14" rx="2" />
+                                                <line x1="2" y1="10" x2="22" y2="10" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="error-msg"
+                                *ngIf="paymentForm.get('cardNumber')?.touched && paymentForm.get('cardNumber')?.invalid">
+                                Número de tarjeta inválido
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cardHolder">Nombre del Titular</label>
+                            <input id="cardHolder" type="text" formControlName="cardHolder"
+                                placeholder="Como aparece en la tarjeta">
+                            <div class="error-msg"
+                                *ngIf="paymentForm.get('cardHolder')?.touched && paymentForm.get('cardHolder')?.invalid">
+                                Nombre obligatorio
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiryDate">Fecha de Expiración</label>
+                                <input id="expiryDate" type="text" formControlName="expiryDate" placeholder="MM/AA"
+                                    maxlength="5" (input)="formatExpiry($event)">
+                                <div class="error-msg"
+                                    *ngIf="paymentForm.get('expiryDate')?.touched && paymentForm.get('expiryDate')?.invalid">
+                                    Inválido (MM/AA)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input id="cvv" type="text" formControlName="cvv" placeholder="123" maxlength="4">
+                                <div class="error-msg"
+                                    *ngIf="paymentForm.get('cvv')?.touched && paymentForm.get('cvv')?.invalid">
+                                    CVV inválido
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-glow" [disabled]="paymentForm.invalid">
+                            CONFIRMAR PAGO ({{ totalPrice | currency:'EUR' }})
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Other methods placeholders -->
+                <div class="payment__placeholder" *ngIf="selectedMethod !== 'card' && selectedMethod !== 'transfer'">
+                    <div class="placeholder-content">
+                        <p>Redirigiendo a {{ selectedMethod | uppercase }} para completar el pago...</p>
+                        <button class="btn-glow" (click)="onSubmit()">CONTINUAR ({{ totalPrice | currency:'EUR'
+                            }})</button>
+                    </div>
+                </div>
+
+                <!-- Bank Transfer Form -->
+                <div class="payment__form-container" *ngIf="selectedMethod === 'transfer'">
+                    <div class="transfer-info">
+                        <h3>Información Bancaria</h3>
+                        <p>Realiza la transferencia a la siguiente cuenta:</p>
+                        <div class="bank-details">
+                            <div class="detail-row">
+                                <span class="label">Beneficiario:</span>
+                                <span class="value">CyberEats S.L.</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">IBAN:</span>
+                                <span class="value">ES21 0000 0000 0000 0000 0000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Concepto:</span>
+                                <span class="value">{{ paymentSource === 'reservation' ? 'RESERVA' : 'PEDIDO' }} #{{
+                                    orderId }}</span>
+                            </div>
+                            <div class="detail-row highlight">
+                                <span class="label">Total:</span>
+                                <span class="value">{{ totalPrice | currency:'EUR' }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form [formGroup]="transferForm" (ngSubmit)="onSubmit()" class="payment__form">
+                        <div class="form-group">
+                            <label for="senderName">Nombre del Titular de la Cuenta</label>
+                            <input id="senderName" type="text" formControlName="senderName"
+                                placeholder="Nombre completo">
+                            <div class="error-msg"
+                                *ngIf="transferForm.get('senderName')?.touched && transferForm.get('senderName')?.invalid">
+                                El nombre es obligatorio
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="senderIban">Tu IBAN (desde donde realizas el pago)</label>
+                            <input id="senderIban" type="text" formControlName="senderIban"
+                                placeholder="ES00 0000 0000 0000 0000 0000" maxlength="24">
+                            <div class="error-msg"
+                                *ngIf="transferForm.get('senderIban')?.touched && transferForm.get('senderIban')?.invalid">
+                                IBAN inválido (Debe empezar por ES seguido de 22 números)
+                            </div>
+                        </div>
+
+                        <p class="note">Al confirmar, indicas que has realizado la transferencia. El pedido se activará
+                            al recibirla.</p>
+
+                        <button type="submit" class="btn-glow" [disabled]="transferForm.invalid">
+                            HE REALIZADO LA TRANSFERENCIA
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

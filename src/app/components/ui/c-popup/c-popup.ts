@@ -1,82 +1,42 @@
-﻿import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+﻿import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+
+export interface CPopupData {
+  title: string;
+  message: string;
+  type: 'success' | 'error' | 'info';
+}
 
 @Component({
   selector: 'c-popup',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatIconModule
   ],
   templateUrl: './c-popup.html',
   styleUrls: ['./c-popup.scss']
 })
-export class CPopup implements OnInit {
-  form: FormGroup;
-  formKeys: string[] = [];
-
+export class CPopup {
   constructor(
     public dialogRef: MatDialogRef<CPopup>,
-    private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public dialogData: {
-      mode: 'create' | 'edit' | 'delete',
-      data: any,
-      title?: string,
-      excludedFields?: string[],
-      fieldOptions?: { [key: string]: string[] }
-    }
-  ) {
-    if (this.dialogData.data) {
-      this.formKeys = Object.keys(this.dialogData.data);
-    }
-    this.form = this.fb.group({});
-  }
-
-  ngOnInit(): void {
-    if (this.dialogData.mode !== 'delete') {
-      const controls: { [key: string]: any } = {};
-      const excluded = this.dialogData.excludedFields || [];
-
-      this.formKeys.forEach(key => {
-        if (!excluded.includes(key)) {
-          const value = this.dialogData.data[key];
-          const validators = [Validators.required];
-
-          if (key === 'price') {
-            validators.push(Validators.min(0));
-          }
-
-          const control = this.fb.control({ value: value, disabled: key === 'id' }, validators);
-          controls[key] = control;
-        }
-      });
-      this.form = this.fb.group(controls);
-    }
-  }
+    @Inject(MAT_DIALOG_DATA) public data: CPopupData
+  ) { }
 
   onClose(): void {
     this.dialogRef.close();
   }
 
-  onSave(): void {
-    if (this.form.valid) {
-      this.dialogRef.close(this.form.getRawValue());
+  get iconName(): string {
+    switch (this.data.type) {
+      case 'success': return 'check_circle';
+      case 'error': return 'error';
+      default: return 'info';
     }
-  }
-
-  onDelete(): void {
-    this.dialogRef.close(true);
   }
 }

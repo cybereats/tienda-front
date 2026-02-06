@@ -1,96 +1,15 @@
-<div class="c-popup">
-  @switch (dialogData.mode) {
+<div class="c-popup" [ngClass]="'c-popup--' + data.type">
+  <div class="c-popup__icon-wrapper">
+    <mat-icon class="c-popup__icon">{{ iconName }}</mat-icon>
+  </div>
 
-  @case ('create') {
-  <h1 mat-dialog-title class="c-popup__title">Crear {{ dialogData.title || 'Elemento' }}</h1>
+  <h2 class="c-popup__title">{{ data.title }}</h2>
 
-  <mat-dialog-content class="c-popup__content">
-    <form class="c-popup__form" [formGroup]="form">
-      @for (key of formKeys; track key) {
-      @if (form.contains(key)) {
-      <mat-form-field appearance="fill" class="c-popup__form-field">
-        <mat-label>{{ key }}</mat-label>
-        @if (dialogData.fieldOptions && dialogData.fieldOptions[key]) {
-        <mat-select [formControlName]="key">
-          @for (option of dialogData.fieldOptions[key]; track option) {
-          <mat-option [value]="option">{{ option }}</mat-option>
-          }
-        </mat-select>
-        } @else {
-        <input matInput [formControlName]="key" [type]="key === 'price' ? 'number' : 'text'"
-          [min]="key === 'price' ? 0 : null">
-        }
-      </mat-form-field>
-      }
-      }
-    </form>
-  </mat-dialog-content>
+  <div class="c-popup__content">
+    <p>{{ data.message }}</p>
+  </div>
 
-  <mat-dialog-actions align="end" class="c-popup__actions">
-    <button mat-button (click)="onClose()" class="c-popup__button">Cancelar</button>
-    <button mat-raised-button color="primary" (click)="onSave()" [disabled]="form.invalid"
-      class="c-popup__button c-popup__button--primary">
-      Crear
-    </button>
-  </mat-dialog-actions>
-  }
-
-  @case ('edit') {
-  <h1 mat-dialog-title class="c-popup__title">Editar {{ dialogData.title || 'Elemento' }}</h1>
-
-  <mat-dialog-content class="c-popup__content">
-    <form class="c-popup__form" [formGroup]="form">
-      @for (key of formKeys; track key) {
-      @if (form.contains(key)) {
-      <mat-form-field appearance="fill" class="c-popup__form-field">
-        <mat-label>{{ key }}</mat-label>
-        @if (dialogData.fieldOptions && dialogData.fieldOptions[key]) {
-        <mat-select [formControlName]="key">
-          @for (option of dialogData.fieldOptions[key]; track option) {
-          <mat-option [value]="option">{{ option }}</mat-option>
-          }
-        </mat-select>
-        } @else {
-        <input matInput [formControlName]="key" [type]="key === 'price' ? 'number' : 'text'"
-          [min]="key === 'price' ? 0 : null">
-        }
-      </mat-form-field>
-      }
-      }
-    </form>
-  </mat-dialog-content>
-
-  <mat-dialog-actions align="end" class="c-popup__actions">
-    <button mat-button (click)="onClose()" class="c-popup__button">Cancelar</button>
-    <button mat-raised-button color="primary" (click)="onSave()" [disabled]="form.invalid"
-      class="c-popup__button c-popup__button--primary">
-      Guardar
-    </button>
-  </mat-dialog-actions>
-  }
-
-  @case ('delete') {
-  <h1 mat-dialog-title class="c-popup__title c-popup__title--danger">Eliminar {{ dialogData.title || 'Elemento' }}</h1>
-
-  <mat-dialog-content class="c-popup__content">
-    <p>¿Estás seguro de que quieres eliminar este {{ dialogData.title?.toLowerCase() || 'elemento' }}? Esta acción no se puede
-      deshacer.</p>
-
-    @for (key of formKeys; track key) {
-    <p class="c-popup__data-row">
-      <strong class="c-popup__data-key">{{ key }}:</strong>
-      {{ dialogData.data[key] }}
-    </p>
-    }
-  </mat-dialog-content>
-
-  <mat-dialog-actions align="end" class="c-popup__actions">
-    <button mat-button (click)="onClose()" class="c-popup__button">Cancelar</button>
-    <button mat-raised-button color="warn" (click)="onDelete()" class="c-popup__button c-popup__button--warn">
-      Eliminar
-    </button>
-  </mat-dialog-actions>
-  }
-
-  }
+  <div class="c-popup__actions">
+    <button mat-flat-button color="primary" (click)="onClose()">Aceptar</button>
+  </div>
 </div>

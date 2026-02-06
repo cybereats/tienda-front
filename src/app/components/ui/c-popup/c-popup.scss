@@ -1,70 +1,146 @@
 ﻿.c-popup {
+    padding: 2.5rem;
+    text-align: center;
+    min-width: 400px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
 
-    --popup-bg: var(--cyb-sys-color-white-9);
-    --popup-text-color: var(--cyb-sys-color-black-1);
-    --popup-title-color: var(--cyb-sys-color-black-1);
-    --popup-title-danger-color: var(--cyb-sys-color-red-1);
-    --popup-border-color: var(--cyb-sys-color-black-1);
-    --popup-input-bg: var(--cyb-sys-color-white-9);
-    --popup-input-label: var(--cyb-sys-color-black-1);
+    // Glassmorphism background matching header
+    background: rgba(20, 20, 25, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border-radius: 16px;
+    color: var(--cyb-sys-color-white-9);
 
-    background-color: var(--popup-bg);
-    color: var(--popup-text-color);
-    border-radius: 8px;
-    border: 1px solid var(--popup-border-color);
-    display: block;
+    // Entrance animation
+    animation: popupFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &__icon-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        margin-bottom: 0.5rem;
+        transition: transform 0.3s ease;
+
+        // Default glow
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    &__icon {
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    // Success State
+    &--success {
+        .c-popup__icon-wrapper {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
+        }
+
+        .c-popup__icon {
+            color: #4ade80;
+        }
+    }
+
+    // Error State
+    &--error {
+        .c-popup__icon-wrapper {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+        }
+
+        .c-popup__icon {
+            color: #f87171;
+        }
+    }
+
+    // Info State
+    &--info {
+        .c-popup__icon-wrapper {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .c-popup__icon {
+            color: #60a5fa;
+        }
+    }
 
     &__title {
-        color: var(--popup-title-color);
-        border-bottom: 1px solid var(--popup-border-color);
-        padding-bottom: 1rem;
-        margin-bottom: 1rem;
-
-        &--danger {
-            color: var(--popup-title-danger-color);
-        }
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: white;
     }
 
     &__content {
-        padding-top: 1rem;
-    }
-
-    &__form {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1rem;
-    }
-
-    &__form-field {
-
-        .mat-mdc-text-field-wrapper {
-            background-color: var(--popup-input-bg);
+        p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            line-height: 1.6;
         }
-
-        .mat-mdc-floating-label {
-            color: var(--popup-input-label);
-        }
-    }
-
-    &__data-row {
-        margin: 0.5rem 0;
-    }
-
-    &__data-key {
-        color: var(--popup-title-color);
-        text-transform: capitalize;
     }
 
     &__actions {
-        border-top: 1px solid var(--popup-border-color);
-        padding-top: 1rem;
-        margin-top: 1.5rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+
+        button {
+            width: 100%;
+            height: 48px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            background: var(--cyb-sys-color-blue-6);
+            color: white;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+            border: none;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: var(--cyb-sys-color-blue-5);
+                box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+                transform: translateY(-1px);
+            }
+
+            &:active {
+                transform: translateY(1px);
+            }
+        }
+    }
+}
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
     }
 
-    &__button {
-
-        &--warn {}
-
-        &--primary {}
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }

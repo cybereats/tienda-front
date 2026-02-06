@@ -104,37 +104,15 @@ export class QrBooking implements OnInit {
       return;
     }
 
-    this.isSubmitting.set(true);
-    this.submitError.set('');
-    this.successMessage.set('');
-
-    const payload = {
-      hours: this.hours,
-      pcId: pc.id
-    };
-
-    this.bookingService.post<any>(payload).subscribe({
-      next: () => {
-        this.successMessage.set(`¡Reserva confirmada! Tu sesión de ${this.hours}h en ${pc.label} está lista. ¡Disfruta!`);
-        this.isSubmitting.set(false);
-        const updatedPc = { ...pc, status: 'OCCUPIED' as const };
-        this.pc.set(updatedPc);
-      },
-      error: (err) => {
-        let errorMsg: string;
-        if (err.status === 0) {
-          errorMsg = 'No se pudo conectar con el servidor. Comprueba tu conexión a internet.';
-        } else if (err.status === 401) {
-          errorMsg = 'Tu sesión ha expirado. Por favor, inicia sesión de nuevo.';
-        } else if (err.status === 403) {
-          errorMsg = 'No tienes permisos para realizar esta reserva.';
-        } else {
-          errorMsg = err.error?.message || 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo.';
-        }
-        this.submitError.set(errorMsg);
-        this.isSubmitting.set(false);
+    const state = {
+      source: 'reservation',
+      amount: this.totalPrice,
+      data: {
+        hours: this.hours,
+        pcId: pc.id
       }
-    });
+    };
+    this.router.navigate(['/payment'], { state });
   }
 
   getParsedSpecs(specs: string) {
