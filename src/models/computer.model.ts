@@ -15,7 +15,7 @@ export interface ComputerResponse {
     page: number;
     size: number;
     totalElements: number;
-    totalPages?: number; 
+    totalPages?: number;
 
 }
 
@@ -23,4 +23,5 @@ export interface CategoryPC {
     id: number;
     label: string;
     slug: string;
+    pricePerHour?: number;
 }

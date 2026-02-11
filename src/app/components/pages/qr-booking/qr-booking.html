@@ -55,7 +55,7 @@
 
       <div class="qr-booking__pc-price-info">
         <span class="price-label">Tarifa por hora</span>
-        <span class="price-value">{{ PRICE_PER_HOUR | currency:'EUR':'symbol' }}</span>
+        <span class="price-value">{{ pricePerHour | currency:'EUR':'symbol' }}</span>
       </div>
     </div>
 
@@ -82,7 +82,7 @@
 
       <div class="qr-booking__price-summary">
         <div class="price-row">
-          <span>{{ PRICE_PER_HOUR | currency:'EUR':'symbol' }} × {{ hours }} {{ hours === 1 ? 'hora' : 'horas'
+          <span>{{ pricePerHour | currency:'EUR':'symbol' }} × {{ hours }} {{ hours === 1 ? 'hora' : 'horas'
             }}</span>
         </div>
         <div class="price-total">

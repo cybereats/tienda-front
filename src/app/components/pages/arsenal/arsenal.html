@@ -2,12 +2,16 @@
     @if (isLoading) {
     <div class="loading-overlay">
         <div class="loader"></div>
-        <p>CONECTANDO AL NUCLEO...</p>
+        <p>CONECTANDO AL NÚCLEO...</p>
     </div>
     }
 
-
+    <!-- Panel lateral de detalles -->
     <aside class="arsenal__sidebar">
+        <div class="arsenal__header">
+            <h1>CYBERZONE</h1>
+            <p class="subtitle">Centro de Gaming Interactivo</p>
+        </div>
 
         <div class="arsenal__stats">
             <div class="stat-item">
@@ -25,27 +29,26 @@
         </div>
 
         <div class="arsenal__legend">
-            <h3>ESTADO</h3>
+            <h3>LEYENDA</h3>
             <ul>
-                <li class="status-available"><span class="dot"></span> DISPONIBLE</li>
-                <li class="status-occupied"><span class="dot"></span> OCUPADO</li>
-                <li class="status-maintenance"><span class="dot"></span> MANTENIMIENTO</li>
-                <li class="status-mine"><span class="dot"></span> MI RESERVA</li>
+                <li class="status-available"><span class="dot"></span> Disponible</li>
+                <li class="status-occupied"><span class="dot"></span> Ocupado</li>
+                <li class="status-maintenance"><span class="dot"></span> Mantenimiento</li>
+                <li class="status-mine"><span class="dot"></span> Mi Reserva</li>
             </ul>
         </div>
 
-
-        @if (selectedStation) {
+        @if (selectedStation(); as station) {
         <div class="arsenal__details">
             <div class="details-header">
-                <h2>{{ selectedStation.label }}</h2>
-                <span class="badge {{ selectedStation.categoryPCResponse.slug }}">{{
-                    selectedStation.categoryPCResponse.label.toUpperCase() }}</span>
+                <h2>{{ station.label }}</h2>
+                <span class="badge {{ station.categoryPCResponse.slug }}">{{
+                    getCategoryDisplayName(station.categoryPCResponse.slug) }}</span>
                 <button class="close-btn" (click)="closeDetails()">×</button>
             </div>
 
             <div class="specs-grid">
-                @let specs = getParsedSpecs(selectedStation.specs);
+                @let specs = getParsedSpecs(station.specs);
                 <div class="spec">
                     <span class="label">CPU</span>
                     <span class="val">{{ specs.cpu }}</span>
@@ -61,119 +64,43 @@
             </div>
 
             <div class="station-meta">
-                <p>EN SERVICIO DESDE: <span class="highlight">{{ selectedStation.workingSince }}</span></p>
-                <p>DISPONIBILIDAD: <span class="highlight">{{ selectedStation.status }}</span></p>
+                <p>Precio: <span class="highlight price-tag">{{ getCategoryPrice(station.categoryPCResponse.slug) |
+                        currency:'EUR':'symbol' }}/hora</span></p>
+                <p>En servicio: <span class="highlight">{{ station.workingSince }}</span></p>
+                <p>Estado: <span class="highlight status-{{ station.status.toLowerCase() }}">{{ station.status ===
+                        'AVAILABLE' ? 'Disponible' : station.status === 'OCCUPIED' ? 'Ocupado' : 'Mantenimiento'
+                        }}</span></p>
             </div>
 
-            @if (selectedStation.status === 'OCCUPIED') {
+            @if (station.status === 'OCCUPIED') {
             <div class="session-info">
                 <p>ESTADO: <span class="highlight">EN USO</span></p>
             </div>
-            @if (isMyPc(selectedStation)) {
-            <button class="c-btn c-btn--primary" (click)="openAdminPage(selectedStation)">ADMINISTRAR</button>
+            @if (isMyPc(station)) {
+            <button class="c-btn c-btn--primary" (click)="openAdminPage(station)">ADMINISTRAR</button>
             } @else {
             <button class="c-btn c-btn--disabled" disabled>OCUPADO</button>
             }
-            } @else if (selectedStation.status === 'MAINTENANCE') {
+            } @else if (station.status === 'MAINTENANCE') {
             <div class="maintenance-msg">EN REPARACIÓN</div>
             } @else {
-            <a [routerLink]="['/reservar', selectedStation.slug]" class="c-btn c-btn--glow">RESERVAR AHORA</a>
+            <a [routerLink]="['/reservar', station.slug]" class="c-btn c-btn--glow">RESERVAR AHORA</a>
             }
         </div>
         } @else {
         <div class="arsenal__empty-state">
-            <p>SELECCIONA UNA ESTACIÓN EN EL MAPA</p>
+            <div class="empty-icon"></div>
+            <p>SELECCIONA UNA ESTACIÓN</p>
+            <small>Haz clic en cualquier PC para ver sus especificaciones</small>
         </div>
         }
     </aside>
 
-
+    <!-- Canvas de Konva -->
     <main class="arsenal__map">
-        <div class="arsenal__floor-plan">
-
-
-            <div class="room servers">
-                <span class="room-label">SERVIDORES</span>
-            </div>
-            <div class="room bathrooms">
-                <div class="bathroom-unit">BAÑOS</div>
-                <div class="bathroom-unit">BAÑOS</div>
-            </div>
-
-
-            <div class="room vip">
-                <span class="room-label">{{ vipSection?.category?.label || 'ZONA VIP' }}</span>
-                <div class="vip-tables">
-                    @for (pc of vipSection?.stations || []; track pc.id) {
-                    <button class="station-node mini" [class]="pc.status.toLowerCase()" [class.mine]="isMyPc(pc)"
-                        [class.selected]="selectedStation === pc" (click)="selectStation(pc)">
-                        <svg class="pc-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z" />
-                        </svg>
-                        <span class="pc-id">{{ pc.label.split('-')[1] }}</span>
-                    </button>
-                    }
-                </div>
-                <div class="room-door"></div>
-            </div>
-
-
-            <div class="arena-columns">
-                @for (section of arenaSections; track section.category.id) {
-                <div class="table-group">
-                    <div class="group-label">{{ section.category.label }}</div>
-                    @for (pc of section.stations; track pc.id) {
-                    <button class="station-node micro" [class]="pc.status.toLowerCase()" [class.mine]="isMyPc(pc)"
-                        [class.selected]="selectedStation === pc" (click)="selectStation(pc)">
-                        <svg class="pc-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z" />
-                        </svg>
-                        <span class="pc-id">{{ pc.label.split('-')[1] }}</span>
-                    </button>
-                    }
-                </div>
-                }
-            </div>
-
-
-            <div class="bottom-wall-row">
-                @if (bottomSection) {
-                <div class="row-label">
-                    {{ bottomSection.category.label }}
-                </div>
-                }
-                @for (pc of bottomSection?.stations || []; track pc.id) {
-                <button class="station-node micro" [class]="pc.status.toLowerCase()" [class.mine]="isMyPc(pc)"
-                    [class.selected]="selectedStation === pc" (click)="selectStation(pc)">
-                    <svg class="pc-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path
-                            d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z" />
-                    </svg>
-                    <span class="pc-id">{{ pc.label.split('-')[1] }}</span>
-                </button>
-                }
-            </div>
-
-
-            <div class="room reception">
-                <span class="room-label">RECEPCIÓN</span>
-                <div class="reception-desk"></div>
-            </div>
-            <div class="room snack-bar">
-                <span class="room-label">CAFETERÍA</span>
-            </div>
-
-
-            <div class="entrance">ENTRADA</div>
-            <div class="exit">SALIDA EMERGENCIA</div>
-            <div class="lounge-area">
-                <div class="sofa"></div>
-                <div class="sofa"></div>
-                <div class="table"></div>
-            </div>
-
+        <div class="arsenal__map-hint">
+            <small>Rueda: Zoom | Arrastrar: Mover mapa</small>
         </div>
+        <div #konvaContainer class="konva-container"></div>
     </main>
 </div>
