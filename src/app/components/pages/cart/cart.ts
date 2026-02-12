@@ -1,10 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../../../services/cart.service';
 import { CartAnimationService } from '../../../../services/cart-animation.service';
 import { UserOrderService } from '../../../../services/user-order.service';
+import { BookingService } from '../../../../services/booking.service';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,15 +14,35 @@ import { UserOrderService } from '../../../../services/user-order.service';
   templateUrl: './cart.html',
   styleUrl: './cart.scss',
 })
-export class Cart {
+export class Cart implements OnInit {
   cartService = inject(CartService);
   private cartAnimation = inject(CartAnimationService);
   private userOrderService = inject(UserOrderService);
+  private bookingService = inject(BookingService);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
   isCheckingOut = false;
   checkoutSuccess = false;
-  deliveryType: 'TABLE' | 'PICKUP' = 'TABLE';
+  deliveryType: 'TABLE' | 'PICKUP' = 'PICKUP';
+  hasActiveBooking = false;
+
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.bookingService.getMyActiveBookings().subscribe({
+        next: (bookings) => {
+          this.hasActiveBooking = bookings.length > 0;
+          if (this.hasActiveBooking) {
+            this.deliveryType = 'TABLE';
+          }
+        },
+        error: () => {
+          this.hasActiveBooking = false;
+          this.deliveryType = 'PICKUP';
+        }
+      });
+    }
+  }
 
   updateQuantity(event: MouseEvent, productId: number, quantity: number, currentQuantity: number): void {
     if (quantity < currentQuantity) {
