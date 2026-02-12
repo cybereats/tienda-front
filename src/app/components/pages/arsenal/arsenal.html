@@ -8,36 +8,6 @@
 
     <!-- Panel lateral de detalles -->
     <aside class="arsenal__sidebar">
-        <div class="arsenal__header">
-            <h1>CYBERZONE</h1>
-            <p class="subtitle">Centro de Gaming Interactivo</p>
-        </div>
-
-        <div class="arsenal__stats">
-            <div class="stat-item">
-                <span class="value">{{ stations.length }}</span>
-                <span class="label">TOTAL</span>
-            </div>
-            <div class="stat-item available">
-                <span class="value">{{ availableCount }}</span>
-                <span class="label">LIBRES</span>
-            </div>
-            <div class="stat-item occupied">
-                <span class="value">{{ occupiedCount }}</span>
-                <span class="label">EN USO</span>
-            </div>
-        </div>
-
-        <div class="arsenal__legend">
-            <h3>LEYENDA</h3>
-            <ul>
-                <li class="status-available"><span class="dot"></span> Disponible</li>
-                <li class="status-occupied"><span class="dot"></span> Ocupado</li>
-                <li class="status-maintenance"><span class="dot"></span> Mantenimiento</li>
-                <li class="status-mine"><span class="dot"></span> Mi Reserva</li>
-            </ul>
-        </div>
-
         @if (selectedStation(); as station) {
         <div class="arsenal__details">
             <div class="details-header">
@@ -73,9 +43,9 @@
             </div>
 
             @if (station.status === 'OCCUPIED') {
-            <div class="session-info">
+            <!-- <div class="session-info">
                 <p>ESTADO: <span class="highlight">EN USO</span></p>
-            </div>
+            </div> -->
             @if (isMyPc(station)) {
             <button class="c-btn c-btn--primary" (click)="openAdminPage(station)">ADMINISTRAR</button>
             } @else {
@@ -94,6 +64,31 @@
             <small>Haz clic en cualquier PC para ver sus especificaciones</small>
         </div>
         }
+
+        <div class="arsenal__stats">
+            <div class="stat-item">
+                <span class="value">{{ stations.length }}</span>
+                <span class="label">TOTAL</span>
+            </div>
+            <div class="stat-item available">
+                <span class="value">{{ availableCount }}</span>
+                <span class="label">LIBRES</span>
+            </div>
+            <div class="stat-item occupied">
+                <span class="value">{{ occupiedCount }}</span>
+                <span class="label">EN USO</span>
+            </div>
+        </div>
+
+        <div class="arsenal__legend">
+            <h3>LEYENDA</h3>
+            <ul>
+                <li class="status-available"><span class="dot"></span> Disponible</li>
+                <li class="status-occupied"><span class="dot"></span> Ocupado</li>
+                <li class="status-maintenance"><span class="dot"></span> Mantenimiento</li>
+                <li class="status-mine"><span class="dot"></span> Mi Reserva</li>
+            </ul>
+        </div>
     </aside>
 
     <!-- Canvas de Konva -->

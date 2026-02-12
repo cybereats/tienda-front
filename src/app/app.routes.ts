@@ -10,6 +10,7 @@ import { Cart } from './components/pages/cart/cart';
 import { PcAdmin } from './components/pages/pc-admin/pc-admin';
 import { Payment } from './components/pages/payment/payment';
 import { authGuard } from '../guards/auth.guard';
+import { loggedInGuard } from '../guards/logged-in.guard';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -18,8 +19,8 @@ export const routes: Routes = [
     { path: 'login', component: Login },
     { path: 'register', component: Register },
     { path: 'reservar/:slug', component: QrBooking },
-    { path: 'pc-admin/:pcId', component: PcAdmin, canActivate: [authGuard] },
-    { path: 'pc-admin/:pcId/report', component: PcReport, canActivate: [authGuard] },
+    { path: 'pc-admin/:pcId', component: PcAdmin, canActivate: [loggedInGuard] },
+    { path: 'pc-admin/:pcId/report', component: PcReport, canActivate: [loggedInGuard] },
     { path: 'cart', component: Cart },
     { path: 'payment', component: Payment },
     { path: '**', redirectTo: '' }
