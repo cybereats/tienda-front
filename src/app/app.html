@@ -1,4 +1,5 @@
-<div class="landbot" [class.landbot--open]="isChatOpen" [class.landbot--food]="currentUrl() === '/food'"
+<div class="landbot" [class.landbot--open]="isChatOpen"
+  [class.landbot--food]="currentUrl() === '/food' || currentUrl() === '/cart'"
   [class.landbot--computers]="currentUrl() === '/computers'"
   [class.landbot--reservar]="currentUrl().startsWith('/reservar')" aria-live="polite">
   <button class="landbot__button" type="button" aria-label="Abrir chat" (click)="toggleChat()">💬</button>

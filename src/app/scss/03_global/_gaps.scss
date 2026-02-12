@@ -1,0 +1,14 @@
+@use "sass:list";
+@use "../01_utilities/variables" as utilities;
+
+:root {
+    @for $i from 1 through list.length(utilities.$gap-sizes) {
+        --cyb-sys-gap-#{$i}: #{list.nth(utilities.$gap-sizes, $i)};
+    }
+}
+
+@for $i from 1 through list.length(utilities.$gap-sizes) {
+    .g--gap-#{$i} {
+        gap: var(--cyb-sys-gap-#{$i});
+    }
+}

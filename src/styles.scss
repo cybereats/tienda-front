@@ -117,3 +117,10 @@ body {
     transform: scale(1) rotate(0deg);
   }
 }
+
+// Retro Arcade Dialog Overrides
+.mat-mdc-dialog-container .mdc-dialog__surface,
+.mat-mdc-dialog-surface.mdc-dialog__surface {
+  border-radius: 0 !important;
+  overflow: visible !important;
+}

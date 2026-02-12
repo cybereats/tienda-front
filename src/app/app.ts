@@ -28,7 +28,7 @@ export class App implements OnInit {
   }
 
   get themeClass(): string {
-    return this.currentUrl() === '/food' ? 'theme-food' : '';
+    return (this.currentUrl() === '/food' || this.currentUrl() === '/cart') ? 'theme-food' : '';
   }
 
   toggleChat() {

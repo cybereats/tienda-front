@@ -1,17 +1,51 @@
 .pc-admin {
-  --admin-bg: #050505;
-  --admin-card-bg: rgba(15, 15, 15, 0.95);
-  --admin-border: rgba(0, 150, 255, 0.2);
-  --admin-accent: #00d4ff;
-  --admin-success: #00ff88;
-  --admin-warning: #ffcc00;
-  --admin-text: #ffffff;
-  --admin-text-muted: rgba(255, 255, 255, 0.6);
+  // Arcade Theme Variables
+  --arcade-bg: #050505;
+  --arcade-magenta: #ff00ff;
+  --arcade-cyan: #00ffff;
+  --arcade-orange: #ff6600;
+  --arcade-red: #ff0000;
+  --arcade-green: #00ff00;
+  --arcade-font-pixel: 'Press Start 2P', cursive;
+  --arcade-font-header: 'Orbitron', sans-serif;
 
   min-height: 100vh;
-  background: var(--admin-bg);
-  color: var(--admin-text);
-  padding: 100px 2rem 2rem;
+  background-color: var(--arcade-bg);
+  color: #fff;
+  padding: 100px 2rem 4rem;
+  font-family: var(--arcade-font-header);
+  position: relative;
+  overflow-x: hidden;
+
+  // CRT & Scanline Effects
+  &::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 999;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 1000;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+  }
 
   .loading {
     display: flex;
@@ -19,21 +53,24 @@
     align-items: center;
     justify-content: center;
     height: 60vh;
-    gap: 1.5rem;
+    gap: 2rem;
 
     .loader {
-      width: 50px;
-      height: 50px;
-      border: 3px solid rgba(0, 150, 255, 0.2);
-      border-top-color: var(--admin-accent);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
+      width: 60px;
+      height: 60px;
+      border: 4px solid var(--arcade-bg);
+      border-top: 4px solid var(--arcade-cyan);
+      border-bottom: 4px solid var(--arcade-magenta);
+      border-radius: 0;
+      animation: arcade-spin 1s steps(4) infinite;
     }
 
     p {
-      color: var(--admin-accent);
-      letter-spacing: 3px;
-      font-size: 0.9rem;
+      font-family: var(--arcade-font-pixel);
+      color: var(--arcade-cyan);
+      letter-spacing: 2px;
+      font-size: 0.8rem;
+      animation: textPulse 1.5s infinite;
     }
   }
 
@@ -43,16 +80,39 @@
     align-items: center;
     justify-content: center;
     height: 60vh;
-    gap: 1.5rem;
+    gap: 2rem;
     text-align: center;
+    border: 4px solid var(--arcade-red);
+    background: rgba(255, 0, 0, 0.05);
+    padding: 3rem;
 
     .error-icon {
       font-size: 4rem;
+      color: var(--arcade-red);
+      text-shadow: 0 0 20px var(--arcade-red);
     }
 
     h2 {
-      color: var(--admin-text-muted);
-      font-weight: 400;
+      font-family: var(--arcade-font-pixel);
+      color: var(--arcade-red);
+      font-size: 1.2rem;
+    }
+
+    .c-btn {
+      font-family: var(--arcade-font-pixel);
+      background: var(--arcade-red);
+      color: #fff;
+      border-radius: 0;
+      padding: 1rem 2rem;
+      box-shadow: 0 0 15px var(--arcade-red);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px var(--arcade-red);
+      }
     }
   }
 
@@ -61,31 +121,34 @@
     align-items: center;
     justify-content: space-between;
     max-width: 1200px;
-    margin: 0 auto 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--admin-border);
+    margin: 0 auto 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 4px solid #222;
 
     .back-btn {
-      background: transparent;
-      border: 1px solid var(--admin-border);
-      color: var(--admin-text-muted);
-      padding: 0.75rem 1.25rem;
-      border-radius: 6px;
+      background: #111;
+      border: 2px solid var(--arcade-cyan);
+      color: var(--arcade-cyan);
+      padding: 0.8rem 1.2rem;
+      border-radius: 0;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 1rem;
+      font-family: var(--arcade-font-pixel);
+      font-size: 0.6rem;
       transition: all 0.2s;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
+      box-shadow: 0 4px 0 #000;
 
       &:hover {
-        border-color: var(--admin-accent);
-        color: var(--admin-accent);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 0 #000;
+        background: rgba(0, 255, 255, 0.1);
       }
 
-      span {
-        font-size: 1.2rem;
+      &:active {
+        transform: translateY(2px);
+        box-shadow: 0 0 0 #000;
       }
     }
 
@@ -93,43 +156,45 @@
       text-align: center;
 
       h1 {
-        margin: 0 0 0.5rem;
-        font-size: 2rem;
-        letter-spacing: 2px;
-        color: var(--admin-accent);
+        margin: 0 0 1.2rem;
+        font-family: var(--arcade-font-pixel);
+        font-size: 1.8rem;
+        color: #fff;
+        text-shadow: 3px 3px 0 var(--arcade-magenta);
       }
 
       .category-badge {
-        background: rgba(0, 150, 255, 0.15);
-        border: 1px solid var(--admin-border);
-        padding: 0.35rem 1rem;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        letter-spacing: 2px;
-        color: var(--admin-text-muted);
+        display: inline-block;
+        font-family: var(--arcade-font-pixel);
+        background: var(--arcade-cyan);
+        color: #000;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.5rem;
+        letter-spacing: 1px;
       }
     }
 
     .status-indicator {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.85rem;
+      gap: 1rem;
+      font-family: var(--arcade-font-pixel);
+      font-size: 0.6rem;
       letter-spacing: 1px;
 
       .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        animation: pulse 2s ease-in-out infinite;
+        width: 12px;
+        height: 12px;
+        border-radius: 0;
+        box-shadow: 0 0 10px currentColor;
       }
 
       &.online {
-        color: var(--admin-success);
+        color: var(--arcade-green);
 
         .dot {
-          background: var(--admin-success);
-          box-shadow: 0 0 10px var(--admin-success);
+          background: var(--arcade-green);
+          animation: arcade-pulse 1s infinite;
         }
       }
     }
@@ -140,7 +205,7 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 3rem;
   }
 
   // Time section
@@ -154,72 +219,103 @@
     }
 
     .time-card {
-      background: var(--admin-card-bg);
-      border: 1px solid var(--admin-border);
-      border-radius: 12px;
-      padding: 1.5rem;
+      background: rgba(10, 10, 10, 0.8);
+      border: 3px solid #222;
+      padding: 2rem;
       text-align: center;
+      position: relative;
 
       .time-label {
-        font-size: 0.75rem;
-        letter-spacing: 2px;
-        color: var(--admin-text-muted);
-        margin-bottom: 0.75rem;
+        font-family: var(--arcade-font-pixel);
+        font-size: 0.5rem;
+        color: #888;
+        margin-bottom: 1.5rem;
+        letter-spacing: 1px;
       }
 
       .time-value {
-        font-size: 2.5rem;
-        font-weight: 700;
+        font-family: var(--arcade-font-pixel);
+        font-size: 2rem;
         letter-spacing: 2px;
+        color: #fff;
       }
 
       .time-bar {
-        margin-top: 1rem;
-        height: 6px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 3px;
-        overflow: hidden;
+        margin-top: 2rem;
+        height: 10px;
+        background: #111;
+        border: 1px solid #333;
+        padding: 2px;
 
         .time-progress {
           height: 100%;
-          background: linear-gradient(90deg, var(--admin-warning), var(--admin-success));
-          border-radius: 3px;
-          transition: width 1s ease;
+          background: var(--arcade-green);
+          box-shadow: 0 0 10px var(--arcade-green);
+          transition: width 1s linear;
         }
       }
 
-      &.active .time-value {
-        color: var(--admin-accent);
+      &.active {
+        border-color: var(--arcade-cyan);
+
+        .time-value {
+          color: var(--arcade-cyan);
+          text-shadow: 0 0 10px var(--arcade-cyan);
+        }
       }
 
-      &.remaining .time-value {
-        color: var(--admin-warning);
+      &.remaining {
+        border-color: var(--arcade-orange);
+
+        .time-value {
+          color: var(--arcade-orange);
+          text-shadow: 0 0 10px var(--arcade-orange);
+        }
+
+        .time-progress {
+          background: var(--arcade-orange);
+          box-shadow: 0 0 10px var(--arcade-orange);
+        }
       }
 
-      &.total .time-value {
-        color: var(--admin-success);
+      &.total {
+        border-color: var(--arcade-magenta);
+
+        .time-value {
+          color: var(--arcade-magenta);
+          text-shadow: 0 0 10px var(--arcade-magenta);
+        }
       }
     }
   }
 
   // Specs section
   .specs-section {
-    background: var(--admin-card-bg);
-    border: 1px solid var(--admin-border);
-    border-radius: 12px;
-    padding: 1.5rem;
+    background: rgba(10, 10, 10, 0.8);
+    border: 3px solid #333;
+    padding: 2rem;
+    position: relative;
+
+    &::after {
+      content: "HARDWARE MANIFEST";
+      position: absolute;
+      top: -0.6rem;
+      left: 2rem;
+      background: var(--arcade-bg);
+      padding: 0 1rem;
+      font-family: var(--arcade-font-pixel);
+      font-size: 0.5rem;
+      color: #555;
+    }
 
     h2 {
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-      color: var(--admin-text-muted);
-      margin: 0 0 1.5rem;
+      display: none;
     }
 
     .specs-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      gap: 2rem;
 
       @media (max-width: 768px) {
         grid-template-columns: 1fr;
@@ -228,29 +324,33 @@
       .spec-item {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 1rem;
-        border-radius: 8px;
+        gap: 1.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 1.5rem;
+        border: 1px solid #222;
 
         .spec-icon {
-          font-size: 2rem;
-          width: 50px;
+          font-family: var(--arcade-font-pixel);
+          font-size: 0.8rem;
+          width: 60px;
+          color: var(--arcade-cyan);
           text-align: center;
         }
 
         .spec-info {
           .spec-label {
             display: block;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            color: var(--admin-text-muted);
-            margin-bottom: 0.25rem;
+            font-family: var(--arcade-font-pixel);
+            font-size: 0.6rem;
+            color: #888;
+            margin-bottom: 0.5rem;
           }
 
           .spec-value {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #eee;
+            letter-spacing: 1px;
           }
         }
       }
@@ -259,88 +359,107 @@
 
   // Stats section
   .stats-section {
-    background: var(--admin-card-bg);
-    border: 1px solid var(--admin-border);
-    border-radius: 12px;
-    padding: 1.5rem;
+    background: rgba(5, 5, 5, 0.9);
+    border: 3px solid #222;
+    padding: 2.5rem;
+    position: relative;
+
+    &::after {
+      content: "LIVE TELEMETRY";
+      position: absolute;
+      top: -0.6rem;
+      left: 2rem;
+      background: var(--arcade-bg);
+      padding: 0 1rem;
+      font-family: var(--arcade-font-pixel);
+      font-size: 0.5rem;
+      color: var(--arcade-cyan);
+    }
 
     h2 {
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-      color: var(--admin-text-muted);
-      margin: 0 0 1.5rem;
+      display: none;
     }
 
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+      gap: 2rem;
 
       @media (max-width: 768px) {
         grid-template-columns: 1fr;
       }
 
       .stat-card {
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 8px;
-        padding: 1.25rem;
+        background: rgba(255, 255, 255, 0.02);
+        padding: 2rem;
+        border: 1px solid #333;
 
         .stat-header {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
-          margin-bottom: 0.75rem;
+          gap: 1.5rem;
+          margin-bottom: 1.5rem;
 
           .stat-icon {
-            font-size: 1.5rem;
+            font-family: var(--arcade-font-pixel);
+            font-size: 0.7rem;
+            color: #666;
           }
 
           .stat-name {
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            font-family: var(--arcade-font-pixel);
+            font-size: 0.6rem;
+            color: #fff;
             flex: 1;
           }
 
           .stat-percentage {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--admin-accent);
+            font-family: var(--arcade-font-pixel);
+            font-size: 0.8rem;
+            color: var(--arcade-cyan);
+            text-shadow: 0 0 10px var(--arcade-cyan);
           }
         }
 
         .stat-bar {
-          height: 8px;
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 4px;
+          height: 12px;
+          background: #000;
+          border: 1px solid #222;
+          padding: 2px;
           overflow: hidden;
 
           .stat-fill {
             height: 100%;
-            border-radius: 4px;
-            transition: width 0.5s ease;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
             &.cpu {
-              background: linear-gradient(90deg, #00d4ff, #0099ff);
+              background: linear-gradient(90deg, #0044ff, var(--arcade-cyan));
+              box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
             }
 
             &.ram {
-              background: linear-gradient(90deg, #a855f7, #7c3aed);
+              background: linear-gradient(90deg, #6600ff, var(--arcade-magenta));
+              box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
             }
 
             &.gpu {
-              background: linear-gradient(90deg, #f97316, #ea580c);
+              background: linear-gradient(90deg, #bb4400, var(--arcade-orange));
+              box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
             }
 
             &.disk {
-              background: linear-gradient(90deg, #22c55e, #16a34a);
+              background: linear-gradient(90deg, #006600, var(--arcade-green));
+              box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
             }
           }
         }
 
         .stat-extra {
-          margin-top: 0.5rem;
-          font-size: 0.8rem;
-          color: var(--admin-text-muted);
+          margin-top: 1rem;
+          font-family: var(--arcade-font-pixel);
+          font-size: 0.6rem;
+          color: #888;
+          text-align: right;
         }
       }
     }
@@ -348,97 +467,231 @@
 
   // Network section
   .network-section {
-    background: var(--admin-card-bg);
-    border: 1px solid var(--admin-border);
-    border-radius: 12px;
-    padding: 1.5rem;
+    background: rgba(10, 10, 10, 0.8);
+    border: 3px solid #222;
+    padding: 2.5rem;
+    position: relative;
+
+    &::after {
+      content: "NETWORK LAYER";
+      position: absolute;
+      top: -0.6rem;
+      left: 2rem;
+      background: var(--arcade-bg);
+      padding: 0 1rem;
+      font-family: var(--arcade-font-pixel);
+      font-size: 0.5rem;
+      color: #555;
+    }
 
     h2 {
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-      color: var(--admin-text-muted);
-      margin: 0 0 1.5rem;
+      display: none;
     }
 
     .network-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
+      gap: 1.5rem;
 
-      @media (max-width: 768px) {
+      @media (max-width: 900px) {
         grid-template-columns: repeat(2, 1fr);
       }
 
       .network-card {
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 8px;
-        padding: 1.25rem;
+        background: rgba(255, 255, 255, 0.02);
+        padding: 1.5rem;
         display: flex;
+        flex-direction: column;
         align-items: center;
         gap: 1rem;
+        border: 1px solid #222;
 
         .network-icon {
-          width: 45px;
-          height: 45px;
+          width: 40px;
+          height: 40px;
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 50%;
-          font-size: 1.25rem;
-          font-weight: 700;
+          font-family: var(--arcade-font-pixel);
+          font-size: 0.8rem;
+          background: #111;
+          border: 1px solid #333;
 
           &.up {
-            background: rgba(0, 255, 136, 0.15);
-            color: var(--admin-success);
+            color: var(--arcade-green);
+            text-shadow: 0 0 10px var(--arcade-green);
           }
 
           &.down {
-            background: rgba(0, 212, 255, 0.15);
-            color: var(--admin-accent);
+            color: var(--arcade-cyan);
+            text-shadow: 0 0 10px var(--arcade-cyan);
           }
 
           &.process {
-            background: rgba(168, 85, 247, 0.15);
-            color: #a855f7;
+            color: var(--arcade-magenta);
+            text-shadow: 0 0 10px var(--arcade-magenta);
           }
 
           &.uptime {
-            background: rgba(249, 115, 22, 0.15);
-            color: #f97316;
+            color: var(--arcade-orange);
+            text-shadow: 0 0 10px var(--arcade-orange);
           }
         }
 
         .network-info {
+          text-align: center;
+
           .network-label {
             display: block;
-            font-size: 0.65rem;
-            letter-spacing: 1px;
-            color: var(--admin-text-muted);
-            margin-bottom: 0.25rem;
+            font-family: var(--arcade-font-pixel);
+            font-size: 0.6rem;
+            color: #888;
+            margin-bottom: 0.5rem;
           }
 
           .network-value {
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-family: var(--arcade-font-header);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
 
             small {
-              font-size: 0.75rem;
-              color: var(--admin-text-muted);
+              font-size: 0.8rem;
+              color: #aaa;
+              margin-left: 4px;
             }
           }
         }
       }
     }
   }
+
+  // Common Button override
+  .c-btn--danger {
+    font-family: var(--arcade-font-pixel);
+    background: #000;
+    color: var(--arcade-orange);
+    border: 2px solid var(--arcade-orange) !important;
+    border-radius: 0 !important;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.6rem;
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.2);
+
+    &:hover {
+      background: var(--arcade-orange);
+      color: #000;
+      box-shadow: 0 0 25px var(--arcade-orange);
+    }
+  }
 }
 
-@keyframes spin {
+@keyframes arcade-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-@keyframes pulse {
+@keyframes arcade-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 15px currentColor;
+  }
+
+  50% {
+    opacity: 0.4;
+    box-shadow: 0 0 5px currentColor;
+  }
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0.27861;
+  }
+
+  5% {
+    opacity: 0.34769;
+  }
+
+  10% {
+    opacity: 0.23604;
+  }
+
+  15% {
+    opacity: 0.90626;
+  }
+
+  20% {
+    opacity: 0.18128;
+  }
+
+  25% {
+    opacity: 0.83891;
+  }
+
+  30% {
+    opacity: 0.65583;
+  }
+
+  35% {
+    opacity: 0.57807;
+  }
+
+  40% {
+    opacity: 0.26559;
+  }
+
+  45% {
+    opacity: 0.84693;
+  }
+
+  50% {
+    opacity: 0.96019;
+  }
+
+  55% {
+    opacity: 0.08523;
+  }
+
+  60% {
+    opacity: 0.71313;
+  }
+
+  65% {
+    opacity: 0.09047;
+  }
+
+  70% {
+    opacity: 0.07036;
+  }
+
+  75% {
+    opacity: 0.66023;
+  }
+
+  80% {
+    opacity: 0.17613;
+  }
+
+  85% {
+    opacity: 0.39574;
+  }
+
+  90% {
+    opacity: 0.22358;
+  }
+
+  95% {
+    opacity: 0.35422;
+  }
+
+  100% {
+    opacity: 0.27983;
+  }
+}
+
+@keyframes textPulse {
 
   0%,
   100% {

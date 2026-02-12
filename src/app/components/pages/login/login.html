@@ -1,38 +1,38 @@
 <div class="form">
     <div class="form__card">
-        <h1 class="form__title">Iniciar Sesión</h1>
+        <h1 class="form__title">LOGIN SYSTEM</h1>
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             @if (errorMessage) {
-            <div class="form__error">{{ errorMessage }}</div>
+            <div class="form__error">ERROR: {{ errorMessage }}</div>
             }
 
-            <label class="form__label" for="username">Usuario o Email</label>
+            <label class="form__label" for="username">USUARIO O EMAIL</label>
             <input class="form__input" type="text" id="username" formControlName="username"
-                placeholder="Introduce tu usuario o email"
+                placeholder="INPUT USERNAME..."
                 [class.form__input--error]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
             @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
-            <span class="form__validation-error">El usuario es obligatorio</span>
+            <span class="form__validation-error">TIPO: REQUERIDO</span>
             }
 
-            <label class="form__label" for="password">Contraseña</label>
+            <label class="form__label" for="password">CONTRASEÑA</label>
             <input class="form__input" type="password" id="password" formControlName="password"
-                placeholder="Introduce tu contraseña"
+                placeholder="INPUT PASSWORD..."
                 [class.form__input--error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
             @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-            <span class="form__validation-error">La contraseña es obligatoria</span>
+            <span class="form__validation-error">TIPO: REQUERIDO</span>
             }
 
             <button class="form__button" type="submit" [disabled]="loginForm.invalid || isLoading">
-                {{ isLoading ? 'Entrando...' : 'Entrar' }}
+                {{ isLoading ? 'CONNECTING...' : 'ENTRAR' }}
             </button>
 
             <p class="form__link">
-                ¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a>
+                SIN CUENTA? <a routerLink="/register">REGÍSTRATE AQUÍ</a>
             </p>
 
             <p class="form__link">
-                <a routerLink="/">Volver al inicio</a>
+                <a routerLink="/">VOLVER AL INICIO</a>
             </p>
         </form>
     </div>

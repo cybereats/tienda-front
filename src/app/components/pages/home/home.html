@@ -1,38 +1,38 @@
 <div class="home">
+    <div class="home__crt-overlay"></div>
+    <div class="home__scanlines"></div>
+
     <section class="home__hero">
         <div class="home__hero-overlay"></div>
-        <img src="assets/cyber-hero.png" alt="Cyber Cafe Gaming" class="home__hero-bg">
+        <img src="assets/cyber_hero_retro_1770822989170.png" alt="Arcade Hero" class="home__hero-bg">
         <div class="home__hero-content">
-            <h1 class="home__title">CYBER <span class="highlight">ZONE</span></h1>
-            <p class="home__subtitle">La Experiencia Gaming Definitiva</p>
-            <a routerLink="/computers" class="c-btn">ENTRAR A LA ZONA</a>
+            <h1 class="home__arcade-title" data-text="CYBER ZONE">CYBER EATS</h1>
+            <p class="home__arcade-subtitle">INSERT COIN TO START</p>
+            <div class="home__hero-actions">
+                <a routerLink="/computers" class="home__pixel-btn">RESERVAR PC</a>
+            </div>
         </div>
     </section>
 
-    <section class="home__section home__info">
+    <section class="home__section home__cyber-info">
         <div class="home__container">
-            <div class="info-content centered-layout">
-                <h2 class="section-title">SUBE DE <span class="highlight">NIVEL</span></h2>
-                <p class="section-desc">Bienvenido al centro gaming más avanzado de la ciudad. Experimenta latencia ultrabaja,
-                    monitores de 360Hz y las últimas GPUs RTX Serie 40.</p>
-
-                <div class="info-showcase">
-                    <img src="assets/vr-lounge.png" alt="VR Lounge Area" class="feature-image">
-
-                    <div class="stats-bar">
-                        <div class="stat-item">
-                            <span class="stat-value">100+</span>
-                            <span class="stat-label">PCs de Alta Gama</span>
+            <div class="arcade-card">
+                <h2 class="arcade-card__title">INFORMACIÓN</h2>
+                <div class="arcade-card__content">
+                    <p class="arcade-text">BIENVENIDO AL CENTRO GAMING MÁS AVANZADO. EXPERIMENTA LATENCIA ULTRABAJA,
+                        MONITORES DE 360HZ Y LAS ÚLTIMAS GPUs RTX EN UN AMBIENTE RETRO-FUTURISTA.</p>
+                    <div class="arcade-stats">
+                        <div class="stat">
+                            <span class="stat__label">PUNTUACIÓN</span>
+                            <span class="stat__value">100+ PCS</span>
                         </div>
-                        <div class="stat-divisor"></div>
-                        <div class="stat-item">
-                            <span class="stat-value">10 Gbps</span>
-                            <span class="stat-label">Conexión de Fibra</span>
+                        <div class="stat">
+                            <span class="stat__label">VELOCIDAD</span>
+                            <span class="stat__value">10 GBPS</span>
                         </div>
-                        <div class="stat-divisor"></div>
-                        <div class="stat-item">
-                            <span class="stat-value">24/7</span>
-                            <span class="stat-label">Acceso Abierto</span>
+                        <div class="stat">
+                            <span class="stat__label">TIEMPO</span>
+                            <span class="stat__value">24/7 OPEN</span>
                         </div>
                     </div>
                 </div>
@@ -41,77 +41,74 @@
     </section>
 
     <section id="arsenal" class="home__section home__arsenal">
-        <div class="home__container arsenal-container">
-            <div class="arsenal-card elite" [class.active]="activeCard === 'elite'" (click)="setActive('elite')">
-                <div class="arsenal-card__content">
-                    <h3 class="arsenal-title">GAMA ALTA</h3>
+        <div class="home__container">
+            <h2 class="home__section-title">SELECCIONA TU ARSENAL</h2>
 
-                    <div class="arsenal-details">
-                        <div class="specs-grid">
-                            <span class="spec-highlight">4K 240Hz</span>
-                            <span class="spec-highlight">RTX 5090</span>
-                            <span class="spec-highlight">i9-14900K</span>
-                            <span class="spec-highlight">64GB RAM</span>
+            <div class="category-accordion">
+                @for (category of categories; track category.id) {
+                <div class="accordion-item" [class.accordion-item--active]="expandedCategoryId === category.id">
+                    <button class="accordion-trigger" (click)="toggleCategory(category.id)">
+                        <div class="accordion-trigger__content">
+                            <span class="accordion-trigger__label">{{ category.label }}</span>
+                            <span class="accordion-trigger__price">{{ category.price | currency:'EUR' }}/H</span>
                         </div>
-                        <p>Experimenta el máximo rendimiento gaming. Domina cada partida sin compromisos.</p>
-                        <a routerLink="/computers" class="c-btn">RESERVAR</a>
-                    </div>
+                        <div class="accordion-trigger__icon">
+                            <span class="accordion-toggle-icon">
+                                {{ expandedCategoryId === category.id ? '-' : '+' }}
+                            </span>
+                        </div>
+                    </button>
 
-                    <button class="c-btn">{{ activeCard === 'elite' ? 'Ver menos' : 'Ver mas' }}</button>
-                    <img src="assets/gama-alta.png" alt="Elite Tier" class="arsenal-bg">
+                    <div class="accordion-panel" [class.accordion-panel--open]="expandedCategoryId === category.id">
+                        <div class="accordion-panel__content">
+                            <div class="specs-grid">
+                                <div class="spec-case">
+                                    <span class="spec-label">TERMINAL SPECS:</span>
+                                    <ul class="spec-list">
+                                        @for (spec of getParsedSpecs(category.id); track $index) {
+                                        <li class="spec-item">
+                                            <span class="spec-bullet">></span>
+                                            <span class="spec-text">{{ spec }}</span>
+                                        </li>
+                                        } @empty {
+                                        <li class="spec-item">No specs available</li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="spec-actions">
+                                    <a routerLink="/computers" [queryParams]="{category: category.slug}"
+                                        class="home__pixel-btn home__pixel-btn--neon home__pixel-btn--small">
+                                        RESERVAR EN {{ category.label }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                } @empty {
+                <div class="accordion-empty">
+                    <p>No hay arsenales disponibles en este momento.</p>
+                </div>
+                }
             </div>
-            <div class="arsenal-card pro" [class.active]="activeCard === 'pro'" (click)="setActive('pro')">
-                <div class="arsenal-card__content">
-                    <h3 class="arsenal-title">GAMA MEDIA</h3>
 
-                    <div class="arsenal-details">
-                        <div class="specs-grid">
-                            <span class="spec-highlight">1440p 165Hz</span>
-                            <span class="spec-highlight">RTX 4070</span>
-                            <span class="spec-highlight">i7-13700K</span>
-                            <span class="spec-highlight">32GB RAM</span>
-                        </div>
-                        <p>Equilibrio perfecto entre potencia y rendimiento. Alto FPS en todos los títulos modernos.</p>
-                        <a routerLink="/computers" class="c-btn">RESERVAR</a>
-                    </div>
-
-                    <button class="c-btn">{{ activeCard === 'pro' ? 'Ver menos' : 'Ver mas' }}</button>
-                    <img src="assets/gama-media.png" alt="Pro Tier" class="arsenal-bg">
-                </div>
-            </div>
-            <div class="arsenal-card standard" [class.active]="activeCard === 'standard'"
-                (click)="setActive('standard')">
-                <div class="arsenal-card__content">
-                    <h3 class="arsenal-title">GAMA BAJA</h3>
-
-                    <div class="arsenal-details">
-                        <div class="specs-grid">
-                            <span class="spec-highlight">1080p 144Hz</span>
-                            <span class="spec-highlight">RTX 3060</span>
-                            <span class="spec-highlight">i5-12400F</span>
-                            <span class="spec-highlight">16GB RAM</span>
-                        </div>
-                        <p>Rendimiento sólido para shooters competitivos y juegos MOBA.</p>
-                        <a routerLink="/computers" class="c-btn">RESERVAR</a>
-                    </div>
-
-                    <button class="c-btn">{{ activeCard === 'standard' ? 'Ver menos' : 'Ver mas' }}</button>
-                    <img src="assets/gama-baja.png" alt="Standard Tier" class="arsenal-bg">
-                </div>
+            <div class="home__arsenal-actions">
+                <a routerLink="/computers" class="home__pixel-btn home__pixel-btn--neon">VER TODOS LOS PCS</a>
             </div>
         </div>
     </section>
 
-    <section class="home__section home__food">
+    <section class="home__section home__food-info">
         <div class="home__hero-overlay"></div>
-        <img src="assets/food-combo.png" alt="Cyber Food" class="home__food-bg">
+        <img src="assets/cyber_food_retro_1770823352230.png" alt="Cyber Food" class="home__food-bg">
         <div class="home__container relative-z">
-            <div class="food-content">
-                <h2>ESTACIÓN DE <span class="highlight">RECARGA</span></h2>
-                <p>No pares tu partida para comer. Pide directamente desde tu terminal y te llevamos el combustible.
-                    Hamburguesas, bebidas energéticas, snacks y más.</p>
-                <a routerLink="/food" class="c-btn">VER MENÚ</a>
+            <div class="arcade-card arcade-card--orange">
+                <h2 class="arcade-card__title">RECHARGE STATION</h2>
+                <div class="arcade-card__content">
+                    <p class="arcade-text">NO PARES TU PARTIDA. PIDE COMBUSTIBLE DIRECTAMENTE A TU TERMINAL.
+                        HAMBURGUESAS, BEBIDAS ENERGÉTICAS Y SNACKS.</p>
+                    <a routerLink="/food" class="home__pixel-btn home__pixel-btn--orange">VER MENÚ COMIDA</a>
+                </div>
             </div>
         </div>
     </section>

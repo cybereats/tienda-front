@@ -11,26 +11,17 @@ export class PaymentService {
 
   payWithCard(cardData: any, amount: number, id: string, source: 'cart' | 'reservation' = 'cart'): Observable<void> {
     const concepto = source === 'reservation' ? `RESERVA #${id}` : `PEDIDO #${id}`;
-    // Convert MM/YY to YYYY-MM-DD (last day of month or just first day, usually API expects LocalDate)
-    // Assuming 01 for day
     const [month, year] = cardData.expiryDate.split('/');
     const fullYear = `20${year}`;
     const formattedDate = `${fullYear}-${month}-01`;
 
     const request = {
-      autorizacion: {
-        login: "usuario1", // Mocked
-        api_token: "token_demo_123" // Mocked
-      },
       origen: {
         id: null,
         numeroTarjeta: cardData.cardNumber.replace(/\s/g, ''),
         fechaCaducidad: formattedDate,
         cvc: parseInt(cardData.cvv, 10),
         nombreCompleto: cardData.cardHolder
-      },
-      destino: {
-        iban: "ES1234567890123456789012" // Mocked Store IBAN
       },
       pago: {
         importe: amount,

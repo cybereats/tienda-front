@@ -1,0 +1,61 @@
+<div class="pc-report">
+    <div class="pc-report__crt-overlay"></div>
+    <div class="pc-report__scanlines"></div>
+    <div class="pc-report__container">
+        <header class="pc-report__header">
+            <button class="pc-report__back-button" (click)="goBack()">
+                <span>
+                    < </span> VOLVER A ADMINISTRACIÓN
+            </button>
+            <h1 class="pc-report__title">REPORTAR INCIDENCIA</h1>
+            <p class="pc-report__subtitle">PC #{{ pcId }}</p>
+        </header>
+
+        <div class="pc-report__card">
+            @if (successMessage) {
+            <div class="pc-report__alert pc-report__alert--success">
+                {{ successMessage }}
+            </div>
+            }
+
+            @if (errorMessage) {
+            <div class="pc-report__alert pc-report__alert--error">
+                {{ errorMessage }}
+            </div>
+            }
+
+            <form class="pc-report__form" [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+                <div class="pc-report__form-group">
+                    <label class="pc-report__label" for="subject">Asunto</label>
+                    <input class="pc-report__input" type="text" id="subject" formControlName="subject"
+                        placeholder="Ej: El ratón no funciona bien"
+                        [class.pc-report__input--error]="reportForm.get('subject')?.touched && reportForm.get('subject')?.invalid">
+                    @if (reportForm.get('subject')?.touched && reportForm.get('subject')?.invalid) {
+                    <span class="pc-report__error-msg">El asunto es obligatorio (mín. 5 caracteres)</span>
+                    }
+                </div>
+
+
+
+                <div class="pc-report__form-group">
+                    <label class="pc-report__label" for="description">Descripción detallada</label>
+                    <textarea class="pc-report__textarea" id="description" formControlName="description" rows="5"
+                        placeholder="Explica detalladamente el problema que estás experimentando..."
+                        [class.pc-report__input--error]="reportForm.get('description')?.touched && reportForm.get('description')?.invalid"></textarea>
+                    @if (reportForm.get('description')?.touched && reportForm.get('description')?.invalid) {
+                    <span class="pc-report__error-msg">La descripción es obligatoria (mín. 10 caracteres)</span>
+                    }
+                </div>
+
+                <div class="pc-report__actions">
+                    <button type="button" class="pc-report__btn pc-report__btn--secondary" (click)="goBack()"
+                        [disabled]="isLoading">CANCELAR</button>
+                    <button type="submit" class="pc-report__btn pc-report__btn--primary"
+                        [disabled]="reportForm.invalid || isLoading">
+                        {{ isLoading ? 'ENVIANDO...' : 'ENVIAR REPORTE' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

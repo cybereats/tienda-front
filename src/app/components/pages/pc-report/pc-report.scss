@@ -1,0 +1,316 @@
+.pc-report {
+    // --- Retro Theme Colors ---
+    --arcade-bg: #050505;
+    --arcade-magenta: #ff00ff;
+    --arcade-cyan: #00ffff;
+    --arcade-yellow: #ffff00;
+    --arcade-green: #00ff00;
+    --arcade-orange: #ff6600;
+    --arcade-red: #ff0000;
+
+    --arcade-font-pixel: 'Press Start 2P', cursive;
+    --arcade-font-header: 'Orbitron', sans-serif;
+
+    min-height: 100vh;
+    background-color: var(--arcade-bg);
+    color: #fff;
+    font-family: var(--arcade-font-header);
+    position: relative;
+    overflow-x: hidden;
+    padding: 8rem 0;
+
+    // --- CRT & Scanline Effects ---
+    &__crt-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        z-index: 9999;
+        background-size: 100% 2px, 3px 100%;
+        pointer-events: none;
+    }
+
+    &__scanlines {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(18, 16, 16, 0.1);
+        z-index: 9998;
+        pointer-events: none;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+            animation: scanline 8s linear infinite;
+        }
+    }
+
+    &__container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    &__header {
+        margin-bottom: 4rem;
+        text-align: center;
+    }
+
+    &__back-button {
+        background: transparent;
+        border: 2px solid #333;
+        color: #888;
+        padding: 0.8rem 1.5rem;
+        font-family: var(--arcade-font-pixel);
+        font-size: 0.7rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 3rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+
+        &:hover {
+            border-color: var(--arcade-cyan);
+            color: var(--arcade-cyan);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+        }
+    }
+
+    &__title {
+        font-family: var(--arcade-font-pixel);
+        font-size: 2.2rem;
+        line-height: 1.4;
+        color: #fff;
+        text-shadow: 3px 3px var(--arcade-red), -3px -3px var(--arcade-magenta);
+        letter-spacing: 2px;
+        margin: 0 0 1rem 0;
+        text-transform: uppercase;
+        animation: glitch 4s infinite;
+
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
+
+    &__subtitle {
+        font-family: var(--arcade-font-pixel);
+        font-size: 1rem;
+        color: var(--arcade-yellow);
+        margin-top: 1.5rem;
+        text-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+    }
+
+    &__card {
+        background: rgba(0, 0, 0, 0.85);
+        border: 4px solid var(--arcade-red);
+        box-shadow: 0 0 15px var(--arcade-red), inset 0 0 10px var(--arcade-red);
+        padding: 3rem;
+        position: relative;
+
+        &::before {
+            content: "SECURITY ALERT";
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--arcade-red);
+            padding: 2px 10px;
+            font-family: var(--arcade-font-pixel);
+            font-size: 0.6rem;
+            color: #000;
+        }
+    }
+
+    &__form-group {
+        margin-bottom: 2.5rem;
+    }
+
+    &__label {
+        display: block;
+        font-family: var(--arcade-font-pixel);
+        font-size: 0.8rem;
+        color: var(--arcade-magenta);
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    &__input,
+    &__textarea {
+        width: 100%;
+        background: rgba(20, 20, 20, 0.8);
+        border: 2px solid #333;
+        padding: 1.25rem;
+        color: #fff;
+        font-family: var(--arcade-font-header);
+        font-size: 1.1rem;
+        outline: none;
+        transition: all 0.3s ease;
+
+        &::placeholder {
+            color: #444;
+        }
+
+        &:focus {
+            border-color: var(--arcade-magenta);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.2);
+            background: rgba(255, 0, 255, 0.02);
+        }
+
+        &--error {
+            border-color: var(--arcade-red) !important;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+    }
+
+    &__error-msg {
+        font-family: var(--arcade-font-pixel);
+        font-size: 0.6rem;
+        color: var(--arcade-red);
+        margin-top: 0.75rem;
+        display: block;
+        animation: blink 1s infinite;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 2rem;
+        margin-top: 3.5rem;
+
+        @media (max-width: 576px) {
+            flex-direction: column;
+        }
+    }
+
+    &__btn {
+        flex: 1;
+        font-family: var(--arcade-font-pixel);
+        font-size: 0.9rem;
+        padding: 0.8rem 2rem;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.2s ease;
+        border: 4px solid #000;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        &:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        &:active:not(:disabled) {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0 #888;
+        }
+
+        &--primary {
+            background: transparent;
+            color: var(--arcade-red);
+            border-color: var(--arcade-red);
+            box-shadow: 0 0 10px var(--arcade-red);
+
+            &:hover:not(:disabled) {
+                background: var(--arcade-red);
+                color: #000;
+                box-shadow: 0 0 25px var(--arcade-red);
+            }
+        }
+
+        &--secondary {
+            background: transparent;
+            color: #fff;
+            border-color: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+
+            &:hover:not(:disabled) {
+                background: #fff;
+                color: #000;
+                box-shadow: 0 0 25px #fff;
+            }
+        }
+    }
+
+    &__alert {
+        padding: 1.5rem;
+        font-family: var(--arcade-font-pixel);
+        font-size: 0.8rem;
+        margin-bottom: 2.5rem;
+        text-align: center;
+        border: 2px dashed;
+
+        &--success {
+            background: rgba(0, 255, 0, 0.05);
+            color: var(--arcade-green);
+            border-color: var(--arcade-green);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+        }
+
+        &--error {
+            background: rgba(255, 0, 0, 0.05);
+            color: var(--arcade-red);
+            border-color: var(--arcade-red);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+        }
+    }
+}
+
+// --- Keyframes ---
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+
+    2% {
+        transform: translate(-3px, 1px);
+    }
+
+    4% {
+        transform: translate(3px, -1px);
+    }
+
+    6% {
+        transform: translate(0);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes scanline {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}

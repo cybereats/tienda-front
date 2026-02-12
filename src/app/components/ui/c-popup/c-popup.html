@@ -1,6 +1,26 @@
 <div class="c-popup" [ngClass]="'c-popup--' + data.type">
   <div class="c-popup__icon-wrapper">
-    <mat-icon class="c-popup__icon">{{ iconName }}</mat-icon>
+    <!-- Success Icon -->
+    <div class="c-popup__icon" *ngIf="data.type === 'success'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+        <path d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <!-- Error Icon -->
+    <div class="c-popup__icon" *ngIf="data.type === 'error'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18" />
+      </svg>
+    </div>
+    <!-- Info Icon -->
+    <div class="c-popup__icon" *ngIf="data.type === 'info'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="16" x2="12" y2="12" />
+        <circle cx="12" cy="8" r="0.5" fill="currentColor" />
+      </svg>
+    </div>
   </div>
 
   <h2 class="c-popup__title">{{ data.title }}</h2>
@@ -10,6 +30,6 @@
   </div>
 
   <div class="c-popup__actions">
-    <button mat-flat-button color="primary" (click)="onClose()">Aceptar</button>
+    <button (click)="onClose()">ACEPTAR</button>
   </div>
 </div>

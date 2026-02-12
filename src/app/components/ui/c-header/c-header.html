@@ -20,7 +20,17 @@
             @if (authService.user$ | async; as user) {
             <div class="c-header__orders-wrapper">
                 <button class="c-header__orders orders-icon" (click)="toggleOrdersDropdown()">
-                    <span class="c-header__orders-icon">📋</span>
+                    <span class="c-header__orders-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="2" width="12" height="2" fill="currentColor" />
+                            <rect x="4" y="4" width="2" height="14" fill="currentColor" />
+                            <rect x="14" y="4" width="2" height="14" fill="currentColor" />
+                            <rect x="4" y="16" width="12" height="2" fill="currentColor" />
+                            <rect x="7" y="6" width="6" height="2" fill="currentColor" />
+                            <rect x="7" y="10" width="6" height="2" fill="currentColor" />
+                            <rect x="7" y="14" width="4" height="2" fill="currentColor" />
+                        </svg>
+                    </span>
                     @if ((userOrderService.pendingCount$ | async); as count) {
                     <span class="c-header__orders-count">{{ count }}</span>
                     }
@@ -60,7 +70,7 @@
                         }
                         } @else {
                         <div class="orders-dropdown__empty">
-                            <span>🍽️</span>
+                            <span class="empty-icon">[ERROR]</span>
                             <p>No tienes pedidos aún</p>
                         </div>
                         }
@@ -71,7 +81,26 @@
             </div>
 
             <a routerLink="/cart" class="c-header__cart cart-icon">
-                <span class="c-header__cart-icon">🛒</span>
+                <span class="c-header__cart-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Handle -->
+                        <rect x="3" y="5" width="2" height="4" fill="currentColor" />
+                        <!-- Top rim -->
+                        <rect x="5" y="5" width="14" height="2" fill="currentColor" />
+                        <!-- Right side -->
+                        <rect x="19" y="7" width="2" height="8" fill="currentColor" />
+                        <!-- Left side slant -->
+                        <rect x="5" y="7" width="2" height="2" fill="currentColor" />
+                        <rect x="6" y="9" width="2" height="2" fill="currentColor" />
+                        <rect x="7" y="11" width="2" height="2" fill="currentColor" />
+                        <rect x="8" y="13" width="2" height="2" fill="currentColor" />
+                        <!-- Bottom -->
+                        <rect x="10" y="15" width="9" height="2" fill="currentColor" />
+                        <!-- Wheels -->
+                        <rect x="9" y="18" width="3" height="3" fill="currentColor" />
+                        <rect x="16" y="18" width="3" height="3" fill="currentColor" />
+                    </svg>
+                </span>
                 @if ((cartService.cart$ | async)?.totalItems; as count) {
                 <span class="c-header__cart-count">{{ count }}</span>
                 }

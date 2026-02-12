@@ -32,10 +32,12 @@
 
       <div class="cart-page__summary">
         <h2>Resumen del pedido</h2>
+        @for (item of cart.items; track item.productId) {
         <div class="summary-row">
-          <span>Artículos ({{ cart.totalItems }})</span>
-          <span>{{ cart.totalPrice | currency:'EUR':'symbol' }}</span>
+          <span>{{ item.product?.label }} (x{{ item.quantity }})</span>
+          <span>{{ (item.price * item.quantity) | currency:'EUR':'symbol' }}</span>
         </div>
+        }
         <div class="summary-row summary-row--total">
           <span>Total</span>
           <span>{{ cart.totalPrice | currency:'EUR':'symbol' }}</span>
@@ -45,7 +47,15 @@
           <h3>Tipo de entrega</h3>
           <label class="delivery-option" [class.selected]="deliveryType === 'TABLE'">
             <input type="radio" name="deliveryType" value="TABLE" [(ngModel)]="deliveryType">
-            <span class="delivery-option__icon">🍽️</span>
+            <span class="delivery-option__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="10" width="16" height="2" fill="currentColor" />
+                <rect x="6" y="12" width="12" height="2" fill="currentColor" />
+                <rect x="8" y="14" width="8" height="2" fill="currentColor" />
+                <rect x="10" y="16" width="4" height="2" fill="currentColor" />
+                <rect x="11" y="4" width="2" height="6" fill="currentColor" />
+              </svg>
+            </span>
             <div class="delivery-option__info">
               <strong>En mesa</strong>
               <small>Requiere reserva activa</small>
@@ -53,7 +63,16 @@
           </label>
           <label class="delivery-option" [class.selected]="deliveryType === 'PICKUP'">
             <input type="radio" name="deliveryType" value="PICKUP" [(ngModel)]="deliveryType">
-            <span class="delivery-option__icon">🏃</span>
+            <span class="delivery-option__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="4" width="4" height="4" fill="currentColor" />
+                <rect x="8" y="8" width="8" height="2" fill="currentColor" />
+                <rect x="6" y="10" width="12" height="2" fill="currentColor" />
+                <rect x="10" y="12" width="4" height="4" fill="currentColor" />
+                <rect x="8" y="16" width="2" height="4" fill="currentColor" />
+                <rect x="14" y="16" width="2" height="4" fill="currentColor" />
+              </svg>
+            </span>
             <div class="delivery-option__info">
               <strong>Recogida en mostrador</strong>
               <small>Sin necesidad de reserva</small>
@@ -74,7 +93,6 @@
     </div>
     } @else {
     <div class="cart-page__empty">
-      <span class="empty-icon">🛒</span>
       <h2>Tu carrito está vacío</h2>
       <p>Añade algunos productos deliciosos</p>
       <a routerLink="/food" class="c-btn">VER MENÚ</a>

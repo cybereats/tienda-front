@@ -102,6 +102,8 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
         return this.CATEGORY_DISPLAY_NAMES[slug] ?? slug.toUpperCase();
     }
 
+    private resizeObserver: ResizeObserver | null = null;
+
     ngOnInit() {
         this.loadData();
         this.loadMyBookings();
@@ -109,6 +111,7 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
 
     ngAfterViewInit() {
         this.initKonva();
+        this.initResizeObserver();
     }
 
     ngOnDestroy() {
@@ -116,17 +119,25 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
         if (this.stage) {
             this.stage.destroy();
         }
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect();
+        }
     }
 
-    @HostListener('window:resize')
-    onResize() {
-        this.resizeStage();
+    private initResizeObserver() {
+        this.resizeObserver = new ResizeObserver(() => {
+            this.resizeStage();
+        });
+        if (this.konvaContainer) {
+            this.resizeObserver.observe(this.konvaContainer.nativeElement);
+        }
     }
 
     private initKonva() {
         const container = this.konvaContainer.nativeElement;
-        const width = container.offsetWidth;
-        const height = container.offsetHeight || 700;
+        // Start with a default size, but it will be updated by ResizeObserver immediately
+        const width = container.offsetWidth || 800;
+        const height = container.offsetHeight || 600;
 
         this.stage = new Konva.Stage({
             container: container,
@@ -140,7 +151,7 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
         this.layer.add(this.mainGroup);
         this.stage.add(this.layer);
 
-        this.stage.on('wheel', (e) => {
+        this.stage.on('wheel', (e: any) => {
             e.evt.preventDefault();
             const oldScale = this.stage.scaleX();
             const pointer = this.stage.getPointerPosition()!;
@@ -165,16 +176,46 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
-    private resizeStage() {
+    private centerMap() {
         if (!this.stage) return;
+        const containerW = this.stage.width();
+        const containerH = this.stage.height();
+
+        // Calculate scale to fit the map with some padding
+        const padding = 60;
+        const scaleX = containerW / (this.MAP_WIDTH + padding);
+        const scaleY = containerH / (this.MAP_HEIGHT + padding);
+
+        // Use the smaller scale to ensure fit, with a reasonable max limit
+        const scale = Math.min(scaleX, scaleY, 1.0);
+        this.currentScale = scale;
+
+        this.stage.scale({ x: scale, y: scale });
+
+        // Center the map group within the stage
+        this.stage.position({
+            x: (containerW - this.MAP_WIDTH * scale) / 2,
+            y: (containerH - this.MAP_HEIGHT * scale) / 2
+        });
+
+        this.stage.batchDraw();
+    }
+
+    private resizeStage() {
+        if (!this.stage || !this.konvaContainer) return;
+
         const container = this.konvaContainer.nativeElement;
-        const width = container.offsetWidth;
-        const height = Math.max(container.offsetHeight, 600);
+        // Use getBoundingClientRect for more accurate measurements
+        const rect = container.getBoundingClientRect();
+
+        const width = rect.width || container.offsetWidth;
+        const height = rect.height || container.offsetHeight || (window.innerHeight - 100);
 
         this.stage.width(width);
         this.stage.height(height);
 
-        this.drawMap();
+        // Re-center after resizing
+        this.centerMap();
     }
 
     private startAutoRefresh() {
@@ -264,20 +305,6 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
                 console.error('Error loading arsenal data:', err);
                 this.isLoading = false;
             }
-        });
-    }
-
-    private centerMap() {
-        const containerW = this.stage.width();
-        const containerH = this.stage.height();
-        const scaleX = containerW / (this.MAP_WIDTH + 40);
-        const scaleY = containerH / (this.MAP_HEIGHT + 40);
-        const scale = Math.min(scaleX, scaleY, 0.8);
-        this.currentScale = scale;
-        this.stage.scale({ x: scale, y: scale });
-        this.stage.position({
-            x: (containerW - this.MAP_WIDTH * scale) / 2,
-            y: (containerH - this.MAP_HEIGHT * scale) / 2
         });
     }
 
