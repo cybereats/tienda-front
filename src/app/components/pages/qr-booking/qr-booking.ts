@@ -30,20 +30,10 @@ export class QrBooking implements OnInit {
   readonly MAX_HOURS = 8;
   readonly MIN_HOURS = 1;
 
-  // Precios por categoría (€/hora)
-  readonly CATEGORY_PRICES: { [slug: string]: number } = {
-    'basico': 2.00,
-    'gaming': 3.00,
-    'edicion-de-video': 4.50,
-    'streaming': 5.00,
-    'esports': 6.00,
-  };
-
   hours = 1;
 
   get pricePerHour(): number {
-    const slug = this.pc()?.categoryPCResponse?.slug || '';
-    return this.CATEGORY_PRICES[slug] ?? 3.50;
+    return this.pc()?.categoryPCResponse?.price ?? 0;
   }
 
   get totalPrice(): number {

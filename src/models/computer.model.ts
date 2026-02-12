@@ -23,5 +23,5 @@ export interface CategoryPC {
     id: number;
     label: string;
     slug: string;
-    pricePerHour?: number;
+    price: number;
 }

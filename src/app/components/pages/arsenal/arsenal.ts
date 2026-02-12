@@ -78,29 +78,22 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
     };
 
     private readonly CATEGORY_CONFIG: { [key: string]: { color: string; icon: string; glow: string } } = {
-        'basico': { color: '#22d3ee', icon: 'B', glow: 'rgba(34, 211, 238, 0.4)' },
-        'gaming': { color: '#10b981', icon: 'G', glow: 'rgba(16, 185, 129, 0.4)' },
-        'edicion-de-video': { color: '#f43f5e', icon: 'E', glow: 'rgba(244, 63, 94, 0.4)' },
+        'gama-baja': { color: '#22d3ee', icon: 'B', glow: 'rgba(34, 211, 238, 0.4)' },
+        'gama-media': { color: '#10b981', icon: 'G', glow: 'rgba(16, 185, 129, 0.4)' },
+        'gama-alta': { color: '#f43f5e', icon: 'E', glow: 'rgba(244, 63, 94, 0.4)' },
         'streaming': { color: '#a855f7', icon: 'S', glow: 'rgba(168, 85, 247, 0.4)' },
         'esports': { color: '#ef4444', icon: 'X', glow: 'rgba(239, 68, 68, 0.5)' }
     };
 
-    readonly CATEGORY_PRICES: { [slug: string]: number } = {
-        'basico': 2.00,
-        'gaming': 3.00,
-        'edicion-de-video': 4.50,
-        'streaming': 5.00,
-        'esports': 6.00,
-    };
-
     getCategoryPrice(slug: string): number {
-        return this.CATEGORY_PRICES[slug] ?? 3.50;
+        const category = this.categories.find(c => c.slug === slug);
+        return category?.price ?? 0;
     }
 
     readonly CATEGORY_DISPLAY_NAMES: { [slug: string]: string } = {
-        'basico': 'BÁSICA',
-        'gaming': 'MEDIA',
-        'edicion-de-video': 'PERFORMANCE',
+        'gama-baja': 'GAMA BAJA',
+        'gama-media': 'GAMA MEDIA',
+        'gama-alta': 'GAMA ALTA',
         'streaming': 'STREAMING',
         'esports': 'ESPORTS',
     };
@@ -249,7 +242,7 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
         return this.myBookings().find(b => b.pc.id === pc.id);
     }
 
-    private readonly VALID_SLUGS = new Set(['basico', 'gaming', 'edicion-de-video', 'streaming', 'esports']);
+    private readonly VALID_SLUGS = new Set(['gama-baja', 'gama-media', 'gama-alta', 'streaming', 'esports']);
 
     loadData() {
         this.isLoading = true;
@@ -627,9 +620,9 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
         const sortedCats = [...this.categories].sort((a, b) => a.id - b.id);
 
         const layouts: { [key: string]: { x: number; y: number; cols: number; zone: string } } = {
-            'basico': { x: 50, y: 90, cols: 5, zone: 'gaming' },
-            'gaming': { x: 355, y: 90, cols: 5, zone: 'gaming' },
-            'edicion-de-video': { x: 660, y: 90, cols: 5, zone: 'gaming' },
+            'gama-baja': { x: 50, y: 90, cols: 5, zone: 'gaming' },
+            'gama-media': { x: 355, y: 90, cols: 5, zone: 'gaming' },
+            'gama-alta': { x: 660, y: 90, cols: 5, zone: 'gaming' },
 
             'streaming': { x: 50, y: 435, cols: 5, zone: 'streaming' },
 
@@ -709,7 +702,7 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
 
         const row2Y = 30;
 
-        const price = this.CATEGORY_PRICES[category.slug] ?? 3.50;
+        const price = category.price ?? 0;
         section.add(new Konva.Rect({
             x: 5,
             y: row2Y,
@@ -792,13 +785,15 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
         const isSelected = this.selectedStation()?.id === pc.id;
         const isMine = this.isMyPc(pc);
 
-        const fillColor = pc.status === 'AVAILABLE' ? this.COLORS.available
-            : pc.status === 'OCCUPIED' ? this.COLORS.occupied
-                : this.COLORS.maintenance;
+        const fillColor = isMine ? this.COLORS.mine
+            : pc.status === 'AVAILABLE' ? this.COLORS.available
+                : pc.status === 'OCCUPIED' ? this.COLORS.occupied
+                    : this.COLORS.maintenance;
 
-        const dimColor = pc.status === 'AVAILABLE' ? 'rgba(0, 255, 159, 0.15)'
-            : pc.status === 'OCCUPIED' ? 'rgba(255, 51, 102, 0.15)'
-                : 'rgba(74, 85, 104, 0.15)';
+        const dimColor = isMine ? 'rgba(0, 212, 255, 0.2)'
+            : pc.status === 'AVAILABLE' ? 'rgba(0, 255, 159, 0.15)'
+                : pc.status === 'OCCUPIED' ? 'rgba(255, 51, 102, 0.15)'
+                    : 'rgba(74, 85, 104, 0.15)';
 
         const stroke = isSelected ? this.COLORS.selected
             : isMine ? this.COLORS.mine
