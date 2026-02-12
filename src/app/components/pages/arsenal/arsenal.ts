@@ -276,7 +276,7 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
     }
 
     isMyPc(pc: Computer): boolean {
-        return this.myPcIds().has(pc.id);
+        return this.myPcIds().has(pc.id) && pc.status === 'OCCUPIED';
     }
 
     getBookingForPc(pc: Computer): Booking | undefined {
