@@ -812,15 +812,15 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
         const isSelected = this.selectedStation()?.id === pc.id;
         const isMine = this.isMyPc(pc);
 
-        const fillColor = isMine ? this.COLORS.mine
-            : pc.status === 'AVAILABLE' ? this.COLORS.available
-                : pc.status === 'OCCUPIED' ? this.COLORS.occupied
-                    : this.COLORS.maintenance;
+        const fillColor = pc.status === 'MAINTENANCE' ? this.COLORS.maintenance
+            : isMine ? this.COLORS.mine
+                : pc.status === 'AVAILABLE' ? this.COLORS.available
+                    : this.COLORS.occupied;
 
-        const dimColor = isMine ? 'rgba(0, 212, 255, 0.2)'
-            : pc.status === 'AVAILABLE' ? 'rgba(0, 255, 159, 0.15)'
-                : pc.status === 'OCCUPIED' ? 'rgba(255, 51, 102, 0.15)'
-                    : 'rgba(74, 85, 104, 0.15)';
+        const dimColor = pc.status === 'MAINTENANCE' ? 'rgba(74, 85, 104, 0.15)'
+            : isMine ? 'rgba(0, 212, 255, 0.2)'
+                : pc.status === 'AVAILABLE' ? 'rgba(0, 255, 159, 0.15)'
+                    : 'rgba(255, 51, 102, 0.15)';
 
         const stroke = isSelected ? this.COLORS.selected
             : isMine ? this.COLORS.mine
@@ -954,11 +954,11 @@ export class Arsenal implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private getSeatColor(pc: Computer): string {
+        if (pc.status === 'MAINTENANCE') return this.COLORS.maintenance;
         if (this.isMyPc(pc)) return this.COLORS.mine;
         switch (pc.status) {
             case 'AVAILABLE': return this.COLORS.available;
             case 'OCCUPIED': return this.COLORS.occupied;
-            case 'MAINTENANCE': return this.COLORS.maintenance;
             default: return this.COLORS.maintenance;
         }
     }
