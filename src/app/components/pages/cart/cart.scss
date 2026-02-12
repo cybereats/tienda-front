@@ -143,6 +143,7 @@
       text-decoration: none;
       box-shadow: 0 0 10px var(--arcade-orange);
       transition: all 0.2s ease;
+      border-radius: 0; // Botón no redondeado
 
       &:hover {
         background: var(--arcade-orange);
@@ -331,14 +332,14 @@
   }
 
   &.selected {
-    background: rgba(168, 85, 247, 0.05); // Morado
-    border-color: #a855f7; // Morado
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.1);
+    background: rgba(255, 0, 255, 0.05); // Rosa (--arcade-magenta)
+    border-color: var(--arcade-magenta);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.1);
 
     .delivery-option__icon {
-      background: #a855f7; // Morado
+      background: var(--arcade-magenta);
       color: #000;
-      box-shadow: 0 0 10px #a855f7;
+      box-shadow: 0 0 10px var(--arcade-magenta);
     }
   }
 
